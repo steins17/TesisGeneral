@@ -1,6 +1,6 @@
 <template>
   <div class="home col-5 mx-auto py-5 mt-5">
-    <h1 class="text'center" style="margin-left: 55px">Editar Contraseña</h1>
+    <h1 class="text'center" style="margin-left: 98px">Editar Contraseña</h1>
     <div class="card" style="border-radius: 20px">
         <div class="form-group" style="margin: 10px">
           <label for="name">Correo Electrónico:</label>
