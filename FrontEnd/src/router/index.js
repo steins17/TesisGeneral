@@ -16,7 +16,7 @@ const router = new Router({
       path: '',
       component: () => import('../components/Navigation'),
       children: [
-        {
+        /*{
           path: "/login",
           name: "Login",
           component: () => import('../views/Login'),
@@ -27,12 +27,11 @@ const router = new Router({
           name: "Registro",
           component: () => import('../views/Registro'),
           meta: { guestOnly: true }
-        },
+        },*/
         {
           path: "/",
           name: "Inicio",
           component: () => import('../views/Inicio'),
-          meta: { authOnly: true }
         },
         {
           path: '/Nivel1',
@@ -82,7 +81,7 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.authOnly)) {
     if (!isLoggedIn()) {
       next({
-        path: "/login",
+        path: "/",
         query: { redirect: to.fullPath }
       });
     } else {

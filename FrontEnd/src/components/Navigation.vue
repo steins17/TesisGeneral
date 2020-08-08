@@ -20,17 +20,17 @@
             </a>
           </button>   
           <div slot="dropdown"> 
-              <a class="dropdown-item" href="#"> <i class="fas fa-user"></i> Mi perfil</a>
-              <a class="dropdown-item" href="#"> <i class="fas fa-poll-h"></i> Mis respuestas</a>
-              <a class="dropdown-item" href="#"> <i class="fas fa-cogs"></i> Configuración</a>
+              <a class="dropdown-item vs-sidebar__item__text color-drem" href="#"> <i class="fas fa-user"></i> Mi perfil</a>
+              <a class="dropdown-item vs-sidebar__item__text color-drem" href="#"> <i class="fas fa-poll-h"></i> Mis respuestas</a>
+              <a class="dropdown-item vs-sidebar__item__text color-drem" href="#"> <i class="fas fa-cogs"></i> Configuración</a>
               <hr>
-              <a class="dropdown-item" href="#" @click="logout()"> <i class="fa fa-sign-out"></i> Cerrar sesión</a>
+              <a class="dropdown-item vs-sidebar__item__text color-drem" href="#" @click="logout()"> <i class="fa fa-sign-out"></i> Cerrar sesión</a>
           </div>
         </dropdown-menu>
       </template>
       <template #right v-else>
-        <vs-button to="login">Login</vs-button>
-        <vs-button to="registro">Registro</vs-button>
+        <vs-button @click="modal.login=!modal.login">Login</vs-button>
+        <vs-button @click="modal.registro=!modal.registro">Registro</vs-button>
       </template>
     </vs-navbar>
     <vs-sidebar
@@ -113,7 +113,7 @@
                 </template>
               </vs-tooltip>
             </vs-avatar>
-            <vs-avatar @click="logout()">
+            <vs-avatar @click="logout()" v-if="user">
               <vs-tooltip circle>
                 <i class="fa fa-sign-out cursor-pointer" aria-hidden="true"></i>
                 <template #tooltip>
@@ -127,6 +127,104 @@
     <div class="main-container-fluid" :class="{'espaciado':!hover}">
       <router-view />
     </div>
+
+
+    <vs-dialog v-model="modal.login">
+        <template #header>
+          <h4 class="not-margin">
+            Bienvenido nuevamente a <b>Tesis</b>
+          </h4>
+        </template>
+        <div class="con-form">
+          <vs-input v-model="form_login.email" placeholder="Correo electrónico:">
+            <template #icon>
+              @
+            </template>
+          </vs-input>
+          <span class="text-danger" v-if="errors_login.email">
+            {{ errors_login.email[0] }}
+          </span>
+          <vs-input type="password" v-model="form_login.password" placeholder="Contraseña:">
+            <template #icon>
+              <i class='fas fa-lock'></i>
+            </template>
+          </vs-input>
+          <span class="text-danger" v-if="errors_login.password">
+            {{ errors_login.password[0] }}
+          </span>
+          <!--<div class="flex">
+            <vs-checkbox v-model="remember">Recordar Sesión</vs-checkbox>
+            <a href="#">Forgot Password?</a>
+          </div>-->
+        </div>
+        <template #footer>
+          <div class="footer-dialog">
+            <vs-button block @click.prevent="login()">
+              Ingresar
+            </vs-button>
+
+            <div class="new">
+              No tienes una cuenta? <a href="javascript:void(0)" @click="cambiarmodales()">Registrate</a>
+            </div>
+          </div>
+        </template>
+    </vs-dialog>
+
+    <vs-dialog v-model="modal.registro">
+      <template #header>
+        <h4 class="not-margin">
+          Bienvenido a <b>Tesis</b>
+        </h4>
+      </template>
+      <div class="con-form">
+        <vs-input v-model="form_registro.name" placeholder="Nombres completos:">
+          <template #icon>
+            <i class="fas fa-user"></i>
+          </template>
+        </vs-input>
+        <span class="text-danger" v-if="errors_registro.name">
+          {{ errors_registro.name[0] }}
+        </span>
+
+        <vs-input v-model="form_registro.email" placeholder="Correo electrónico:">
+          <template #icon>
+            @
+          </template>
+        </vs-input>
+        <span class="text-danger" v-if="errors_registro.email">
+          {{ errors_registro.email[0] }}
+        </span>
+
+        <vs-input type="password" v-model="form_registro.password" placeholder="Contraseña:">
+          <template #icon>
+            <i class='fas fa-lock'></i>
+          </template>
+        </vs-input>
+        <span class="text-danger" v-if="errors_registro.password">
+          {{ errors_registro.password[0] }}
+        </span>
+
+        <vs-input type="password" v-model="form_registro.password_confirmation" placeholder="repetir Contraseña:">
+          <template #icon>
+            <i class='fas fa-lock'></i>
+          </template>
+        </vs-input>
+        <span class="text-danger" v-if="errors_registro.password_confirmation">
+          {{ errors_registro.password_confirmation[0] }}
+        </span>
+      </div>
+      <template #footer>
+        <div class="footer-dialog">
+          <vs-button block @click.prevent="register()">
+            Registrarse
+          </vs-button>
+
+          <div class="new">
+            ya tienes una cuenta? <a href="#" @click="cambiarmodales()">Iniciar sesión</a>
+          </div>
+        </div>
+      </template>
+    </vs-dialog>
   </div>
 </template>
 <script>
@@ -149,6 +247,23 @@
       interactive:true,
       user: null,
       val_loading:null,
+      modal:{
+        login:false,
+        registro:false,
+      },
+      form_login: {
+        email: "",
+        password: "",
+        device_name: "browser"
+      },
+      errors_login: [],
+      form_registro: {
+        name: "",
+        email: "",
+        password: "",
+        password_confirmation: ""
+      },
+      errors_registro: [],
     }),
     methods:{
       settings(){
@@ -189,6 +304,35 @@
           $("body").css("overflow-y","auto");
         }
       },
+      cambiarmodales(){
+        this.modal.login =! this.modal.login;
+        this.modal.registro =! this.modal.registro;
+      },
+      login() {
+        User.login(this.form_login)
+          .then(response => {
+            this.$root.$emit("login", true);
+            localStorage.setItem("token", response.data);
+            location.reload();
+            //this.$router.push({ name: "Inicio" });
+          })
+          .catch(error => {
+            if (error.response.status === 422) {
+              this.errors_login = error.response.data.errors;
+            }
+          });
+      },
+      register() {
+        User.register(this.form_registro)
+          .then(() => {
+            this.$router.push({ name: "Inicio" });
+          })
+          .catch(error => {
+            if (error.response.status === 422) {
+              this.errors_registro = error.response.data.errors;
+            }
+          });
+      }
     },
     mounted() {
       this.val_loading = this.$vs.loading({text: 'Cargando...'});
@@ -460,5 +604,69 @@
   }
   .vs-loading--default{
     background: rgba(255,255,255);
+  }
+  .not-margin {
+    margin: 0px;
+    font-weight: normal;
+    padding: 10px;
+  }
+  .con-form {
+    width: 100%;
+  }
+  .con-form .flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .con-form .flex a {
+    font-size: 0.8rem;
+    opacity: 0.7;
+  }
+  .con-form .flex a:hover {
+    opacity: 1;
+  }
+  .con-form .vs-checkbox-label {
+    font-size: 0.8rem;
+  }
+  .con-form .vs-input-content {
+    margin: 10px 0px;
+    width: calc(100%);
+  }
+  .con-form .vs-input-content .vs-input {
+    width: 100%;
+  }
+  .footer-dialog {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: calc(100%);
+  }
+  .footer-dialog .new {
+    margin: 0px;
+    margin-top: 20px;
+    padding: 0px;
+    font-size: 0.7rem;
+  }
+  .footer-dialog .new a {
+    color: rgba(var(--vs-primary), 1) !important;
+    margin-left: 6px;
+  }
+  .footer-dialog .new a:hover {
+    text-decoration: underline;
+  }
+  .footer-dialog .vs-button {
+    margin: 0px;
+  }
+  .vs-input--has-icon{
+        padding-left: 45px;
+  }
+
+  .text-danger{
+    display: block;
+    margin-bottom: 1rem!important;
+  }
+  .color-drem{
+    color: #6c7885;
   }
 </style>
