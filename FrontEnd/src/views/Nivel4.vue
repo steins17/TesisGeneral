@@ -24,8 +24,8 @@
                 <div class="center content-inputs">
                   <vs-input state="success" success v-model="value" placeholder="Escribir" style="float: right;margin-right: 87px;margin-bottom: 35px"></vs-input>
                 </div>
-                <div class="container" style="position:absolute;bottom: 0px;display: block;">
-                  <vs-button  style="float: right;margin-right: 80px;margin-bottom: 6px;--vs-color: 25, 91, 255;border-radius: 70px;width: 40px;height: 40px;">
+                <div class="container" style="position:absolute;display: block;">
+                  <vs-button  style="float: right;margin-right: 80px;margin-bottom: 20px;--vs-color: 25, 91, 255;border-radius: 70px;width: 40px;height: 40px;">
                     <vs-tooltip circle>
                       <i class="fas fa-microphone-alt fa-2x"></i>
                       <template #tooltip>
@@ -56,7 +56,7 @@
                   <vs-input state="success" success v-model="value" placeholder="Escribir" style="float: right;margin-right: 87px;margin-bottom: 35px"></vs-input>
                 </div>
                 <div class="container" style="position:absolute;bottom: 0px;display: block;">
-                  <vs-button  style="float: right;margin-right: 80px;margin-bottom: 6px;--vs-color: 25, 91, 255;border-radius: 70px;width: 40px;height: 40px;">
+                  <vs-button  style="float: right;margin-right: 80px;margin-bottom: 20px;--vs-color: 25, 91, 255;border-radius: 70px;width: 40px;height: 40px;">
                     <vs-tooltip circle>
                       <i class="fas fa-microphone-alt fa-2x"></i>
                       <template #tooltip>
@@ -115,13 +115,13 @@ export default {
             oracion:"En la casa de la señora sofía, a la sombra de un peral me comí un pastel. Por la ventana apareció su sobrino, el de la cara redonda y le mandó un saludo para mi tia."
           },
           {
-            oracion:"Lola es la hermana de Sara. Lola es una niña pequeña que le gusta jugar en la nieve, cada vez que nieva Lola se pone sus botas, su abrigo y sus orejeras y sale a jugar"
+            oracion:"Lola es la hermana de Sara. Lola es una niña pequeña que le gusta jugar en la nieve, cada vez que nieva Lola se pone sus botas, su abrigo, sus orejeras y sale a jugar."
           },
           {
-            oracion:"La gallina roja vive en una granaja, ella trabaja mucho, siembra y cosecha el trigo. Ella hace un pan muy rico. Cuando acaba su trabajo ella se come todo el pan."
+            oracion:"La gallina roja vive en una granja, ella trabaja mucho, siembra y cosecha el trigo. Ella hace un pan muy rico. Cuando acaba su trabajo ella se come todo el pan."
           },
           {
-            oracion:"Carlos es un mono muy divertido, le gusta comer bananas todo el dia. A carlos le gusta ser perezoso y hacer reir a sus amigos."
+            oracion:"Carlos es un mono muy divertido, le gusta comer bananas todo el día. A carlos le gusta ser perezoso y hacer reir a sus amigos."
           },
           {
             oracion:"Miguel le gusta la playa, a Miguel lee muchas horas. Cuando viaja miguel a la playa siempre lo acompañan sus libros."
