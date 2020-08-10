@@ -16,7 +16,7 @@ class RegisterController extends Controller
             'password' => ['required', 'min:8', 'confirmed']
         ]);
 
-        User::create([
+        $res = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password)

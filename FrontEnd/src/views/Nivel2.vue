@@ -30,11 +30,11 @@
                         </vs-button>
                       </center>
                     </vs-col>
-                    <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 container" v-for="(tr,index) in tr.respuestas" :key="index">
+                    <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 container" v-for="(tr,index_hijo) in tr.respuestas" :key="index_hijo">
                         <div class="card-head text-center">
                           Mayúscula - Minúscula
                         </div>
-                      <div class="card" style="border-radius: 50px">
+                      <div class="card estilodecard" :class="{'seleccionado':tr.status}" @click="seleccionar_letras(index, tr, index_hijo)">
                         <img :src="'archivos/imagenes/ejercicios/'+tr.valor+'.png'" class="w-100" style="border-radius: 50px"/>
                       </div><br>
                     </vs-col>
@@ -42,6 +42,7 @@
                 </div>
             </vs-col>
           </vs-row>
+          {{variable_seleccionado}}
         </div>
         <!-- silabas -->
         <div class="tab-pane fade show mt-5" id="level" role="tabpanel" aria-labelledby="level-tab">
@@ -118,29 +119,29 @@ export default {
           {
             audio:"b",
             respuestas:[
-              {id:1, valor:"b",},
-              {id:2, valor:"d",}
+              {id:1, valor:"b"},
+              {id:2, valor:"d"}
             ]
           },
           {
             audio:"q",
             respuestas:[
-              {id:1, valor:"p",},
-              {id:2, valor:"q",}
+              {id:3, valor:"p",},
+              {id:4, valor:"q",}
             ]
           },
           {
             audio:"n",
             respuestas:[
-              {id:1, valor:"m",},
-              {id:2, valor:"n",}
+              {id:5, valor:"m",},
+              {id:6, valor:"n",}
             ]
           },
           {
             audio:"z",
             respuestas:[
-              {id:1, valor:"s",},
-              {id:2, valor:"z",}
+              {id:7, valor:"s",},
+              {id:8, valor:"z",}
             ]
           },
         ],
@@ -197,11 +198,27 @@ export default {
         ]
       },
       value:"",
+      seleccionado:null,  
+      variable_seleccionado:[],
     };
   },
   methods: {
     sonido(palabra){    
       responsiveVoice.speak(palabra, "Spanish Latin American Female");
+    },
+    seleccionar_letras(index, tr, index_hijo){
+      if(this.variable_seleccionado.length==0){
+        this.letras.preguntas.forEach(el => {
+          this.variable_seleccionado.push({});
+        });
+      } 
+
+      this.letras.preguntas[index].respuestas.forEach(hijo => {
+        hijo.status = false;
+      });
+
+      this.letras.preguntas[index].respuestas[index_hijo].status = true;
+      this.variable_seleccionado.splice(index,1,tr);
     }
   },
   mounted() {
@@ -209,3 +226,30 @@ export default {
   },
 };
 </script>
+<style>
+  .estilodecard{
+    border-radius: 50px;
+    cursor:pointer;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    transition: all .3s ease;
+  }
+  .estilodecard:hover{
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    transition: all .3s ease;
+    -moz-transform: scale(1.01);
+    -webkit-transform: scale(1.01);
+    -o-transform: scale(1.01);
+    -ms-transform: scale(1.01);
+    transform: scale(1.01);
+  }
+  .seleccionado{
+    border: 2px solid #195bff;
+  }
+  
+</style>
