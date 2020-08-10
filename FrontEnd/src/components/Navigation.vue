@@ -5,7 +5,7 @@
         <div class="vs-navbar--header">
           <div class="themelogo" :class="{'noneleg': hover}">
             <img src="archivos/imagenes/perfiles/itq.png" alt="Dashboard" width="70" height="40" style="margin-right: 10px;">
-            <span class="logo-text" :class="{'none': hover}">Tesis ITQ</span> 
+            <span class="logo-text" :class="{'none': hover}">Tesis General</span> 
           </div>
         </div>
         <vs-button @click="settings()" icon class="botonmenu dseleccion" :class="{'seleccion': !hover}">
@@ -20,7 +20,7 @@
             </a>
           </button>   
           <div slot="dropdown"> 
-              <a class="dropdown-item vs-sidebar__item__text color-drem" href="#"> <i class="fas fa-user"></i> Mi perfil</a>
+              <a class="dropdown-item vs-sidebar__item__text color-drem" href="Restablecer"><i class="fas fa-user"></i> Mi perfil</a>
               <a class="dropdown-item vs-sidebar__item__text color-drem" href="#"> <i class="fas fa-poll-h"></i> Mis respuestas</a>
               <a class="dropdown-item vs-sidebar__item__text color-drem" href="#"> <i class="fas fa-cogs"></i> Configuración</a>
               <hr>

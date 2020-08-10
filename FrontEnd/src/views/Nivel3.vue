@@ -148,7 +148,7 @@ export default {
             audio:"con",
           },
           {
-            audio:"tu",
+            audio:"ir",
           },
           {
             audio:"que",
@@ -163,7 +163,7 @@ export default {
             audio:"in",
           },
           {
-            audio:"im",
+            audio:"immmm",
           },
           {
             audio:"si",

@@ -42,7 +42,6 @@
                 </div>
             </vs-col>
           </vs-row>
-          {{variable_seleccionado}}
         </div>
         <!-- silabas -->
         <div class="tab-pane fade show mt-5" id="level" role="tabpanel" aria-labelledby="level-tab">
@@ -62,11 +61,11 @@
                         </vs-button>
                       </center>
                     </vs-col>
-                    <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 container" v-for="(tr,index) in tr.respuestas" :key="index">
+                    <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 container" v-for="(tr,index_h) in tr.respuestas" :key="index_h">
                         <div class="card-head text-center">
                           Mayúscula - Minúscula
                         </div>
-                      <div class="card" style="border-radius: 50px">
+                      <div class="card estilodecard" :class="{'seleccionado':tr.status}" @click="seleccionar_silabas(index, tr, index_h)">
                         <img :src="'archivos/imagenes/silabas/'+tr.valor+'.png'" class="w-100" style="border-radius: 50px"/>
                       </div><br>
                     </vs-col>
@@ -74,6 +73,7 @@
                 </div>
             </vs-col>
           </vs-row>
+          {{variable_seleccionado}}
         </div>
         <!-- oraciones -->
         <div class="tab-pane fade show  mt-5" id="p" role="tabpanel" aria-labelledby="p-tab">
@@ -219,6 +219,18 @@ export default {
 
       this.letras.preguntas[index].respuestas[index_hijo].status = true;
       this.variable_seleccionado.splice(index,1,tr);
+    },
+    seleccionar_silabas(index, tr, index_h){
+      if(this.variable_seleccionado.length==0){
+        this.silabas.preguntas.forEach(el => {
+          this.variable_seleccionado.push({})
+        })
+      }
+      this.silabas.preguntas[index].respuestas.forEach(hijo => {
+        hijo.status= false
+      })
+      this.silabas.preguntas[index].respuestas[index_h].status = true;
+      this.variable_seleccionado.splice(index, 1, tr)
     }
   },
   mounted() {

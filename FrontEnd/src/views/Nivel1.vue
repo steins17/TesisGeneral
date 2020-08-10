@@ -13,7 +13,7 @@
     </ul> 
     <div class="tab-content" id="myTabContent">
       <!-- letras -->
-      <div class="tab-pane fade show active mt-5" id="home" role="tabpanel" aria-labelledby="home-tab">
+      <div class="tab-pane fade active show  mt-5" id="home" role="tabpanel" aria-labelledby="home-tab">
         <vs-row>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 col-md-6 p-0" v-for="(tr,index) in valores" :key="index">
             <div class="col-lg-12 mb-4">
@@ -63,7 +63,7 @@
         </vs-row>
       </div>
       <!-- silabas -->
-      <div class="tab-pane fade mt-5" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+      <div class="tab-pane fade  mt-5" id="contact" role="tabpanel" aria-labelledby="contact-tab">
         <vs-row>
           <vs-col vs-type="flex" vs-justify="" vs-align="" w="6" v-for="(tr,index) in silabas.preguntas" :key="index">
             <div class="col-lg-12 mb-4">
@@ -101,43 +101,43 @@ export default {
             respuestas:['la','le','li','lo','lu',]
           },
           {
-            respuestas:['al','el','il','ol','ul',]
+            respuestas:['al','el','ill','ooll','ull',]
           },
           {
             respuestas:['da','de','di','do','du',]
           },
           {
-            respuestas:['ad','ed','id','od','ud',]
+            respuestas:['add','ed','id','ooodd','uudd',]
           },
           {
-            respuestas:['ma','me','mi','mo','mu',]
+            respuestas:['ma','me','mi','mmoo','mu',]
           },
           {
-            respuestas:['am','em','im','om','um',]
+            respuestas:['aamm','em','im','om','uumm',]
           },
           {
-            respuestas:['na','ne','ni','no','nu',]
+            respuestas:['naa','ne','ni','no','nu',]
           },
           {
-            respuestas:['an','en','in','on','un',]
+            respuestas:['an','eennn','in','on','un',]
           },
           {
             respuestas:['pa','pe','pi','po','pu',]
           },
           {
-            respuestas:['ap','ep','ip','op','up',]
+            respuestas:['app','epp','iip','op','uupp',]
           },
           {
-            respuestas:['ra','re','ri','ro','ru',]
+            respuestas:['ra','re','rrii','rroo','rruu',]
           },
           {
-            respuestas:['ar','er','ir','or','ur',]
+            respuestas:['ar','eer','ir','or','ur',]
           },
           {
-            respuestas:['sa','se','si','so','su',]
+            respuestas:['saaa','se','si','so','su',]
           },
           {
-            respuestas:['as','es','is','os','us',]
+            respuestas:['as','es','is','os','uus',]
           },
         ]
       }
