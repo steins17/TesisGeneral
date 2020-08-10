@@ -17,23 +17,23 @@
         </div>
         <div class="form-group" style="margin: 10px">
           <label for="telefono">Teléfono:</label>
-          <input type="text"  class="form-control" id="name" style="border-radius: 50px">
+          <input type="text"  class="form-control" id="telefono" style="border-radius: 50px">
         </div>
         <div class="form-group" style="margin: 10px">
           <label for="celular">Celular:</label>
-          <input type="text"  class="form-control" id="name" style="border-radius: 50px">
+          <input type="text"  class="form-control" id="celular" style="border-radius: 50px">
         </div>
         <div class="form-group" style="margin: 10px">
           <label for="dirrecion">Dirección:</label>
-          <input type="text"  class="form-control" id="name" style="border-radius: 50px">
+          <input type="text"  class="form-control" id="direccion" style="border-radius: 50px">
         </div>
         <div class="form-group" style="margin: 10px">
-          <label for="name">Correo Electrónico:</label>
+          <label for="email">Correo Electrónico:</label>
           <input type="email"  class="form-control" id="email" style="border-radius: 50px">
         </div>
         <div class="form-group" style="margin: 10px">
           <label for="foto">Foto</label>
-          <input type="email"  class="form-control" id="email" style="border-radius: 50px">
+          <input type="text"  class="form-control" id="foto" style="border-radius: 50px">
         </div>
         <div class="form-group" style="margin: 10px">
           <vs-button @click.prevent="" class="btn btn-primary btn-block" style="float: right;margin-right: 2px">Guardar</vs-button>
