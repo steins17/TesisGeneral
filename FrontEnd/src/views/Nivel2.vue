@@ -42,6 +42,7 @@
                 </div>
             </vs-col>
           </vs-row>
+          <vs-button class="primary" @click="enviarletras()">Enviar</vs-button>
         </div>
         <!-- silabas -->
         <div class="tab-pane fade show mt-5" id="level" role="tabpanel" aria-labelledby="level-tab">
@@ -88,7 +89,7 @@
                         </vs-col>
                         <vs-col vs-justify="flex" class="container" w="4">
                           <div class="center content-inputs" >
-                            <vs-input state="success" placeholder="Escribir" style="float: right;margin-right: 125px;margin-bottom: 35px"></vs-input>
+                            <vs-input state="success" placeholder="Escribir" style="float: right;margin-right: 125px;margin-bottom: 35px" v-model="tr.res"></vs-input>
                           </div>
                           <div class="container" style="position:absolute;bottom: 12px;display: block;">
                             <vs-button  style="float: right;margin-right: 115px;margin-bottom: 6px;--vs-color: 25, 91, 255;border-radius: 70px;width: 40px;height: 40px;" @click="active=1">
@@ -111,6 +112,8 @@
 </template>
 
 <script>
+import Api from "../apis/Nivel2";
+
 export default {
   data() {
     return {
@@ -181,7 +184,9 @@ export default {
       oraciones:{
         preguntas:[
           {
-            oracion:"Miperroladramucho"
+            id:1,
+            oracion:"Miperroladramucho",
+            res:"",
           },
           {
             oracion:"Borjatienepecas"
@@ -231,6 +236,13 @@ export default {
       })
       this.silabas.preguntas[index].respuestas[index_h].status = true;
       this.variable_seleccionado.splice(index, 1, tr)
+    },
+    enviarletras(){
+      Api.enviarletras(this.variable_seleccionado).then( ({data}) => {
+
+      }).catch( error => {
+        console.log(error);
+      });
     }
   },
   mounted() {
