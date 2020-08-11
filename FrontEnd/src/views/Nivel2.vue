@@ -78,7 +78,7 @@
         <!-- oraciones -->
         <div class="tab-pane fade show  mt-5" id="p" role="tabpanel" aria-labelledby="p-tab">
           <vs-row>
-            <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="12">
+            <vs-col vs-type="flex" vs-justify="center" vs-align="center">
               <div class="card m-3 p-3" style="border-radius: 50px" v-for="(tr,index) in oraciones.preguntas" :key="index">
                   <vs-row>
                         <vs-col vs-type="flex" vs-justify="center" vs-align="center" style="margin: 15px">
@@ -86,25 +86,25 @@
                               <h2><span>{{tr.oracion}}</span></h2>
                             </div>
                         </vs-col>
-                        <vs-col vs-justify="flex" class="container" w="4">
-                          <div class="center content-inputs" >
-                            <vs-input state="success" placeholder="Escribir" style="float: right;margin-right: 125px;margin-bottom: 35px"></vs-input>
-                          </div>
-                          <div class="container" style="position:absolute;bottom: 12px;display: block;">
-                            <vs-button  style="float: right;margin-right: 115px;margin-bottom: 6px;--vs-color: 25, 91, 255;border-radius: 70px;width: 40px;height: 40px;" @click="active=1">
-                              <vs-tooltip circle>
-                                <i class="fas fa-check fa-2x"></i>
-                                <template #tooltip>
-                                  Verificar
-                                </template>
-                              </vs-tooltip>
-                            </vs-button>
+                        <vs-col vs-justify="flex" class="container">
+                          <div class="content-inputs container center">
+                            <vs-input state="success" placeholder="Escribir" style="margin-bottom: 35px"></vs-input>
                           </div>
                         </vs-col>
                   </vs-row>
               </div>
             </vs-col>
           </vs-row>
+          <div class="container" style=";bottom: 12px;display: block;">
+            <vs-button  style="float: right;margin-bottom: 20px;--vs-color: 25, 91, 255;width: 100px;height: 100px;" @click="active=1">
+              <vs-tooltip circle>
+                <i class="fas fa-check fa-2x"></i>
+                <template #tooltip>
+                  Verificar
+                </template>
+              </vs-tooltip>
+            </vs-button>
+          </div>
         </div>
     </div>
   </div>
@@ -151,29 +151,71 @@ export default {
           {
             audio:"da",
             respuestas:[
-              {id:1, valor:"ad",},
+              {id:1, valor:"add",},
               {id:2, valor:"da",}
             ]
           },
           {
             audio:"li",
             respuestas:[
-              {id:1, valor:"li",},
-              {id:2, valor:"il",}
+              {id:3, valor:"li",},
+              {id:4, valor:"ill",}
             ]
           },
           {
             audio:"om",
             respuestas:[
-              {id:1, valor:"mo",},
-              {id:2, valor:"om",}
+              {id:5, valor:"mmoo",},
+              {id:6, valor:"om",}
             ]
           },
           {
             audio:"ne",
             respuestas:[
-              {id:1, valor:"ne",},
-              {id:2, valor:"en",}
+              {id:7, valor:"ne",},
+              {id:8, valor:"eennn",}
+            ]
+          },
+          {
+            audio:"saaa",
+            respuestas:[
+              {id:9, valor:"saaa",},
+              {id:10, valor:"as",}
+            ]
+          },
+          {
+            audio:"eerr",
+            respuestas:[
+              {id:11, valor:"re",},
+              {id:12, valor:"eer",}
+            ]
+          },
+          {
+            audio:"rrii",
+            respuestas:[
+              {id:13, valor:"rrii",},
+              {id:14, valor:"ir",}
+            ]
+          },
+          {
+            audio:"iip",
+            respuestas:[
+              {id:15, valor:"pi",},
+              {id:16, valor:"iip",}
+            ]
+          },
+          {
+            audio:"di",
+            respuestas:[
+              {id:17, valor:"di",},
+              {id:18, valor:"id",}
+            ]
+          },
+          {
+            audio:"pu",
+            respuestas:[
+              {id:19, valor:"uupp",},
+              {id:20, valor:"pu",}
             ]
           },
         ],
@@ -194,6 +236,21 @@ export default {
           },
           {
             oracion:"Misombreroesdecopa"
+          },
+          {
+            oracion:"Sofíavadecompras"
+          },
+          {
+            oracion:"Albertotieneuncerezo"
+          },
+          {
+            oracion:"Elratonpereztienemidiente"
+          },
+          {
+            oracion:"Juancaminaporlecerro"
+          },
+          {
+            oracion:"Laplayaeshermosa"
           },
         ]
       },
