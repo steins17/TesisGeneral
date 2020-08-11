@@ -52,7 +52,6 @@
               </vs-tooltip>
             </vs-button>
           </div>
-          {{variable_seleccionado}}
         </div>
         <!-- silabas -->
         <div class="tab-pane fade show mt-5" id="level" role="tabpanel" aria-labelledby="level-tab">
@@ -106,7 +105,9 @@
                       <div class="card-head text-center" style="position: center;margin-bottom: 20px">
                         <h2><span>{{tr.oracion}}</span></h2>
                       </div>
-                      <vs-input state="success" placeholder="Escribir" style="margin-bottom: 15px"></vs-input>
+                      <div class="center content-inputs">
+                      <vs-input   color="#7d33ff" label-placeholder="Escribir" style="margin-bottom: 15px"/>
+                      </div>
                     </vs-col>
                   </vs-row>
                 </div>
