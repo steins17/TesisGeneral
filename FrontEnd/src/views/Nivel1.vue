@@ -41,7 +41,7 @@
       <div class="tab-pane fade mt-5" id="profile" role="tabpanel" aria-labelledby="profile-tab">
         <vs-row>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" v-for="(tr,index) in comparacion" :key="index">
-            <div class="col-lg-12 mb-4">
+            <div class="col-lg-12 mb-4"> 
               <div class="card" style="border-radius: 50px">
                 <img :src="'archivos/imagenes/ejercicios/'+tr+'.png'" class="w-100" style="border-radius: 50px"/>
                 <div class="card-head text-center">
@@ -65,10 +65,9 @@
       <!-- silabas -->
       <div class="tab-pane fade  mt-5" id="contact" role="tabpanel" aria-labelledby="contact-tab">
         <vs-row>
-          <vs-col vs-type="flex" vs-justify="" vs-align="" w="6" v-for="(tr,index) in silabas.preguntas" :key="index">
-            <div class="col-lg-12 mb-4">
-              <div class="card m-3" style="border-radius: 50px" v-for="(tr,index) in tr.respuestas" :key="index">
-                <img :src="'archivos/imagenes/silabas/'+tr+'.png'" class="w-100" style="border-radius: 50px"/>
+          <vs-col vs-type="flex" w="6" v-for="(tr,index) in silabas.preguntas" :key="index">
+              <div class="card m-3" style="width: 609px;height: 540px;">
+                <img :src="'archivos/imagenes/silabas/'+tr+'.png'" class="w-100"/>
                 <vs-row vs-justify="flex-end" style="position:absolute;bottom: 0px;display: block;">
                   <vs-button color="primary" type="gradient" style="float: right;margin-right: -12px;margin-bottom: -10px;--vs-color: 25, 91, 255;border-radius: 89px;width: 40px;height: 40px;" @click.prevent="sonido(tr)">
                     <vs-tooltip circle>
@@ -79,8 +78,7 @@
                     </vs-tooltip>
                   </vs-button>
                 </vs-row>
-              </div>
-            </div>
+              </div>  
           </vs-col>
         </vs-row>
       </div>
@@ -96,50 +94,7 @@ export default {
       valores: ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','ñ','o','p','q','r','s','t','u','v','w','x','y','z'],
       comparacion: ['b','d','p','q','m','n','s','z'],
       silabas:{
-        preguntas:[
-          { 
-            respuestas:['la','le','li','lo','lu',]
-          },
-          {
-            respuestas:['al','el','ill','ooll','ull',]
-          },
-          {
-            respuestas:['da','de','di','do','du',]
-          },
-          {
-            respuestas:['add','ed','id','ooodd','uudd',]
-          },
-          {
-            respuestas:['ma','me','mi','mmoo','mu',]
-          },
-          {
-            respuestas:['aamm','em','im','om','uumm',]
-          },
-          {
-            respuestas:['naa','ne','ni','no','nu',]
-          },
-          {
-            respuestas:['an','eennn','in','on','un',]
-          },
-          {
-            respuestas:['pa','pe','pi','po','pu',]
-          },
-          {
-            respuestas:['app','epp','iip','op','uupp',]
-          },
-          {
-            respuestas:['ra','re','rrii','rroo','rruu',]
-          },
-          {
-            respuestas:['ar','eer','ir','or','ur',]
-          },
-          {
-            respuestas:['saaa','se','si','so','su',]
-          },
-          {
-            respuestas:['as','es','is','os','uus',]
-          },
-        ]
+        preguntas:['la','le','li','lo','lu','al','el','ill','ooll','ull','da','de','di','do','du','add','ed','id','ooodd','uudd','ma','me','mi','mmoo','mu','aamm','em','im','om','uumm','naa','ne','ni','no','nu','an','eennn','in','on','un','pa','pe','pi','po','pu','app','epp','iip','op','uupp','ra','re','rrii','rroo','rruu','ar','eer','ir','or','ur','saaa','se','si','so','su','as','es','is','os','uus',]
       }
     }
   },
