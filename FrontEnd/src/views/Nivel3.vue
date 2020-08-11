@@ -15,11 +15,11 @@
     <!-- letras -->
     <div  class="tab-pane fade show active mt-5" id="a" role="tabpanel" aria-labelledby="level3-tab">
       <vs-row>
-        <vs-col vs-type="flex" vs-justify="center" vs-align="center">
-          <div class="card m-3" style="border-radius: 50px" v-for="(tr,index) in letras.preguntas" :key="index">
-            <vs-row>
-              <vs-col vs-justify="flex center" w="4" style="margin: 15px;">
-                <vs-button color="dark" type="gradient" class="col-lg-4 p-3" style="float: left;margin-left: 780px;border-radius:;width: 90px;height: 90px;" @click.prevent="sonido(tr.audio)">
+        <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 col-md-6 p-0"  v-for="(tr,index) in letras.preguntas" :key="index">
+          <div class="col-lg-12 mb-4">
+            <div class="card m-3" style="border-radius: 50px">
+              <vs-row vs-justify="flex-end" style=";bottom: 0px;display: block;">
+                <vs-button color="dark" type="gradient" style="margin: 15px;border-radius:;width: 90px;height: 90px;" @click.prevent="sonido(tr.audio)">
                   <vs-tooltip circle>
                     <i class="fas fa-volume-up fa-2x"></i>
                     <template #tooltip>
@@ -27,16 +27,79 @@
                     </template>
                   </vs-tooltip>
                 </vs-button>
-              </vs-col>
-              <vs-col vs-justify=" flex center" style="float: left;margin-left: 390px;margin-bottom: 20px">
-                  <vs-input state="success"  placeholder="Escribir" style="float: left;margin-left: 210px"></vs-input>
-              </vs-col>
-            </vs-row>
+                <vs-input state="success"  placeholder="Escribir" style="margin-bottom: 20px"></vs-input>
+              </vs-row>
+            </div>
           </div>
         </vs-col>
       </vs-row>
       <div class="content-inputs ">
-        <vs-button color="primary" style="float: left;margin-left: 190px;margin-bottom: 20px;--vs-color: 25, 91, 10;border-radius: 50px;width: 40px;height: 40px;" type="gradient" @click.prevent="sonido(tr.audio)">
+        <vs-button color="primary"  style="float: right;margin-bottom: 20px;--vs-color: 25, 91, 255;width: 100px;height: 100px;" type="gradient" @click="enviarletras()">
+          <vs-tooltip circl>
+            <i class="fas fa-check fa-2x"></i>
+            <template #tooltip>
+              Verificar
+            </template>
+          </vs-tooltip>
+        </vs-button>
+      </div>
+      {{variable_seleccionado}}
+    </div>
+    <!-- silabas -->
+    <div  class="tab-pane fade show  mt-5" id="b" role="tabpanel" aria-labelledby="leve3-tab">
+      <vs-row>
+        <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 col-md-6 p-0" v-for="(tr,index) in silabas.preguntas" :key="index">
+          <div class="col-lg-12 mb-4">
+            <div class="card m-3 " style="border-radius: 50px" >
+              <vs-row vs-justify="flex-end" style="bottom: 0px;display: block;">
+                <vs-button color="dark" type="gradient" style="margin: 15px;border-radius:;width: 90px;height: 90px;" @click.prevent="sonido(tr.audio)">
+                  <vs-tooltip circle>
+                    <i class="fas fa-volume-up fa-2x"></i>
+                    <template #tooltip>
+                        Escuchar
+                    </template>
+                  </vs-tooltip>
+                </vs-button>
+                  <vs-input state="success"   placeholder="Escribir" style="margin-bottom: 20px"></vs-input>
+              </vs-row>
+            </div>
+          </div>
+        </vs-col>
+      </vs-row>
+      <div class="content-inputs">
+        <vs-button color="primary"  style="float: right;margin-bottom: 20px;--vs-color: 25, 91, 255;width: 100px;height: 100px;" type="gradient" @click="enviarsilabas()">
+          <vs-tooltip circl>
+            <i class="fas fa-check fa-2x"></i>
+            <template #tooltip>
+              Verificar
+            </template>
+          </vs-tooltip>
+        </vs-button>
+        </div>
+    </div>
+    <!-- palabra -->
+    <div  class="tab-pane fade show  mt-5" id="c" role="tabpanel" aria-labelledby="lev3-tab">
+      <vs-row>
+        <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 col-md-6 p-0" v-for="(tr,index) in palabras.preguntas" :key="index">
+          <div class="col-lg-12">
+            <div class="card m-3" style="border-radius: 50px">
+              <vs-row vs-justify="flex-end" style="bottom: 0px;display: block;">
+                <vs-button color="dark" type="gradient" style="margin: 15px;border-radius:;width: 90px;height: 90px;" @click.prevent="sonido(tr.audio)">
+                  <vs-tooltip circle>
+                    <i class="fas fa-volume-up fa-2x"></i>
+                    <template #tooltip>
+                        Escuchar
+                    </template>
+                  </vs-tooltip>
+                </vs-button>
+                  <vs-input state="success"   placeholder="Escribir" style="margin-bottom: 20px"></vs-input>
+              </vs-row>  
+            </div>
+          </div>
+        </vs-col>
+      </vs-row>
+      <div >
+        <vs-button color="primary"  style="float: right;margin-bottom: 20px;--vs-color: 25, 91, 255;width: 100px;height: 100px;" type="gradient" @click="enviarpalabras()">
           <vs-tooltip circl>
             <i class="fas fa-check fa-2x"></i>
             <template #tooltip>
@@ -46,80 +109,13 @@
         </vs-button>
       </div>
     </div>
-    <!-- silabas -->
-    <div  class="tab-pane fade show  mt-5" id="b" role="tabpanel" aria-labelledby="leve3-tab">
-      <vs-row>
-        <vs-col vs-type="flex" vs-justify="center" vs-align="center">
-          <div class="card m-3" style="border-radius: 50px" v-for="(tr,index) in silabas.preguntas" :key="index">
-            <vs-row>
-              <vs-col vs-justify="flex" style="margin: 15px; ">
-                <vs-button color="dark" type="gradient" class="col-lg-4 p-3" style="float: right;margin-right: 523px;border-radius:;width: 90px;height: 90px;" @click.prevent="sonido(tr.audio)">
-                  <vs-tooltip circle>
-                    <i class="fas fa-volume-up fa-2x"></i>
-                    <template #tooltip>
-                        Escuchar
-                    </template>
-                  </vs-tooltip>
-                </vs-button>
-              </vs-col>
-              <vs-col vs-justify="flex" class="container" w="4">
-                <div class="content-inputs">
-                  <vs-input state="success"   placeholder="Escribir" style=";margin-left: 100px"></vs-input>
-                  <vs-button color="primary" style="float: right;margin-right: 50px;margin-bottom: 20px;--vs-color: 25, 91, 10;border-radius: 50px;width: 40px;height: 40px;" type="gradient" @click.prevent="sonido(tr.audio)">
-                    <vs-tooltip circl>
-                      <i class="fas fa-check fa-2x"></i>
-                      <template #tooltip>
-                        Escuchar
-                      </template>
-                    </vs-tooltip>
-                  </vs-button>
-                </div>
-              </vs-col>
-            </vs-row>
-          </div>
-        </vs-col>
-      </vs-row>
-    </div>
-    <!-- palabra -->
-    <div  class="tab-pane fade show  mt-5" id="c" role="tabpanel" aria-labelledby="lev3-tab">
-      <vs-row>
-        <vs-col vs-type="flex" vs-justify="center" vs-align="center" v-for="(tr,index) in palabras.preguntas" :key="index">
-          <div class="card m-3" style="border-radius: 50px">
-            <vs-row>
-              <vs-col vs-justify="flex" style="margin: 15px;">
-                <vs-button color="dark" type="gradient" class="col-lg-4 p-3" style="float: right;margin-right: 520px;border-radius:;width: 90px;height: 90px;" @click.prevent="sonido(tr.audio)">
-                  <vs-tooltip circle>
-                    <i class="fas fa-volume-up fa-2x"></i>
-                    <template #tooltip>
-                        Escuchar
-                    </template>
-                  </vs-tooltip>
-                </vs-button>
-              </vs-col>
-              <vs-col vs-justify="flex" class="container" w="4">
-                <div class="content-inputs">
-                  <vs-input state="success"   placeholder="Escribir" style=";margin-left: 100px"></vs-input>
-                  <vs-button color="primary" style="float: right;margin-right: 50px;margin-bottom: 20px;--vs-color: 25, 91, 10;border-radius: 50px;width: 40px;height: 40px;" type="gradient" @click.prevent="sonido(tr.audio)">
-                    <vs-tooltip circl>
-                      <i class="fas fa-check fa-2x"></i>
-                      <template #tooltip>
-                        Escuchar
-                      </template>
-                    </vs-tooltip>
-                  </vs-button>
-                </div>
-              </vs-col>
-            </vs-row>
-          </div>
-        </vs-col>
-      </vs-row>
-    </div>
   </div>
 </div>
 </template>
 <script src="archivos/voz.js"></script>
 <script>
 const $ = require('jquery');
+import Api from "../apis/Nivel3";
 export default {
   data(){
     return{
@@ -286,7 +282,8 @@ export default {
           },
         ]
       },
-      value:""
+      value:"",
+      variable_seleccionado:[],
     }
   },
   methods:{
@@ -294,7 +291,28 @@ export default {
       responsiveVoice.speak(palabra, "Spanish Latin American Female");
       //var voicelist = responsiveVoice.getVoices();
       //console.log(voicelist);
-    }
+    },
+    enviarletras(){
+      Api.enviarletras(this.variable_seleccionado).then( ({data}) => {
+
+      }).catch( error => {
+        console.log(error);
+      });
+    },
+    enviarsilabas(){
+      Api.enviarsilabas(this.variable_seleccionado).then( ({data}) => {
+
+      }).catch( error => {
+        console.log(error);
+      });
+    },
+    enviarpalabras(){
+      Api.enviarpalabras(this.variable_seleccionado).then( ({data}) => {
+
+      }).catch( error => {
+        console.log(error);
+      });
+    },
   }
 }
 </script>

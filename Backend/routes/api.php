@@ -24,9 +24,9 @@ Route::post('/login', 'LoginController@login');
 Route::post('/logout', 'LoginController@logout')->middleware('auth:sanctum');
 
 //rutas del nivel 2
-Route::post('/nivel2/letras/respuestas', 'Nivel2Controller@letras_respuesta');
-Route::post('/nivel2/silabas/respuestas', 'Nivel2Controller@silabas_respuesta');
-Route::post('/nivel2/oraciones/respuestas', 'Nivel2Controller@oraciones_respuesta');
+Route::post('/nivel2/letras/respuesta', 'Nivel2Controller@letras_respuesta');
+Route::post('/nivel2/silabas/respuesta', 'Nivel2Controller@silabas_respuesta');
+Route::post('/nivel2/oraciones/respuesta', 'Nivel2Controller@oraciones_respuesta');
 
 //rutas del nivel 3
 Route::post('/nivel3/letras/respuestas', 'Nivel3Controller@letras_respuesta');
