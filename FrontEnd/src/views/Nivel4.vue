@@ -41,7 +41,7 @@
       </vs-row>
     </div>
     <!-- frases -->
-    <div  class="tab-pane fade show active mt-5" id="b" role="tabpanel" aria-labelledby="leve3-tab">
+    <div  class="tab-pane fade show mt-5" id="b" role="tabpanel" aria-labelledby="leve3-tab">
       <vs-row>
         <vs-col vs-type="flex" vs-justify="center" vs-align="center" v-for="(tr,index) in frases.preguntas" :key="index">
           <div class="card m-3" style="border-radius: 50px">
@@ -84,47 +84,73 @@ export default {
       oraciones:{
         preguntas:[
           {
-            oracion:"Yo abrí la boca para que el odontólogo la revisara."
+            id:"1",
+            oracion:"Yo abrí la boca para que el odontólogo la revisara.",
+            respuesta:"Yo abrí la boca para que el odontólogo la revisara"
           },
           {
-            oracion:"Bárbara bendita, eres mujer entre las santas."
+            id:"2",
+            oracion:"Bárbara bendita, eres mujer entre las santas.",
+            respuesta:"Bárbara bendita, eres mujer entre las santas"
           },
           {
-            oracion:"La Barbacoa estaba deliciosa."
+            id:"3",
+            oracion:"La Barbacoa estaba deliciosa.",
+            respuesta:"La Barbacoa estaba deliciosa"
           },
           {
-            oracion:"La rosa es roja."
+            id:"4",
+            oracion:"La rosa es roja.",
+            respuesta:"La rosa es roja"
           },
           {
-            oracion:"El pan es de Natalia."
+            id:"5",
+            oracion:"El pan es de Natalia.",
+            respuesta:"El pan es de Natalia"
           },
           {
-            oracion:"Yo repaso un rato."
+            id:"6",
+            oracion:"Yo repaso un rato.",
+            respuesta:"Yo repaso un rato"
           },
           {
-            oracion:"Zapatero a su zapato"
+            id:"7",
+            oracion:"Zapatero a su zapato",
+            respuesta:"Zapatero a su zapato"
           },
           {
-            oracion:"Mi mamá me ama."
+            id:"8",
+            oracion:"Mi mamá me ama.",
+            respuesta:"Mi mamá me ama"
           },
         ]
       },
       frases:{
         preguntas:[
           {
-            oracion:"En la casa de la señora sofía, a la sombra de un peral me comí un pastel. Por la ventana apareció su sobrino, el de la cara redonda y le mandó un saludo para mi tia."
+            id:"1",
+            oracion:"En la casa de la señora sofía, a la sombra de un peral me comí un pastel. Por la ventana apareció su sobrino, el de la cara redonda y le mandó un saludo para mi tia.",
+            respuesta:"En la casa de la señora sofía, a la sombra de un peral me comí un pastel. Por la ventana apareció su sobrino, el de la cara redonda y le mandó un saludo para mi tia." 
           },
           {
-            oracion:"Lola es la hermana de Sara. Lola es una niña pequeña que le gusta jugar en la nieve, cada vez que nieva Lola se pone sus botas, su abrigo, sus orejeras y sale a jugar."
+            id:"2",
+            oracion:"Lola es la hermana de Sara. Lola es una niña pequeña que le gusta jugar en la nieve, cada vez que nieva Lola se pone sus botas, su abrigo, sus orejeras y sale a jugar.",
+            respuesta:"Lola es la hermana de Sara. Lola es una niña pequeña que le gusta jugar en la nieve, cada vez que nieva Lola se pone sus botas, su abrigo, sus orejeras y sale a jugar." 
           },
           {
-            oracion:"La gallina roja vive en una granja, ella trabaja mucho, siembra y cosecha el trigo. Ella hace un pan muy rico. Cuando acaba su trabajo ella se come todo el pan."
+            id:"3",
+            oracion:"La gallina roja vive en una granja, ella trabaja mucho, siembra y cosecha el trigo. Ella hace un pan muy rico. Cuando acaba su trabajo ella se come todo el pan.",
+            respuesta:"La gallina roja vive en una granja, ella trabaja mucho, siembra y cosecha el trigo. Ella hace un pan muy rico. Cuando acaba su trabajo ella se come todo el pan." 
           },
           {
-            oracion:"Carlos es un mono muy divertido, le gusta comer bananas todo el día. A carlos le gusta ser perezoso y hacer reir a sus amigos."
+            id:"4",
+            oracion:"Carlos es un mono muy divertido, le gusta comer bananas todo el día. A carlos le gusta ser perezoso y hacer reir a sus amigos.",
+            respuesta:"Carlos es un mono muy divertido, le gusta comer bananas todo el día. A carlos le gusta ser perezoso y hacer reir a sus amigos." 
           },
           {
-            oracion:"Miguel le gusta la playa, a Miguel lee muchas horas. Cuando viaja miguel a la playa siempre lo acompañan sus libros."
+            id:"5",
+            oracion:"Miguel le gusta la playa, a Miguel lee muchas horas. Cuando viaja miguel a la playa siempre lo acompañan sus libros.",
+            respuesta:"Miguel le gusta la playa, a Miguel lee muchas horas. Cuando viaja miguel a la playa siempre lo acompañan sus libros." 
           },
         ]
       },

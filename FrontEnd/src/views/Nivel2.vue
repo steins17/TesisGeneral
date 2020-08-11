@@ -42,7 +42,17 @@
                 </div>
             </vs-col>
           </vs-row>
-          <vs-button class="primary" @click="enviarletras()">Enviar</vs-button>
+          <div class="container" style=";bottom: 12px;display: block;">
+            <vs-button  style="float: right;margin-bottom: 20px;--vs-color: 25, 91, 255;width: 100px;height: 100px;" @click="enviarletras()">
+              <vs-tooltip circle>
+                <i class="fas fa-check fa-2x"></i>
+                <template #tooltip>
+                  Verificar
+                </template>
+              </vs-tooltip>
+            </vs-button>
+          </div>
+          
         </div>
         <!-- silabas -->
         <div class="tab-pane fade show mt-5" id="level" role="tabpanel" aria-labelledby="level-tab">
@@ -74,46 +84,43 @@
                 </div>
             </vs-col>
           </vs-row>
-          {{variable_seleccionado}}
+          <div class="container" style=";bottom: 12px;display: block;">
+            <vs-button  style="float: right;margin-bottom: 20px;--vs-color: 25, 91, 255;width: 100px;height: 100px;" @click="enviarsilabas()">
+              <vs-tooltip circle>
+                <i class="fas fa-check fa-2x"></i>
+                <template #tooltip>
+                  Verificar
+                </template>
+              </vs-tooltip>
+            </vs-button>
+          </div>
         </div>
         <!-- oraciones -->
         <div class="tab-pane fade show  mt-5" id="p" role="tabpanel" aria-labelledby="p-tab">
-          <vs-row>
+          <vs-row >
             <vs-col vs-type="flex" vs-justify="center" vs-align="center">
-              <div class="card m-3 p-3" style="border-radius: 50px" v-for="(tr,index) in oraciones.preguntas" :key="index">
+              <div class="col-lg-3 mb-2">
+
+              
+              <div class="card m-3" style="border-radius: 50px" v-for="(tr,index) in oraciones.preguntas" :key="index">
                   <vs-row>
-                        <vs-col vs-type="flex" vs-justify="center" vs-align="center" style="margin: 15px">
-                            <div class="card-head text-center" style="position: center;margin-bottom: 12px">
-                              <h2><span>{{tr.oracion}}</span></h2>
-                            </div>
-                        </vs-col>
-<<<<<<< HEAD
-                        <vs-col vs-justify="flex" class="container">
-                          <div class="content-inputs container center">
-                            <vs-input state="success" placeholder="Escribir" style="margin-bottom: 35px"></vs-input>
-=======
-                        <vs-col vs-justify="flex" class="container" w="4">
-                          <div class="center content-inputs" >
-                            <vs-input state="success" placeholder="Escribir" style="float: right;margin-right: 125px;margin-bottom: 35px" v-model="tr.res"></vs-input>
-                          </div>
-                          <div class="container" style="position:absolute;bottom: 12px;display: block;">
-                            <vs-button  style="float: right;margin-right: 115px;margin-bottom: 6px;--vs-color: 25, 91, 255;border-radius: 70px;width: 40px;height: 40px;" @click="active=1">
-                              <vs-tooltip circle>
-                                <i class="fas fa-check fa-2x"></i>
-                                <template #tooltip>
-                                  Verificar
-                                </template>
-                              </vs-tooltip>
-                            </vs-button>
->>>>>>> fc01faac5041b156d873ab80cf9a0d76b4fd5d05
-                          </div>
-                        </vs-col>
+                    <vs-col vs-type="flex" vs-justify="center" vs-align="center" style="margin: 15px" >
+                        <div class="card-head text-center" style="position: center;margin-bottom: 12px">
+                          <h2><span>{{tr.oracion}}</span></h2>
+                        </div>
+                    </vs-col>
+                    <vs-col vs-justify="flex" class="container">
+                      <div class="content-inputs container center">
+                        <vs-input state="success" placeholder="Escribir" style="margin-bottom: 35px"></vs-input>
+                      </div>
+                    </vs-col>
                   </vs-row>
+              </div>
               </div>
             </vs-col>
           </vs-row>
           <div class="container" style=";bottom: 12px;display: block;">
-            <vs-button  style="float: right;margin-bottom: 20px;--vs-color: 25, 91, 255;width: 100px;height: 100px;" @click="active=1">
+            <vs-button  style="float: right;margin-bottom: 20px;--vs-color: 25, 91, 255;width: 100px;height: 100px;" @click="enviaroraciones()">
               <vs-tooltip circle>
                 <i class="fas fa-check fa-2x"></i>
                 <template #tooltip>
@@ -242,9 +249,7 @@ export default {
       oraciones:{
         preguntas:[
           {
-            id:1,
-            oracion:"Miperroladramucho",
-            res:"",
+            oracion:"Miperroladramucho"
           },
           {
             oracion:"Borjatienepecas"
@@ -316,7 +321,21 @@ export default {
       }).catch( error => {
         console.log(error);
       });
-    }
+    },
+    enviarsilabas(){
+      Api.enviarsilabas(this.variable_seleccionado).then( ({data}) => {
+
+      }).catch( error => {
+        console.log(error);
+      });
+    },
+    enviaroraciones(){
+      Api.enviaroraciones(this.variable_seleccionado).then( ({data}) => {
+
+      }).catch( error => {
+        console.log(error);
+      });
+    },
   },
   mounted() {
     //this.llamarpreguntas();

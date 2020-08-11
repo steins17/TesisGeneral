@@ -29,22 +29,22 @@
                 </vs-button>
               </vs-col>
               <vs-col vs-justify=" flex center" style="float: left;margin-left: 390px;margin-bottom: 20px">
-                <div class="content-inputs ">
                   <vs-input state="success"  placeholder="Escribir" style="float: left;margin-left: 210px"></vs-input>
-                  <vs-button color="primary" style="float: left;margin-left: 190px;margin-bottom: 20px;--vs-color: 25, 91, 10;border-radius: 50px;width: 40px;height: 40px;" type="gradient" @click.prevent="sonido(tr.audio)">
-                    <vs-tooltip circl>
-                      <i class="fas fa-check fa-2x"></i>
-                      <template #tooltip>
-                        Escuchar
-                      </template>
-                    </vs-tooltip>
-                  </vs-button>
-                </div>
               </vs-col>
             </vs-row>
           </div>
         </vs-col>
       </vs-row>
+      <div class="content-inputs ">
+        <vs-button color="primary" style="float: left;margin-left: 190px;margin-bottom: 20px;--vs-color: 25, 91, 10;border-radius: 50px;width: 40px;height: 40px;" type="gradient" @click.prevent="sonido(tr.audio)">
+          <vs-tooltip circl>
+            <i class="fas fa-check fa-2x"></i>
+            <template #tooltip>
+              Verificar
+            </template>
+          </vs-tooltip>
+        </vs-button>
+      </div>
     </div>
     <!-- silabas -->
     <div  class="tab-pane fade show  mt-5" id="b" role="tabpanel" aria-labelledby="leve3-tab">
@@ -126,75 +126,163 @@ export default {
       letras:{
         preguntas:[
           {
+            id:"1",
             audio:"s",
+            respuesta:"s"
           },
           {
+            id:"2",
             audio:"r",
+            respuesta:"r"
           },
           {
+            id:"3",
             audio:"t",
+            respuesta:"t"
           },
           {
+            id:"4",
             audio:"l",
+            respuesta:"l"
           },
           {
+            id:"5",
             audio:"f",
+            respuesta:"f"
+          },
+          {
+            id:"6",
+            audio:"b",
+            respuesta:"b"
+          },
+          {
+            id:"7",
+            audio:"x",
+            respuesta:"x"
+          },
+          {
+            id:"8",
+            audio:"y",
+            respuesta:"y"
+          },
+          {
+            id:"9",
+            audio:"o",
+            respuesta:"o"
+          },
+          {
+            id:"10",
+            audio:"c",
+            respuesta:"c"
           },
         ]
       },
       silabas:{
         preguntas:[
           {
+            id:"1",
             audio:"con",
+            respuesta:"con"
           },
           {
+            id:"2",
             audio:"ir",
+            respuesta:"ir"
           },
           {
+            id:"3",
             audio:"que",
+            respuesta:"que"
           },
           {
+            id:"4",
             audio:"ya",
+            respuesta:"ya"
           },
           {
+            id:"5",
             audio:"un",
+            respuesta:"un"
           },
           {
+            id:"6",
             audio:"in",
+            respuesta:"in"
           },
           {
+            id:"7",
             audio:"immmm",
+            respuesta:"im"
           },
           {
+            id:"8",
             audio:"si",
+           respuesta:"si" 
+          },
+          {
+            id:"9",
+            audio:"por",
+            respuesta:"por"
+          },
+          {
+            id:"10",
+            audio:"ttoos",
+            respuesta:"tos"
           },
         ]
       },
       palabras:{
         preguntas:[
           {
+
+            id:"1",
             audio:"Cafetería",
+            respuesta:"Cafetería"
           },
           {
+            id:"2",
             audio:"Jinete",
+            respuesta:"Jinete"
           },
           {
+            id:"3",
             audio:"Naranja",
+            respuesta:"Naranja"
           },
           {
+            id:"4",
             audio:"Presentador",
+            respuesta:"Presentador"
           },
           {
+            id:"5",
             audio:"Ballena",
+            respuesta:"Ballena"
           },
           {
+            id:"6",
             audio:"Sandía",
+            respuesta:"Sandía"
           },
           {
+            id:"7",
             audio:"Árboles",
+            respuesta:"Árboles"
           },
           {
+            id:"8",
             audio:"Tablero",
+            respuesta:"Tablero"
+          },
+          {
+            id:"9",
+            audio:"Complejo",
+            respuesta:"Complejo"
+          },
+          {
+            id:"10",
+            audio:"Opinión",
+            respuesta:"opinion"
           },
         ]
       },
