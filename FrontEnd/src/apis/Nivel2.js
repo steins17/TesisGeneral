@@ -7,4 +7,7 @@ export default {
   enviarsilabas(form) {
     return Api().post("/nivel2/silabas/respuesta", form);
   },
+  enviaroraciones(form) {
+    return Api().post("/nivel2/oraciones/respuesta", form);
+  },
 };

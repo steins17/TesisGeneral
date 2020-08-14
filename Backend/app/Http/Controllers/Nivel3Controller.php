@@ -1,13 +1,14 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Nivel2;
+use App\Nivel3;
 
-class Nivel2Controller extends Controller
+class Nivel3Controller extends Controller
 {
     function letras_respuesta(Request $rq){
         $user = Auth::user()->id;
@@ -20,14 +21,14 @@ class Nivel2Controller extends Controller
             $subnivel = $res->id_subnivel;
             $preguntas_subnivel = $res->id_preguntas_subnivel;
 
-            $nv2 = new Nivel2();
-            $nv2->tipo = $tipo;
-            $nv2->id_users = $user;
-            $nv2->id_nivel = $nivel;
-            $nv2->id_subnivel = $subnivel;
-            $nv2->id_pre_nive = $preguntas_subnivel;
-            $nv2->usuario_crea = $user;
-            $nv2->save();
+            $nv3 = new Nivel3();
+            $nv3->tipo = $tipo;
+            $nv3->id_users = $user;
+            $nv3->id_nivel = $nivel;
+            $nv3->id_subnivel = $subnivel;
+            $nv3->id_pre_nive = $preguntas_subnivel;
+            $nv3->usuario_crea = $user;
+            $nv3->save();
         }
     }
     function silabas_respuesta(Request $rq){
@@ -41,17 +42,17 @@ class Nivel2Controller extends Controller
             $subnivel = $res->id_subnivel;
             $preguntas_subnivel = $res->id_preguntas_subnivel;
 
-            $nv2 = new Nivel2();
-            $nv2->tipo = $tipo;
-            $nv2->id_users = $user;
-            $nv2->id_nivel = $nivel;
-            $nv2->id_subnivel = $subnivel;
-            $nv2->id_pre_nive = $preguntas_subnivel;
-            $nv2->usuario_crea = $user;
-            $nv2->save();
+            $nv3 = new Nivel3();
+            $nv3->tipo = $tipo;
+            $nv3->id_users = $user;
+            $nv3->id_nivel = $nivel;
+            $nv3->id_subnivel = $subnivel;
+            $nv3->id_pre_nive = $preguntas_subnivel;
+            $nv3->usuario_crea = $user;
+            $nv3->save();
         }
     }
-    function oraciones_respuesta(Request $rp){
+    function palabras_respuesta(Request $rp){
         $user = Auth::user()->id;
         for($i=0; $i<strlen($rq); $i++){
             $id = $rq[$i]["id"];
@@ -62,14 +63,14 @@ class Nivel2Controller extends Controller
             $subnivel = $res->id_subnivel;
             $preguntas_subnivel = $res->id_preguntas_subnivel;
 
-            $nv2 = new Nivel2();
-            $nv2->tipo = $tipo;
-            $nv2->id_users = $user;
-            $nv2->id_nivel = $nivel;
-            $nv2->id_subnivel = $subnivel;
-            $nv2->id_pre_nive = $preguntas_subnivel;
-            $nv2->usuario_crea = $user;
-            $nv2->save();
+            $nv3 = new Nivel3();
+            $nv3->tipo = $tipo;
+            $nv3->id_users = $user;
+            $nv3->id_nivel = $nivel;
+            $nv3->id_subnivel = $subnivel;
+            $nv3->id_pre_nive = $preguntas_subnivel;
+            $nv3->usuario_crea = $user;
+            $nv3->save();
         }
     }
 }

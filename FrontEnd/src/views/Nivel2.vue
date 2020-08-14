@@ -42,7 +42,16 @@
                 </div>
             </vs-col>
           </vs-row>
-          <vs-button class="primary" @click="enviarletras()">Enviar</vs-button>
+          <div class="container" style=";bottom: 12px;display: block;">
+            <vs-button  style="float: right;margin-bottom: 20px;--vs-color: 25, 91, 255;width: 100px;height: 100px;" @click="enviarletras()">
+              <vs-tooltip circle>
+                <i class="fas fa-check fa-2x"></i>
+                <template #tooltip>
+                  Verificar
+                </template>
+              </vs-tooltip>
+            </vs-button>
+          </div>
         </div>
         <!-- silabas -->
         <div class="tab-pane fade show mt-5" id="level" role="tabpanel" aria-labelledby="level-tab">
@@ -74,46 +83,8 @@
                 </div>
             </vs-col>
           </vs-row>
-          {{variable_seleccionado}}
-        </div>
-        <!-- oraciones -->
-        <div class="tab-pane fade show  mt-5" id="p" role="tabpanel" aria-labelledby="p-tab">
-          <vs-row>
-            <vs-col vs-type="flex" vs-justify="center" vs-align="center">
-              <div class="card m-3 p-3" style="border-radius: 50px" v-for="(tr,index) in oraciones.preguntas" :key="index">
-                  <vs-row>
-                        <vs-col vs-type="flex" vs-justify="center" vs-align="center" style="margin: 15px">
-                            <div class="card-head text-center" style="position: center;margin-bottom: 12px">
-                              <h2><span>{{tr.oracion}}</span></h2>
-                            </div>
-                        </vs-col>
-<<<<<<< HEAD
-                        <vs-col vs-justify="flex" class="container">
-                          <div class="content-inputs container center">
-                            <vs-input state="success" placeholder="Escribir" style="margin-bottom: 35px"></vs-input>
-=======
-                        <vs-col vs-justify="flex" class="container" w="4">
-                          <div class="center content-inputs" >
-                            <vs-input state="success" placeholder="Escribir" style="float: right;margin-right: 125px;margin-bottom: 35px" v-model="tr.res"></vs-input>
-                          </div>
-                          <div class="container" style="position:absolute;bottom: 12px;display: block;">
-                            <vs-button  style="float: right;margin-right: 115px;margin-bottom: 6px;--vs-color: 25, 91, 255;border-radius: 70px;width: 40px;height: 40px;" @click="active=1">
-                              <vs-tooltip circle>
-                                <i class="fas fa-check fa-2x"></i>
-                                <template #tooltip>
-                                  Verificar
-                                </template>
-                              </vs-tooltip>
-                            </vs-button>
->>>>>>> fc01faac5041b156d873ab80cf9a0d76b4fd5d05
-                          </div>
-                        </vs-col>
-                  </vs-row>
-              </div>
-            </vs-col>
-          </vs-row>
           <div class="container" style=";bottom: 12px;display: block;">
-            <vs-button  style="float: right;margin-bottom: 20px;--vs-color: 25, 91, 255;width: 100px;height: 100px;" @click="active=1">
+            <vs-button  style="float: right;margin-bottom: 20px;--vs-color: 25, 91, 255;width: 100px;height: 100px;" @click="enviarsilabas()">
               <vs-tooltip circle>
                 <i class="fas fa-check fa-2x"></i>
                 <template #tooltip>
@@ -123,6 +94,38 @@
             </vs-button>
           </div>
         </div>
+        <!-- oraciones -->
+        <div class="tab-pane fade show  mt-5" id="p" role="tabpanel" aria-labelledby="p-tab">
+          <vs-row >
+            <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 col-md-6 p-0" v-for="(tr,index) in oraciones.preguntas" :key="index">
+              <div class="col-lg-12 mb-4">
+                <div class="card m-3" style="border-radius: 50px" >
+                  <vs-row>
+                    <vs-col vs-type="flex" vs-justify="center" vs-align="center" style="margin: 15px" >
+                      <div class="card-head text-center" style="position: center;margin-bottom: 20px">
+                        <h2><span>{{tr.oracion}}</span></h2>
+                      </div>
+                      <div class="center content-inputs">
+                      <vs-input   color="#7d33ff" label-placeholder="Escribir" style="margin-bottom: 15px"/>
+                      </div>
+                    </vs-col>
+                  </vs-row>
+                </div>
+              </div>
+            </vs-col>
+          </vs-row>
+          <div>
+            <vs-button  style="float: right;margin-bottom: 20px;--vs-color: 25, 91, 255;width: 100px;height: 100px;" @click="enviaroraciones()">
+              <vs-tooltip circle>
+                <i class="fas fa-check fa-2x"></i>
+                <template #tooltip>
+                  Verificar
+                </template>
+              </vs-tooltip>
+            </vs-button>
+          </div>
+        </div>
+        {{variable_seleccionado}}
     </div>
   </div>
 </template>
@@ -242,36 +245,54 @@ export default {
       oraciones:{
         preguntas:[
           {
-            id:1,
+            id:"1",
             oracion:"Miperroladramucho",
-            res:"",
+            respuesta:"Mi perro ladra mucho"
           },
           {
-            oracion:"Borjatienepecas"
+            id:"2",
+            oracion:"Borjatienepecas",
+            respuesta:"Borja tiene pecas"
           },
           {
-            oracion:"Lavacatienecuernos"
+            id:"3",
+            oracion:"Lavacatienecuernos",
+            respuesta:"La vaca tiene cuernos"
           },
           {
-            oracion:"Perdoquierepastel"
+            id:"4",
+            oracion:"Pedroquierepastel",
+            respuesta:"Pedro quiere pastel"
           },
           {
-            oracion:"Misombreroesdecopa"
+            id:"5",
+            oracion:"Misombreroesdecopa",
+            respuesta:"Mi sombrero es de copa"
           },
           {
-            oracion:"Sofíavadecompras"
+            id:"6",
+            oracion:"Sofíavadecompras",
+            respuesta:"Sofía va de compras"
           },
           {
-            oracion:"Albertotieneuncerezo"
+            id:"7",
+            oracion:"Albertotieneunmanzano",
+            respuesta:"Alberto tiene un manzano"
           },
           {
-            oracion:"Elratonpereztienemidiente"
+            id:"8",
+            oracion:"ElratonPereztienemidiente",
+            respuesta:"El ratón Perez tiene mi diente"
           },
           {
-            oracion:"Juancaminaporlecerro"
+            id:"9",
+            oracion:"Juancaminaporelcerro",
+            respuesta:"Juan camina por el cerro"
           },
           {
-            oracion:"Laplayaeshermosa"
+            id:"10",
+            oracion:"Laplayaeshermosa",
+            respuesta:"La playa es hermosa"
           },
         ]
       },
@@ -316,7 +337,21 @@ export default {
       }).catch( error => {
         console.log(error);
       });
-    }
+    },
+    enviarsilabas(){
+      Api.enviarsilabas(this.variable_seleccionado).then( ({data}) => {
+
+      }).catch( error => {
+        console.log(error);
+      });
+    },
+    enviaroraciones(){
+      Api.enviaroraciones(this.variable_seleccionado).then( ({data}) => {
+
+      }).catch( error => {
+        console.log(error);
+      });
+    },
   },
   mounted() {
     //this.llamarpreguntas();
