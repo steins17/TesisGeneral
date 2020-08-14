@@ -1,16 +1,22 @@
 <template>
-  <div class="home col-5 mx-auto py-5 mt-5">
-    <h1 class="text'center" style="margin-left: 110px">Editar Perfil</h1>
+  <div class="container">
     <div class="card" style="border-radius: 20px">
-      
-        <div class="form-group" style="margin: 10px">
-          <label for="name">Nombre:</label>
-          <input type="text"  class="form-control" id="name" style="border-radius: 50px">
+      <div class="row">
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+          <div class="form-group" style="margin: 10px">
+            <label for="name">Nombre:</label>
+            <input type="text"  class="form-control" id="name" style="border-radius: 50px">
+          </div>
         </div>
-        <div class="form-group" style="margin: 10px">
-          <label for="edad">Edad:</label>
-          <input type="text"  class="form-control" id="edad" style="border-radius: 50px">
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+          <div class="form-group" style="margin: 10px">
+            <label for="edad">Edad:</label>
+            <input type="text"  class="form-control" id="edad" style="border-radius: 50px">
+          </div>
         </div>
+      </div>
+        
+        
         <div class="form-group" style="margin: 10px">
           <label for="fecha">Fecha Nacimiento:</label>
           <input type="text"  class="form-control" id="fecha_nacimiento" style="border-radius: 50px">
@@ -43,6 +49,8 @@
 </template>
 
 <script>
+import Persona from "../apis/Persona";
+
 export default {
   data() {
     return {
@@ -60,6 +68,32 @@ export default {
       },
       error:[]
     }
+  },
+  methods: {
+    recuperar(){
+      Persona.recuperar().then(({data}) => {
+        this.form ={
+            name: data.nombre,
+            email: "",
+            password: "",
+            password_confirmation: "",
+            fecha_nacimiento:"",
+            edad:"",
+            telefono:"",
+            celeular:"",
+            direccion:"",
+            foto:""
+        }
+      });
+    },
+    restablecer(){
+      if(this.form.password.length>=8){
+        axios
+      }
+    }
+  },
+  mounted() {
+    this.recuperar();
   },
 }
 </script>

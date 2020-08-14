@@ -10,7 +10,7 @@ use App\Nivel2;
 class Nivel2Controller extends Controller
 {
     function letras_respuesta(Request $rq){
-        $user = $rq->user();
+        $user = Auth::user()->id;
         for($i=0; $i<strlen($rq); $i++){
             $id = $rq[$i]["id"];
             $bddres = DB::select("SELECT ps.*, sb.id_nivel FROM preguntas_subnivel ps INNER JOIN subnivel sb ON sb.id_subnivel=ps.id_subnivel WHERE id_preguntas_subnivel = $id");

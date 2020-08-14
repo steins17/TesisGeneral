@@ -33,4 +33,47 @@ class LoginController extends Controller
     {
         $request->user()->tokens()->delete();
     }
+
+    public function perfil(Request $request)
+    {
+        $request->validate([
+            'name' => ['required'],
+            'email' => ['required', 'email', 'unique:users']
+        ]);
+        if(strlen($request->password)>=8){
+            $request->validate([
+                'password' => ['required', 'min:8', 'confirmed']
+            ]);
+        }
+
+        $user = User::findOrFail();
+        if(strlen($request->password)>=8){
+            $user->password = Hash::make($request->password);
+        }
+        $user->save();
+
+        $perfil = Perfil::findOrFail();
+        
+        $perfil->save();
+
+        if(strlen($request->password)>=8){
+            $request->user()->tokens()->delete();
+            $request->validate([
+                'email' => 'required|email',
+                'password' => 'required',
+                'device_name' => 'required'
+            ]);
+    
+            $user = User::where('email', $request->email)->first();
+    
+            if (!$user || !Hash::check($request->password, $user->password)) {
+                throw ValidationException::withMessages([
+                    'email' => ['The provided credentials are incorrect.'],
+                ]);
+            }
+    
+            return $user->createToken($request->device_name)->plainTextToken;
+        }
+        
+    }
 }

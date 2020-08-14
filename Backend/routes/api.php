@@ -23,6 +23,8 @@ Route::post('/register', 'RegisterController@register');
 Route::post('/login', 'LoginController@login'); 
 Route::post('/logout', 'LoginController@logout')->middleware('auth:sanctum');
 
-//rutas del nivel 2
-Route::post('/nivel2/letras/respuesta', 'Nivel2Controller@letras_respuesta');
-Route::post('/nivel2/silabas/respuesta', 'Nivel2Controller@silabas_respuesta');
+Route::middleware(['auth:sanctum'])->group(function () {
+    //rutas del nivel 2
+    Route::post('/nivel2/letras/respuesta', 'Nivel2Controller@letras_respuesta');
+    Route::post('/nivel2/silabas/respuesta', 'Nivel2Controller@silabas_respuesta');
+});
