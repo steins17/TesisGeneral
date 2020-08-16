@@ -1,7 +1,10 @@
 import Api from "./Api";
 
 export default {
-  updated() {
-    return Api().set("/persona");
+  recuperar(form) {
+    return Api().post("/perfil", form);
+  },
+  updated(form) {
+    return Api().get("/perfil", form );
   }
 };
