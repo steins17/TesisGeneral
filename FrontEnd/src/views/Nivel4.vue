@@ -115,7 +115,7 @@ export default {
           },
           {
             id:"7",
-            oracion:"Zapatero a su zapato",
+            oracion:"Zapatero a su zapato.",
             respuesta:"Zapatero a su zapato"
           },
           {
@@ -129,8 +129,8 @@ export default {
         preguntas:[
           {
             id:"1",
-            oracion:"En la casa de la señora sofía, a la sombra de un peral me comí un pastel. Por la ventana apareció su sobrino, el de la cara redonda y le mandó un saludo para mi tia.",
-            respuesta:"En la casa de la señora sofía, a la sombra de un peral me comí un pastel. Por la ventana apareció su sobrino, el de la cara redonda y le mandó un saludo para mi tia." 
+            oracion:"En la casa de la señora sofía, a la sombra de un peral me comí un pastel. Por la ventana apareció su sobrino, el de la cara redonda y le mandó un saludo para mi tía.",
+            respuesta:"En la casa de la señora sofía, a la sombra de un peral me comí un pastel. Por la ventana apareció su sobrino, el de la cara redonda y le mandó un saludo para mi tía." 
           },
           {
             id:"2",

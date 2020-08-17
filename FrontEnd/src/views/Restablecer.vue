@@ -15,35 +15,56 @@
           <div class="form-group" style="margin: 10px">
             <label for="edad">Edad:</label>
             <input type="text"  class="form-control" id="edad" style="border-radius: 50px" v-model="form.edad">
+            <span class="text-danger" v-if="error_validacion.email">
+              {{ error_validacion.edad[0] }}
+            </span>
           </div>
         </div>
       </div>
         <div class="form-group" style="margin: 10px">
-          <label for="fecha">Fecha Nacimiento:</label>
-          <input type="text"  class="form-control" id="fecha_nacimiento" style="border-radius: 50px" v-model="form.fecha_nacimiento">
+          <label for="fecha_nacimiento">Fecha Nacimiento:</label>
+          <input type="date"  class="form-control" id="fecha_nacimiento" style="border-radius: 50px" v-model="form.fecha_nacimiento">
+          <span class="text-danger" v-if="error_validacion.email">
+              {{ error_validacion.fecha_nacimiento[0] }}
+            </span>
         </div>
         <div class="form-group" style="margin: 10px">
           <label for="telefono">Teléfono:</label>
           <input type="text"  class="form-control" id="telefono" style="border-radius: 50px" v-model="form.telefono">
+          <span class="text-danger" v-if="error_validacion.email">
+              {{ error_validacion.telefono[0] }}
+            </span>
         </div>
         <div class="form-group" style="margin: 10px">
           <label for="celular">Celular:</label>
           <input type="text"  class="form-control" id="celular" style="border-radius: 50px" v-model="form.celular">
+          <span class="text-danger" v-if="error_validacion.email">
+              {{ error_validacion.celular[0] }}
+            </span>
         </div>
         <div class="form-group" style="margin: 10px">
           <label for="dirrecion">Dirección:</label>
           <input type="text"  class="form-control" id="direccion" style="border-radius: 50px" v-model="form.direccion">
+          <span class="text-danger" v-if="error_validacion.email">
+              {{ error_validacion.direccion[0] }}
+            </span>
         </div>
         <div class="form-group" style="margin: 10px">
           <label for="email">Correo Electrónico:</label>
           <input type="email"  class="form-control" id="email" style="border-radius: 50px" v-model="form.email">
+          <span class="text-danger" v-if="error_validacion.email">
+              {{ error_validacion.email[0] }}
+            </span>
         </div>
         <div class="form-group" style="margin: 10px">
           <label for="foto">Foto</label>
           <input type="text"  class="form-control" id="foto" style="border-radius: 50px" v-model="form.foto">
+          <span class="text-danger" v-if="error_validacion.email">
+              {{ error_validacion.foto[0] }}
+            </span>
         </div>
         <div class="form-group" style="margin: 10px">
-          <vs-button @click.prevent="restablecer" class="btn btn-primary btn-block" style="float: right;margin-right: 2px">Guardar</vs-button>
+          <vs-button @click="restablecer" class="btn btn-primary btn-block" style="float: right;margin-right: 2px">Guardar</vs-button>
       </div>
     </div>
   </div>
@@ -79,7 +100,7 @@ export default {
     },
     restablecer(){
       Persona.restablecer(this.form).then(({data}) => {
-        console.log(data);
+        data
       }).catch( error => {
         if (error.response.status === 422) {
           this.error_validacion = error.response.data.errors;
@@ -89,6 +110,7 @@ export default {
   },
   mounted() {
     this.recuperar();
+    // this.restablecer();
   },
 }
 </script>

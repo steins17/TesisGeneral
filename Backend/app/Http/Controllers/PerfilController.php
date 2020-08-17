@@ -20,9 +20,14 @@ class PerfilController extends Controller
     public function restablecer(Request $request){
         $id = Auth::user()->id;
         $request->validate([
-            'name' => ['required'],
+            'name' => ['required', 'name', 'users'],
             'email' => ['required', 'email', 'unique:users'],
-            'direccion' => ['required']
+            'fecha_nacimiento' => ['required', 'fecha_nacimiento', 'persona'],
+            'edad' => ['required', 'edad', 'persona'],
+            'telefono' => ['required', 'telefono', 'persona'],
+            'celular' => ['required', 'celular', 'persona'],
+            'direccion' => ['required', 'direccion', 'persona'],
+            'foto' => ['required', 'foto', 'persona']
         ]);
         if(strlen($request->password)>=8){
             $request->validate([
@@ -37,6 +42,10 @@ class PerfilController extends Controller
         */
 
         $user = User::findOrFail();
+        $user->name= $request->name;
+        $user->email= $request->email;
+        $user->password= $request->password;
+        $user->password_confirmation= $request->password_confirmation;
         $user->save();
 
         $perfil = Persona::findOrFail();
@@ -45,7 +54,6 @@ class PerfilController extends Controller
         $perfil->telefono= $request->telefono;
         $perfil->celular= $request->celular;
         $perfil->direccion= $request->direccion;
-        $perfil->email= $request->email;
         $perfil->foto= $request->foto;
         $perfil->save();
 
@@ -53,20 +61,4 @@ class PerfilController extends Controller
         $user = User::where('id', $id)->first();
         return $user->createToken($request->device_name)->plainTextToken;
     }
-
-    // public function listar(){
-    //     $datos = Persona::all('*');
-    //     return $datos;
-    // }
-    // public function agregar(Request $request)
-    // {
-    //     $datos = new Persona();
-    //     $datos->fecha_nacimiento=$request->fecha_nacimiento;
-    //     $datos->edad= $request->edad;
-    //     $datos->telefono= $request->telefono;
-    //     $datos->celular= $request->celular;
-    //     $datos->direccion= $request->direccion;
-    //     $datos->foto= $request->foto;
-    //     $datos->save();
-    // }
 }

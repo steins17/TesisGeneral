@@ -19,8 +19,8 @@
           <input type="password"  class="form-control" id="password_confirmation" style="border-radius: 50px" v-model="form.password_confirmation">
         </div>
         <div class="form-group" style="margin: 10px">
-          <vs-button @click.prevent="cargar()" v-if="accion==0" class="btn btn-primary btn-block" style="float: right;margin-right: 2px">Cargar</vs-button>
-          <vs-button @click.prevent="updated()" v-if="accion==1" class="btn btn-primary btn-block" style="float: right;margin-right: 2px">Guardar</vs-button>
+          
+          <vs-button @click.prevent="restablecer()" class="btn btn-primary btn-block" style="float: right;margin-right: 2px">Guardar</vs-button>
         
       </div>
     </div>
@@ -32,7 +32,6 @@ import Persona from "../apis/Persona"
 export default {
   data() {
     return {
-      accion: 0,
       form: {
         name: "",
         email: "",
@@ -44,58 +43,23 @@ export default {
     }
   },
   methods: {
-    abrir(tipo, datos = []){
-      switch(tipo){
-        case "cargar": {
-          this.id = datos.id;
-          this.name = datos.name;
-          this.email = datos.email;
-          this.password =  datos.password;
-          this.password_confirmation =  datos.password_confirmation;
-          break
-        }
-        case "updated": {
-          this.id = datos.id,
-          this.name = datos.name,
-          this.email = datos.email,
-          this.password = datos.password,
-          this.password_confirmation = datos.password_confirmation
-        }
-      }
+    recuperar(){
+      Persona.recuperar().then(({data}) => {
+        this.form = data;
+      });
     },
-    updated() {
-      Persona.updated(this.form)
-      .then(() => {
-        if (error.response.status === 442){
-          this.error = error.response.data.error
-        } else{
-          Persona.updated().then(({data}) =>{
-            this.form =(
-              id= this.id,
-              name= this.name,
-              email= this.email,
-              password= this.password,
-              password_confirmation= this.password_confirmation
-            )
-          })
+    restablecer(){
+      Persona.restablecer(this.form).then(({data}) => {
+        console.log(data)
+      }).catch( error => {
+        if (error.response.status === 422) {
+          this.error_validacion = error.response.data.errors;
         }
-      })
-    },
-    cargar(){
-      Persona.updated(this.form)
-      .the(()=> {
-            this.form =(
-              id= this.id,
-              name= this.name,
-              email= this.email,
-              password= this.password,
-              password_confirmation= this.password_confirmation
-            )
-      })
+      });
     }
   },
   mounted() {
-    this.updated();
+    this.recuperar();
   },
 }
 </script>

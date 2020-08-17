@@ -246,47 +246,47 @@ export default {
         preguntas:[
           {
             id:"1",
-            oracion:"Miperroladramucho",
+            oracion:"Miperroladramucho.",
             respuesta:"Mi perro ladra mucho"
           },
           {
             id:"2",
-            oracion:"Borjatienepecas",
+            oracion:"Borjatienepecas.",
             respuesta:"Borja tiene pecas"
           },
           {
             id:"3",
-            oracion:"Lavacatienecuernos",
+            oracion:"Lavacatienecuernos.",
             respuesta:"La vaca tiene cuernos"
           },
           {
             id:"4",
-            oracion:"Pedroquierepastel",
+            oracion:"Pedroquierepastel.",
             respuesta:"Pedro quiere pastel"
           },
           {
             id:"5",
-            oracion:"Misombreroesdecopa",
+            oracion:"Misombreroesdecopa.",
             respuesta:"Mi sombrero es de copa"
           },
           {
             id:"6",
-            oracion:"Sofíavadecompras",
+            oracion:"Sofíavadecompras.",
             respuesta:"Sofía va de compras"
           },
           {
             id:"7",
-            oracion:"Albertotieneunmanzano",
+            oracion:"Albertotieneunmanzano.",
             respuesta:"Alberto tiene un manzano"
           },
           {
             id:"8",
-            oracion:"ElratonPereztienemidiente",
+            oracion:"ElratonPereztienemidiente.",
             respuesta:"El ratón Perez tiene mi diente"
           },
           {
             id:"9",
-            oracion:"Juancaminaporelcerro",
+            oracion:"Juancaminaporelcerro.",
             respuesta:"Juan camina por el cerro"
           },
           {
