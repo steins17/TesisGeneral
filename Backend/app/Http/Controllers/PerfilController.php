@@ -29,6 +29,12 @@ class PerfilController extends Controller
                 'password' => ['required', 'min:8', 'confirmed']
             ]);
         }
+        /*
+            tipos
+            1=>escuchar-imagen
+            2=>escuchas-imagen-escoger
+            3=>escuchar-escribir
+        */
 
         $user = User::findOrFail();
         $user->save();
