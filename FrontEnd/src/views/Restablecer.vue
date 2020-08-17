@@ -12,6 +12,9 @@
           <div class="form-group" style="margin: 10px">
             <label for="name">Nombre:</label>
             <input type="text"  class="form-control" id="name" style="border-radius: 50px" v-model="form.name">
+            <span class="text-danger" v-if="error_validacion.email">
+              {{ error_validacion.name[0] }}
+            </span>
           </div>
         </div>
         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
@@ -21,8 +24,6 @@
           </div>
         </div>
       </div>
-        
-        
         <div class="form-group" style="margin: 10px">
           <label for="fecha">Fecha Nacimiento:</label>
           <input type="text"  class="form-control" id="fecha_nacimiento" style="border-radius: 50px" v-model="form.fecha_nacimiento">
@@ -48,7 +49,7 @@
           <input type="text"  class="form-control" id="foto" style="border-radius: 50px" v-model="form.foto">
         </div>
         <div class="form-group" style="margin: 10px">
-          <vs-button @click.prevent="recuperar" class="btn btn-primary btn-block" style="float: right;margin-right: 2px">Guardar</vs-button>
+          <vs-button @click.prevent="restablecer" class="btn btn-primary btn-block" style="float: right;margin-right: 2px">Guardar</vs-button>
       </div>
     </div>
   </div>
@@ -72,32 +73,24 @@ export default {
         direccion:"",
         foto:""
       },
-      error:[]
+      error:[],
+      error_validacion:[],
     }
   },
   methods: {
     recuperar(){
       Persona.recuperar().then(({data}) => {
-        this.form ={
-            id: this.id_persona,
-            name: this.name,
-            email: this.email,
-            // password: this.,
-            // password_confirmation: this.,
-            fecha_nacimiento:this.fecha_nacimiento,
-            edad:this.edad,
-            telefono:this.telefono,
-            celeular:this.celeular,
-            direccion:this.direccion,
-            foto:this.foto
-        }
+        this.form = data;
       });
     },
     restablecer(){
-      if(this.form.password.length>=8){
-        // axios
-
-      }
+      Persona.restablecer(this.form).then(({data}) => {
+        console.log(data);
+      }).catch( error => {
+        if (error.response.status === 422) {
+          this.error_validacion = error.response.data.errors;
+        }
+      });
     }
   },
   mounted() {

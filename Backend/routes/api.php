@@ -25,8 +25,8 @@ Route::post('/logout', 'LoginController@logout')->middleware('auth:sanctum');
 
 Route::middleware(['auth:sanctum'])->group(function () {
     
-    Route::get('/perfil', 'PerfilController@perfil');
-    Route::get('/perfil', 'PerfilController@persona');
+    Route::get('/perfil', 'PerfilController@recuperar');
+    Route::post('/perfil', 'PerfilController@restablecer');
 
     //rutas del nivel 2
     Route::post('/nivel2/letras/respuesta', 'Nivel2Controller@letras_respuesta');

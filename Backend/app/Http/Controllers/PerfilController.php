@@ -11,12 +11,18 @@ use Illuminate\Validation\ValidationException;
 
 class PerfilController extends Controller
 {
-    public function perfil(Request $request)
-    {
+    public function recuperar(){
+        $user = Auth::user()->id;
+        $data = User::select("*")->leftJoin("persona", "persona.id_users", "=", "users.id")->where("users.id", "=", $user)->get();
+        return $data[0];
+    }
 
+    public function restablecer(Request $request){
+        $id = Auth::user()->id;
         $request->validate([
             'name' => ['required'],
-            'email' => ['required', 'email', 'unique:users']
+            'email' => ['required', 'email', 'unique:users'],
+            'direccion' => ['required']
         ]);
         if(strlen($request->password)>=8){
             $request->validate([
@@ -25,12 +31,9 @@ class PerfilController extends Controller
         }
 
         $user = User::findOrFail();
-        if(strlen($request->password)>=8){
-            $user->password = Hash::make($request->password);
-        }
         $user->save();
 
-        $perfil = Pefril::findOrFail();
+        $perfil = Persona::findOrFail();
         $perfil->fecha_nacimiento=$request->fecha_nacimiento;
         $perfil->edad= $request->edad;
         $perfil->telefono= $request->telefono;
@@ -40,25 +43,9 @@ class PerfilController extends Controller
         $perfil->foto= $request->foto;
         $perfil->save();
 
-        if(strlen($request->password)>=8){
-            $request->user()->tokens()->delete();
-            $request->validate([
-                'email' => 'required|email',
-                'password' => 'required',
-                'device_name' => 'required'
-            ]);
-    
-            $user = User::where('email', $request->email)->first();
-    
-            if (!$user || !Hash::check($request->password, $user->password)) {
-                throw ValidationException::withMessages([
-                    'email' => ['The provided credentials are incorrect.'],
-                ]);
-            }
-    
-            return $user->createToken($request->device_name)->plainTextToken;
-        }
-        
+        $request->user()->tokens()->delete();
+        $user = User::where('id', $id)->first();
+        return $user->createToken($request->device_name)->plainTextToken;
     }
 
     // public function listar(){
