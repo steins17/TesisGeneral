@@ -94,5 +94,8 @@ export default {
       })
     }
   },
+  mounted() {
+    this.updated();
+  },
 }
 </script>

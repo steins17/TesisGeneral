@@ -4,12 +4,6 @@
       <div class="row">
         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
           <div class="form-group" style="margin: 10px">
-            <label for="id">id:</label>
-            <input type="text"  class="form-control" id="id" style="border-radius: 50px" v-model="form.id">
-          </div>
-        </div>
-        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-          <div class="form-group" style="margin: 10px">
             <label for="name">Nombre:</label>
             <input type="text"  class="form-control" id="name" style="border-radius: 50px" v-model="form.name">
             <span class="text-danger" v-if="error_validacion.email">
