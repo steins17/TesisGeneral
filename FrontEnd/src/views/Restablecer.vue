@@ -66,6 +66,9 @@
         <div class="form-group" style="margin: 10px">
           <vs-button @click="restablecer" class="btn btn-primary btn-block" style="float: right;margin-right: 2px">Guardar</vs-button>
       </div>
+        <div class="form-group" style="margin: 10px">
+          <a href="Restablecer" style="float: right;margin-right: 2px">Restablecer contreseña</a>
+      </div>
     </div>
   </div>
 </template>
@@ -100,7 +103,7 @@ export default {
     },
     restablecer(){
       Persona.restablecer(this.form).then(({data}) => {
-        data
+        
       }).catch( error => {
         if (error.response.status === 422) {
           this.error_validacion = error.response.data.errors;

@@ -88,18 +88,18 @@
         <h4 v-if="user">
           <span class="small-cap">Configuración</span>
         </h4>
-        <vs-sidebar-item id="Restablacer" to="Restablecer" v-if="user">
+        <vs-sidebar-item id="Restablacer" to="prolife" v-if="user">
           <template #icon>
             <i class="fas fa-user"></i>
           </template>
           Mi Perfil
         </vs-sidebar-item>
-        <vs-sidebar-item id="Perfil" to="prolife" >
+        <!-- <vs-sidebar-item id="Perfil" to="Restablecer" >
           <template #icon>
             <i class="fas fa-cogs"></i>
           </template>
           Restablacer contraseña
-        </vs-sidebar-item>
+        </vs-sidebar-item> -->
         <template #footer>
           <vs-row justify="space-between">
             <vs-avatar badge-color="danger" badge-position="top-right">
