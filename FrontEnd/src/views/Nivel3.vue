@@ -16,19 +16,22 @@
     <div  class="tab-pane fade show active mt-5" id="a" role="tabpanel" aria-labelledby="level3-tab">
       <vs-row>
         <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 col-md-6 p-0"  v-for="(tr,index) in letras.preguntas" :key="index">
-          <div class="col-lg-12 mb-4">
+          <div class="col-lg-12 mb-4"  >
             <div class="card m-3" style="border-radius: 50px">
-              <vs-row vs-justify="flex-end" style=";bottom: 0px;display: block;">
-                <vs-button color="dark" type="gradient" style="margin: 15px;border-radius:;width: 90px;height: 90px;" @click.prevent="sonido(tr.audio)">
-                  <vs-tooltip circle>
-                    <i class="fas fa-volume-up fa-2x"></i>
-                    <template #tooltip>
-                        Escuchar
-                    </template>
-                  </vs-tooltip>
-                </vs-button>
-                <vs-input state="success"  placeholder="Escribir" style="margin-bottom: 20px"></vs-input>
-              </vs-row>
+              <img :src="'archivos/imagenes/escuchar'+'.png'" class="card-img-top" style="border-radius: 50px"  alt="Card image cap"/>
+              <div class="card-body">
+                <vs-row vs-justify="flex-end" style=";bottom: 0px;display: block;">
+                  <vs-button color="dark" type="gradient" style="margin: 15px;border-radius:;width: 90px;height: 90px;" @click.prevent="sonido(tr.audio)">
+                    <vs-tooltip circle>
+                      <i class="fas fa-volume-up fa-2x"></i>
+                      <template #tooltip>
+                          Escuchar
+                      </template>
+                    </vs-tooltip>
+                  </vs-button>
+                  <vs-input state="success"  placeholder="Escribir" style="margin-bottom: 20px"></vs-input>
+                </vs-row>
+              </div>
             </div>
           </div>
         </vs-col>
@@ -49,19 +52,22 @@
     <div  class="tab-pane fade show  mt-5" id="b" role="tabpanel" aria-labelledby="leve3-tab">
       <vs-row>
         <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 col-md-6 p-0" v-for="(tr,index) in silabas.preguntas" :key="index">
-          <div class="col-lg-12 mb-4">
+          <div class="col-lg-12 mb-4" >
             <div class="card m-3 " style="border-radius: 50px" >
-              <vs-row vs-justify="flex-end" style="bottom: 0px;display: block;">
-                <vs-button color="dark" type="gradient" style="margin: 15px;border-radius:;width: 90px;height: 90px;" @click.prevent="sonido(tr.audio)">
-                  <vs-tooltip circle>
-                    <i class="fas fa-volume-up fa-2x"></i>
-                    <template #tooltip>
-                        Escuchar
-                    </template>
-                  </vs-tooltip>
-                </vs-button>
-                  <vs-input state="success"   placeholder="Escribir" style="margin-bottom: 20px"></vs-input>
-              </vs-row>
+              <img :src="'archivos/imagenes/escuchar'+'.png'" class="card-img-top" style="border-radius: 50px"  alt="Card image cap"/>
+              <div class="card-body" >
+                <vs-row vs-justify="flex-end" style="bottom: 0px;display: block;">
+                  <vs-button color="dark" type="gradient" style="margin: 15px;border-radius:;width: 90px;height: 90px;" @click.prevent="sonido(tr.audio)">
+                    <vs-tooltip circle>
+                      <i class="fas fa-volume-up fa-2x"></i>
+                      <template #tooltip>
+                          Escuchar
+                      </template>
+                    </vs-tooltip>
+                  </vs-button>
+                    <vs-input state="success"   placeholder="Escribir" style="margin-bottom: 20px"></vs-input>
+                </vs-row>
+              </div>
             </div>
           </div>
         </vs-col>
@@ -82,18 +88,21 @@
       <vs-row>
         <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 col-md-6 p-0" v-for="(tr,index) in palabras.preguntas" :key="index">
           <div class="col-lg-12">
-            <div class="card m-3" style="border-radius: 50px">
-              <vs-row vs-justify="flex-end" style="bottom: 0px;display: block;">
-                <vs-button color="dark" type="gradient" style="margin: 15px;border-radius:;width: 90px;height: 90px;" @click.prevent="sonido(tr.audio)">
-                  <vs-tooltip circle>
-                    <i class="fas fa-volume-up fa-2x"></i>
-                    <template #tooltip>
-                        Escuchar
-                    </template>
-                  </vs-tooltip>
-                </vs-button>
-                  <vs-input state="success"   placeholder="Escribir" style="margin-bottom: 20px"></vs-input>
-              </vs-row>  
+            <div class="card m-3 " style="border-radius: 50px">
+              <img :src="'archivos/imagenes/escuchar'+'.png'" class="card-img-top" style="border-radius: 50px"  alt="Card image cap"/>
+              <div class="card-body" >
+                <vs-row vs-justify="flex-end" style="bottom: 0px;display: block;">
+                  <vs-button color="dark" type="gradient" style="margin: 15px;border-radius:;width: 90px;height: 90px;" @click.prevent="sonido(tr.audio)">
+                    <vs-tooltip circle>
+                      <i class="fas fa-volume-up fa-2x"></i>
+                      <template #tooltip>
+                          Escuchar
+                      </template>
+                    </vs-tooltip>
+                  </vs-button>
+                    <vs-input state="success"   placeholder="Escribir" style="margin-bottom: 20px"></vs-input>
+                </vs-row>  
+              </div>
             </div>
           </div>
         </vs-col>
