@@ -97,10 +97,10 @@
         <!-- oraciones -->
         <div class="tab-pane fade show  mt-5" id="p" role="tabpanel" aria-labelledby="p-tab">
           <vs-row >
-            <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 col-md-6 p-0" v-for="(tr,index) in oraciones.preguntas " :key="index">
+            <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-6 col-md-6 p-0" v-for="(tr,index) in oraciones.preguntas " :key="index">
               <div class="col-lg-12 mb-4">
                 <div class="card m-3" style="border-radius: 50px">
-                  <img :src="'archivos/imagenes/ima_ejer/'+tr.imagen+'jpg'" class="card-img-top" style="border-radius: 50px"  alt="Card image cap"/>
+                  <img :src="'archivos/imagenes/ima_ejer/'+tr.imagen+'.jpg'" class="card-img-top" style="border-radius: 50px"  alt="Card image cap"/>
                   <div class="card-body">
                     <vs-row>
                       <vs-col vs-type="flex" vs-justify="center" vs-align="center" style="margin: 15px" >
@@ -249,9 +249,9 @@ export default {
         preguntas:[
           {
             id:"1",
-            imagen:"perro",
-            oracion:"Miperroladramucho.",
-            respuesta:"Mi perro ladra mucho"
+            imagen:"sombrero",
+            oracion:"Misombreroesdecopa.",
+            respuesta:"Mi sombrero es de copa"
           },
           {
             id:"2",
@@ -273,9 +273,9 @@ export default {
           },
           {
             id:"5",
-            imagen:"sombrero",
-            oracion:"Misombreroesdecopa.",
-            respuesta:"Mi sombrero es de copa"
+            imagen:"perro",
+            oracion:"Miperroladramucho.",
+            respuesta:"Mi perro ladra mucho"
           },
           {
             id:"6",
