@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Nivel2;
+
+use App\Models\Nivel;
+use App\Models\Subnivel;
+use App\Models\Preguntas_subnivel;
 
 class Nivel2Controller extends Controller
 {
@@ -71,5 +74,18 @@ class Nivel2Controller extends Controller
             $nv2->usuario_crea = $user;
             $nv2->save();
         }
+    }
+    function llamardatos(){
+        $nivel = Nivel::select('*')->where("nivel", "=", 2)->get();
+        for($i=0; $i<count($nivel); $i++){
+            $valor = $nivel[$i]["id_nivel"];
+            $subnivel = Subnivel::select('*')->where("id_nivel", "=", $valor)->get();
+            $preguntas = Preguntas_subnivel::select('*')->get();//->where("id_nivel", "=", $valor)->get();
+        }
+        return [
+            'nivel' => $nivel,
+            'subnivel' => $subnivel,
+            'preguntas' => $preguntas,
+        ];
     }
 }

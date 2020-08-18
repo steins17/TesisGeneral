@@ -39,3 +39,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/nivel3/silabas/respuestas', 'Nivel3Controller@silabas_respuesta');
     Route::post('/nivel3/palabras/respuestas', 'Nivel3Controller@palabras_respuesta');
 });
+
+Route::get('/nivel2/llamardatos', 'Nivel2Controller@llamardatos');

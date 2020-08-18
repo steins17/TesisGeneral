@@ -365,6 +365,11 @@ export default {
         console.log(error);
       });
     },
+    nivel(){
+      Api.llamardatos().then(({data}) => {
+        console.log(data);
+      })
+    }
   },
   mounted() {
     //this.llamarpreguntas();
