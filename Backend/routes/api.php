@@ -38,6 +38,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/nivel3/letras/respuestas', 'Nivel3Controller@letras_respuesta');
     Route::post('/nivel3/silabas/respuestas', 'Nivel3Controller@silabas_respuesta');
     Route::post('/nivel3/palabras/respuestas', 'Nivel3Controller@palabras_respuesta');
+
+    //rutas del nivel 4
+    Route::post('/nivel4/oraciones/respuestas', 'Nivel4Controller@oraciones_respuesta');
+    Route::post('/nivel4/frases/respuestas', 'Nivel4Controller@frases_respuesta');
 });
 
 Route::get('/nivel2/llamardatos', 'Nivel2Controller@llamardatos');
+Route::get('/nivel3/llamardatos', 'Nivel3Controller@llamardatos');
+Route::get('/nivel4/llamardatos', 'Nivel4Controller@llamardatos');

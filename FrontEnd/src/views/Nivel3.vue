@@ -303,25 +303,30 @@ export default {
     },
     enviarletras(){
       Api.enviarletras(this.variable_seleccionado).then( ({data}) => {
-
+        console.log(data);
       }).catch( error => {
         console.log(error);
       });
     },
     enviarsilabas(){
       Api.enviarsilabas(this.variable_seleccionado).then( ({data}) => {
-
+        console.log(data);
       }).catch( error => {
         console.log(error);
       });
     },
     enviarpalabras(){
       Api.enviarpalabras(this.variable_seleccionado).then( ({data}) => {
-
+        console.log(data);
       }).catch( error => {
         console.log(error);
       });
     },
+    nivel(){
+      Api.llamardatos().then(({data}) => {
+        console.log(data);
+      })
+    }
   }
 }
 </script>

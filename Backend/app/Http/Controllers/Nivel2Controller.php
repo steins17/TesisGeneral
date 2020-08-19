@@ -23,7 +23,7 @@ class Nivel2Controller extends Controller
             $subnivel = $res->id_subnivel;
             $preguntas_subnivel = $res->id_preguntas_subnivel;
 
-            $nv2 = new Nivel2();
+            $nv2 = new Preguntas_subnivel();
             $nv2->tipo = $tipo;
             $nv2->id_users = $user;
             $nv2->id_nivel = $nivel;
@@ -44,7 +44,7 @@ class Nivel2Controller extends Controller
             $subnivel = $res->id_subnivel;
             $preguntas_subnivel = $res->id_preguntas_subnivel;
 
-            $nv2 = new Nivel2();
+            $nv2 = new Preguntas_subnivel();
             $nv2->tipo = $tipo;
             $nv2->id_users = $user;
             $nv2->id_nivel = $nivel;
@@ -65,7 +65,7 @@ class Nivel2Controller extends Controller
             $subnivel = $res->id_subnivel;
             $preguntas_subnivel = $res->id_preguntas_subnivel;
 
-            $nv2 = new Nivel2();
+            $nv2 = new Preguntas_subnivel();
             $nv2->tipo = $tipo;
             $nv2->id_users = $user;
             $nv2->id_nivel = $nivel;
@@ -78,7 +78,7 @@ class Nivel2Controller extends Controller
     function llamardatos(){
         $nivel = Nivel::select('*')->where("nivel", "=", 2)->get();
         for($i=0; $i<count($nivel); $i++){
-            $valor = $nivel[$i]["id_nivel"];
+            $valor = $nivel[$i]["id"];
             $subnivel = Subnivel::select('*')->where("id_nivel", "=", $valor)->get();
             $preguntas = Preguntas_subnivel::select('*')->get();//->where("id_nivel", "=", $valor)->get();
         }

@@ -346,21 +346,21 @@ export default {
     },
     enviarletras(){
       Api.enviarletras(this.variable_seleccionado).then( ({data}) => {
-
+        console.log(data);
       }).catch( error => {
         console.log(error);
       });
     },
     enviarsilabas(){
       Api.enviarsilabas(this.variable_seleccionado).then( ({data}) => {
-
+        console.log(data);
       }).catch( error => {
         console.log(error);
       });
     },
     enviaroraciones(){
       Api.enviaroraciones(this.variable_seleccionado).then( ({data}) => {
-
+        console.log(data);
       }).catch( error => {
         console.log(error);
       });
