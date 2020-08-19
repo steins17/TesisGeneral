@@ -14,11 +14,15 @@ class CreateUsuarioPreguntaTable extends Migration
     public function up()
     {
         Schema::create('usuario_pregunta', function (Blueprint $table) {
-            $table->id();
-            $table->tipo();
-            $table->usuario_crea();
-            $table->usuario_modifica();
+            $table->bigIncrements('id');
+            $table->char('tipo', 10);
             $table->timestamps();
+
+            $table->unsignedBigInteger('usuario_crea');
+            $table->foreign('usuario_crea')->references('id')->on('users')->onDelete('cascade');
+
+            $table->unsignedBigInteger('usuario_modifica')->nullable();
+            $table->foreign('usuario_modifica')->references('id')->on('users')->onDelete('cascade');
 
             $table->unsignedBigInteger('id_users');
             $table->foreign('id_users')->references('id')->on('users');

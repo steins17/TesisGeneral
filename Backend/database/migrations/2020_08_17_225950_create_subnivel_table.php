@@ -14,16 +14,19 @@ class CreateSubnivelTable extends Migration
     public function up()
     {
         Schema::create('subnivel', function (Blueprint $table) {
-            $table->id();
-            $table->nombre();
-            $table->descripcion();
-            $table->foto();
-            $table->audio();
-            $table->usuario_crea();
-            $table->usuario_modifica();
+            $table->bigIncrements('id');
+            $table->char('nombre', 100);
+            $table->char('descripcion', 100)->nullable();
+            $table->text('foto')->nullable();
+            $table->text('audio')->nullable();
             $table->timestamps();
 
-            
+            $table->unsignedBigInteger('usuario_crea');
+            $table->foreign('usuario_crea')->references('id')->on('users')->onDelete('cascade');
+
+            $table->unsignedBigInteger('usuario_modifica')->nullable();
+            $table->foreign('usuario_modifica')->references('id')->on('users')->onDelete('cascade');
+
             $table->unsignedBigInteger('id_nivel');
             $table->foreign('id_nivel')->references('id')->on('nivel');
         });

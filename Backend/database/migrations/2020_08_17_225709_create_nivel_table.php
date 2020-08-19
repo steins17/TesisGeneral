@@ -14,13 +14,17 @@ class CreateNivelTable extends Migration
     public function up()
     {
         Schema::create('nivel', function (Blueprint $table) {
-            $table->id();
-            $table->nivel();
-            $table->nombre();
-            $table->descripcion();
-            $table->usuario_crea();
-            $table->usuario_modifica();
+            $table->bigIncrements('id');
+            $table->integer('nivel');
+            $table->char('nombre', 100);
+            $table->char('descripcion', 100)->nullable();
             $table->timestamps();
+
+            $table->unsignedBigInteger('usuario_crea');
+            $table->foreign('usuario_crea')->references('id')->on('users')->onDelete('cascade');
+
+            $table->unsignedBigInteger('usuario_modifica')->nullable();
+            $table->foreign('usuario_modifica')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
