@@ -14,10 +14,10 @@ class CreateVisitasTable extends Migration
     public function up()
     {
         Schema::create('visitas', function (Blueprint $table) {
-            $table->id();
-            $table->ip();
-            $table->conteo();
-            $table->fechas();
+            $table->bigIncrements('id')->autoIncrement();
+            $table->string('ip');
+            $table->integer('conteo');
+            $table->datetime('fechas', 0);
             $table->timestamps();
         });
     }

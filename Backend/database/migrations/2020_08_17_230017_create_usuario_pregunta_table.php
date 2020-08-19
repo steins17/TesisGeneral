@@ -14,8 +14,8 @@ class CreateUsuarioPreguntaTable extends Migration
     public function up()
     {
         Schema::create('usuario_pregunta', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->char('tipo', 10);
+            $table->bigIncrements('id')->autoIncrement();
+            $table->string('tipo');
             $table->timestamps();
 
             $table->unsignedBigInteger('usuario_crea');
@@ -34,7 +34,7 @@ class CreateUsuarioPreguntaTable extends Migration
             $table->foreign('id_subnivel')->references('id')->on('subnivel');
 
             $table->unsignedBigInteger('id_pre_nive');
-            $table->foreign('id_pre_nive')->references('id')->on('preguntas_nivel');
+            $table->foreign('id_pre_nive')->references('id')->on('preguntas_subnivel');
         });
     }
 

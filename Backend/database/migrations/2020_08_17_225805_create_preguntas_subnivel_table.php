@@ -14,17 +14,17 @@ class CreatePreguntasSubnivelTable extends Migration
     public function up()
     {
         Schema::create('preguntas_subnivel', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->char('nombre', 100);
-            $table->char('descripcion', 100)->nullable();
+            $table->bigIncrements('id')->autoIncrement();
+            $table->string('nombre');
+            $table->string('descripcion')->nullable();
             $table->text('foto')->nullable();
             $table->text('audio')->nullable();
             $table->text('oraciones')->nullable();
-            $table->char('tipo', 10);
-            $table->char('estado', 10);
+            $table->string('tipo');
+            $table->string('estado');
             $table->integer('tipo_campo');
-            $table->char('valor_campo', 100);
-            $table->char('respuesta_campo', 100);
+            $table->string('valor_campo');
+            $table->string('respuesta_campo');
             $table->timestamps();
 
             $table->unsignedBigInteger('usuario_crea');

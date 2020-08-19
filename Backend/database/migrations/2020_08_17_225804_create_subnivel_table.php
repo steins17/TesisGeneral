@@ -14,9 +14,9 @@ class CreateSubnivelTable extends Migration
     public function up()
     {
         Schema::create('subnivel', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->char('nombre', 100);
-            $table->char('descripcion', 100)->nullable();
+            $table->bigIncrements('id')->autoIncrement();
+            $table->string('nombre');
+            $table->string('descripcion')->nullable();
             $table->text('foto')->nullable();
             $table->text('audio')->nullable();
             $table->timestamps();

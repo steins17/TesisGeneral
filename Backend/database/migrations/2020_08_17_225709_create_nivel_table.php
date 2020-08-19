@@ -14,10 +14,10 @@ class CreateNivelTable extends Migration
     public function up()
     {
         Schema::create('nivel', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->autoIncrement();
             $table->integer('nivel');
-            $table->char('nombre', 100);
-            $table->char('descripcion', 100)->nullable();
+            $table->string('nombre');
+            $table->string('descripcion')->nullable();
             $table->timestamps();
 
             $table->unsignedBigInteger('usuario_crea');
