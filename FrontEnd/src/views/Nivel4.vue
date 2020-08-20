@@ -73,8 +73,6 @@
       </vs-row>
       {{variable_seleccionado}}
     </div>
-    
-
   </div>
 </div>
 </template>
@@ -171,13 +169,13 @@ export default {
       this.oraciones.preguntas[index].respuesta[index_hijo];
       this.variable_seleccionado.splice(index,1,tr);
     },
-    seleccionar_frases(index, tr, index_hijo){
+    seleccionar_frases(index, tr, index_h){
       if(this.variable_seleccionado.length==0){
         this.frases.preguntas.forEach(el => {
           this.variable_seleccionado.push({});
         });
       } 
-      this.frases.preguntas[index].respuesta[index_hijo];
+      this.frases.preguntas[index].respuesta[index_h];
       this.variable_seleccionado.splice(index,1,tr);
     },
     enviaroraciones(){
