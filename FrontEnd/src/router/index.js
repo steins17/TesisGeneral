@@ -58,7 +58,7 @@ const router = new Router({
         },
         {
           path: '/Restablecer',
-          name: 'Prolife',
+          name: 'Restablecer',
           component: () => import('../views/Prolife'),
           meta: { authOnly: true }
         },

@@ -138,6 +138,7 @@ import Api from "../apis/Nivel2";
 
 export default {
   data() {
+    const axios = require("axios");
     return {
       letras:{
         preguntas:[
@@ -312,6 +313,7 @@ export default {
       value:"",
       seleccionado:null,  
       variable_seleccionado:[],
+      lista: []
     };
   },
   methods: {
@@ -346,33 +348,39 @@ export default {
     },
     enviarletras(){
       Api.enviarletras(this.variable_seleccionado).then( ({data}) => {
-        console.log(data);
+        // console.log(data);
       }).catch( error => {
         console.log(error);
       });
     },
     enviarsilabas(){
       Api.enviarsilabas(this.variable_seleccionado).then( ({data}) => {
-        console.log(data);
+        // console.log(data);
       }).catch( error => {
         console.log(error);
       });
     },
     enviaroraciones(){
       Api.enviaroraciones(this.variable_seleccionado).then( ({data}) => {
-        console.log(data);
       }).catch( error => {
         console.log(error);
       });
     },
-    nivel(){
-      Api.llamardatos().then(({data}) => {
-        console.log(data);
+    // nivel(){
+    //   Api.llamardatos().then(({data}) => {
+    //     console.log(data);
+    //   })
+    // },
+    listar(){
+      axios.get("/api/llamardatos").then(({data}) => {
+        console.log(data)
+        // this.lista = data;
       })
     }
   },
   mounted() {
     //this.llamarpreguntas();
+    this.listar();
   },
 };
 </script>

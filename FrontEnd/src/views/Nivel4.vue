@@ -162,23 +162,23 @@ export default {
   methods: {
     enviaroraciones(){
       Api.enviaroraciones(this.variable_seleccionado).then( ({data}) => {
-        console.log(data);
+        // console.log(data);
       }).catch( error => {
         console.log(error);
       });
     },
     enviarfrases(){
       Api.enviarfrases(this.variable_seleccionado).then( ({data}) => {
-        console.log(data);
+        // console.log(data);
       }).catch( error => {
         console.log(error);
       });
     },
-    nivel(){
-      Api.llamardatos().then(({data}) => {
-        console.log(data);
-      })
-    }
+    // nivel(){
+    //   Api.llamardatos().then(({data}) => {
+    //     console.log(data);
+    //   })
+    // }
   }
 }
 </script>
