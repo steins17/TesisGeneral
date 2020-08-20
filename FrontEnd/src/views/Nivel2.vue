@@ -99,7 +99,7 @@
           <vs-row >
             <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-6 col-md-6 p-0" v-for="(tr,index) in oraciones.preguntas " :key="index">
               <div class="col-lg-12 mb-4">
-                <div class="card m-3" style="border-radius: 50px">
+                <div class="card card-ajuste m-3" style="border-radius: 50px">
                   <img :src="'archivos/imagenes/ima_ejer/'+tr.imagen+'.jpg'" class="card-img-top" style="border-radius: 50px"  alt="Card image cap"/>
                   <div class="card-body">
                     <vs-row>
@@ -401,5 +401,12 @@ export default {
   .seleccionado{
     border: 2px solid #195bff;
   }
-  
+  .card-ajuste{
+    display: block;
+    text-align: center;
+  }
+  .card-ajuste img{
+    width: 300px;
+    height: 250px;
+  }
 </style>
