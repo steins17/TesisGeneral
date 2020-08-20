@@ -312,6 +312,7 @@ export default {
       value:"",
       seleccionado:null,  
       variable_seleccionado:[],
+      lista: []
     };
   },
   methods: {
@@ -346,21 +347,20 @@ export default {
     },
     enviarletras(){
       Api.enviarletras(this.variable_seleccionado).then( ({data}) => {
-
+        // console.log(data);
       }).catch( error => {
         console.log(error);
       });
     },
     enviarsilabas(){
       Api.enviarsilabas(this.variable_seleccionado).then( ({data}) => {
-
+        // console.log(data);
       }).catch( error => {
         console.log(error);
       });
     },
     enviaroraciones(){
       Api.enviaroraciones(this.variable_seleccionado).then( ({data}) => {
-
       }).catch( error => {
         console.log(error);
       });
@@ -369,7 +369,7 @@ export default {
       Api.llamardatos().then(({data}) => {
         console.log(data);
       })
-    }
+    },
   },
   mounted() {
     //this.llamarpreguntas();

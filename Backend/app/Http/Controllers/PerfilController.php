@@ -35,9 +35,9 @@ class PerfilController extends Controller
             tipos
             1=>escuchar-imagen
             2=>escuchas-imagen-escoger
-            3=>escuchar-escribir oracion correcta
+            3=>ver-escribir-oracion-correcta
             4=>escuchar-escribir
-            5=>hablar
+            5=>ver-hablar
         */
 
         $user = User::findOrFail($request->id);
