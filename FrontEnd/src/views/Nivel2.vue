@@ -138,7 +138,6 @@ import Api from "../apis/Nivel2";
 
 export default {
   data() {
-    const axios = require("axios");
     return {
       letras:{
         preguntas:[
@@ -366,21 +365,14 @@ export default {
         console.log(error);
       });
     },
-    // nivel(){
-    //   Api.llamardatos().then(({data}) => {
-    //     console.log(data);
-    //   })
-    // },
-    listar(){
-      axios.get("/api/llamardatos").then(({data}) => {
-        console.log(data)
-        // this.lista = data;
+    nivel(){
+      Api.llamardatos().then(({data}) => {
+        console.log(data);
       })
-    }
+    },
   },
   mounted() {
     //this.llamarpreguntas();
-    this.listar();
   },
 };
 </script>
