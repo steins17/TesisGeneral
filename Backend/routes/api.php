@@ -24,10 +24,11 @@ Route::post('/login', 'LoginController@login');
 Route::post('/logout', 'LoginController@logout')->middleware('auth:sanctum');
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    
-
     Route::get('/perfil', 'PerfilController@recuperar');
     Route::post('/perfil', 'PerfilController@restablecer');
+    Route::post('/imagen', 'PerfilController@imagen');
+
+    Route::get('/nivel2/llamardatos', 'Nivel2Controller@llamardatos');
 
     //rutas del nivel 2
     Route::post('/nivel2/letras/respuesta', 'Nivel2Controller@letras_respuesta');
@@ -40,4 +41,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/nivel3/palabras/respuestas', 'Nivel3Controller@palabras_respuesta');
 });
 
-Route::get('/nivel2/llamardatos', 'Nivel2Controller@llamardatos');
+//Route::get('/perfil/imagenver/{imagen}', 'PerfilController@imagenver');
+Route::get('/perfil/imagenver/{imagen}', function ($imagen) {
+    $filePath = base_path().'/imagenes/'.$imagen;
+    return File::get($filePath);
+});

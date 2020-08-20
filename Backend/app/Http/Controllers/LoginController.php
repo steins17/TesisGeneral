@@ -26,7 +26,7 @@ class LoginController extends Controller
             ]);
         }
 
-        return $user->createToken($request->device_name)->plainTextToken;
+        return $user->createToken("browser")->plainTextToken;
     }
 
     public function logout(Request $request)

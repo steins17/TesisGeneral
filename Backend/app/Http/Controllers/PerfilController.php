@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Models\Persona;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+
+use Carbon\Carbon;
 
 class PerfilController extends Controller
 {
@@ -16,24 +19,18 @@ class PerfilController extends Controller
         $data = User::select("*")->leftJoin("persona", "persona.id_users", "=", "users.id")->where("users.id", "=", $user)->get();
         return $data[0];
     }
-
     public function restablecer(Request $request){
         $id = Auth::user()->id;
         $request->validate([
-            'name' => ['required', 'name', 'users'],
-            'email' => ['required', 'email', 'unique:users'],
-            'fecha_nacimiento' => ['required', 'fecha_nacimiento', 'persona'],
-            'edad' => ['required', 'edad', 'persona'],
-            'telefono' => ['required', 'telefono', 'persona'],
-            'celular' => ['required', 'celular', 'persona'],
-            'direccion' => ['required', 'direccion', 'persona'],
-            'foto' => ['required', 'foto', 'persona']
+            'name' => ['required'],
+            'email' => ['required'],
+            'fecha_nacimiento' => ['required'],
+            'edad' => ['required'],
+            'telefono' => ['required'],
+            'celular' => ['required'],
+            'direccion' => ['required'],
         ]);
-        if(strlen($request->password)>=8){
-            $request->validate([
-                'password' => ['required', 'min:8', 'confirmed']
-            ]);
-        }
+        
         /*
             tipos
             1=>escuchar-imagen
@@ -43,22 +40,56 @@ class PerfilController extends Controller
             5=>hablar
         */
 
-        $user = User::findOrFail();
+        $user = User::findOrFail($request->id);
         $user->name= $request->name;
         $user->email= $request->email;
         $user->save();
 
-        $perfil = Persona::findOrFail();
-        $perfil->fecha_nacimiento=$request->fecha_nacimiento;
-        $perfil->edad= $request->edad;
-        $perfil->telefono= $request->telefono;
-        $perfil->celular= $request->celular;
-        $perfil->direccion= $request->direccion;
-        $perfil->foto= $request->foto;
-        $perfil->save();
+        $dat=date_create($request->fecha_nacimiento);
+        $date = date_format($dat,"Y-m-d");
+
+        if(isset($request->id_persona)){
+            $perfil = Persona::findOrFail($request->id_persona);
+            $perfil->fecha_nacimiento=$date;
+            $perfil->edad= $request->edad;
+            $perfil->telefono= $request->telefono;
+            $perfil->celular= $request->celular;
+            $perfil->direccion= $request->direccion;
+            $perfil->id_users= $request->id;
+            $perfil->save();
+        }else{
+            $perfil = new Persona();
+            $perfil->fecha_nacimiento=$date;
+            $perfil->edad= $request->edad;
+            $perfil->telefono= $request->telefono;
+            $perfil->celular= $request->celular;
+            $perfil->direccion= $request->direccion;
+            $perfil->id_users= $request->id;
+            $perfil->save();
+        }
+    }
+    public function imagen(Request $request){
+        $id = Auth::user()->id;
+        if ($request->file('imagen')) {
+            $file_imagen = $request->file('imagen');
+            $nombre = $file_imagen->getClientOriginalName();
+            $data = User::where("id", "=", $id)->get();
+            $imagenborrar = $data[0]["foto"];
+            if(strlen($imagenborrar)>3){
+                if (file_exists(base_path().'/imagenes/'.$imagenborrar)) {
+                    unlink(base_path().'/imagenes/'.$imagenborrar);
+                }
+            }
+            $nombre_imagen = $id.'tesis'. $nombre;
+            $request->file('imagen')->move(base_path().'/imagenes', $nombre_imagen);
+
+            $user = User::findOrFail($id);
+            $user->foto = $nombre_imagen;
+            $user->save();
+        }
 
         $request->user()->tokens()->delete();
         $user = User::where('id', $id)->first();
-        return $user->createToken($request->device_name)->plainTextToken;
+        return $user->createToken("browser")->plainTextToken;
     }
 }

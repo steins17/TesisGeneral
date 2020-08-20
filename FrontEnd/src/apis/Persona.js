@@ -6,5 +6,8 @@ export default {
   },
   restablecer(form) {
     return Api().post("/perfil", form );
+  },
+  imagen(form) {
+    return Api().post("/imagen", form );
   }
 };

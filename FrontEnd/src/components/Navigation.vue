@@ -16,7 +16,7 @@
         <dropdown-menu v-model="menuver" :interactive="interactive">
           <button type="button" left="" class="vs-con-dropdown parent-dropdown cursor-pointer pr-2 pl-2 ml-1 mr-md-3">
             <a href="#" class="text-white-dark user-image">
-              <img src="archivos/imagenes/perfiles/descarga.jpg" alt="User">
+              <img :src="baseURL+'/perfil/imagenver/'+user.foto" alt="User">
             </a>
           </button>   
           <div slot="dropdown"> 
@@ -44,7 +44,7 @@
         <header class="vs-sidebar--header" v-if="user">
           <div class="header-sidebar text-center">
             <div class="con-vs-avatar 70px" style="width: 70px; height: 70px; background: rgb(195, 195, 195);">
-              <div class="con-img vs-avatar--con-img"><img src="archivos/imagenes/perfiles/descarga.jpg" alt="">
+              <div class="con-img vs-avatar--con-img"><img :src="baseURL+'/perfil/imagenver/'+user.foto" alt="">
               </div></div>
               <h4>{{ user.name }}<br><small>{{ user.email }}</small></h4>
           </div>
@@ -127,8 +127,6 @@
     <div class="main-container-fluid" :class="{'espaciado':!hover}">
       <router-view />
     </div>
-
-
     <vs-dialog v-model="modal.login">
         <template #header>
           <h4 class="not-margin">
@@ -239,6 +237,7 @@
       'dropdown-menu':DropdownMenu
     },
     data: () => ({
+      baseURL: "http://localhost:8000/api",
       open: true,
       hover:true,
       reduce:true,
@@ -277,6 +276,10 @@
             this.user = response.data;
           }).catch(error => {
             if (error.response.status === 401) {
+              localStorage.removeItem("token");
+              console.log("debes iniciar sesión");
+            }
+            if (error.response.status === 500) {
               localStorage.removeItem("token");
               console.log("debes iniciar sesión");
             }
