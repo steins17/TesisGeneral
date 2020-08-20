@@ -104,10 +104,10 @@
           <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-4 text-center">
             <h3 class="mb-3">Foto de Usuario</h3>
             <div class="card w-100 text-center" style="border: none;" v-if="previewImage || form.foto">
-              <div class="imagePreviewWrapper" v-if="previewImage" :style="{ 'background-image': `url(${previewImage})` }" @click="selectImage"></div>
+              <div class="imagePreviewWrapper"  v-if="previewImage" :style="{ 'background-image': `url(${previewImage})` }" @click="selectImage"></div>
               <img class="imagePreviewWrapper" v-else-if="form.foto" :src="baseURL+'/perfil/imagenver/'+form.foto" @click="selectImage">
             </div>
-            <vs-button @click="agregarimagen" v-else class="btn btn-primary btn-block btnimge" style="float: right;margin-right: 2px">Agregar Imagen</vs-button>
+            <vs-button @click="agregarimagen" v-else class="btn btn-primary btn-block btnimge" style="float: right;margin-right: 2px;">Agregar Imagen</vs-button>
             <input ref="fileInput" id="fileimage" type="file" @input="pickFile" style="display:none">
             <span class="text-danger" v-if="error_validacion.foto">
               {{ error_validacion.foto[0] }}
@@ -247,7 +247,7 @@ export default {
   .btnimge{
     margin-right: 2px;
     padding: 0!important;
-    border-radius: 0px;
+    border-radius: 10px;
     margin: 0px;
     margin-top: -1px;
   }

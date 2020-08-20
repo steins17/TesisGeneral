@@ -54,7 +54,7 @@
               </vs-col>
               <vs-col vs-justify="flex" class="container" w="4">
                 <div class="center content-inputs" v-for="(tr,index_h) in tr" :key="index_h">
-                  <vs-input state="success" success v-model="value" placeholder="Escribir" style="float: right;margin-right: 87px;margin-bottom: 35px"@click="seleccionar_frases(index, tr, index_h)"/>
+                  <vs-input state="success"  placeholder="Escribir" style="float: right;margin-right: 87px;margin-bottom: 35px"@click="seleccionar_frases(index, tr, index_h)"/>
                 </div>
                 <div class="container" style="bottom: 0px;display: block;">
                   <vs-button  style="float: right;margin-right: 80px;margin-bottom: 20px;--vs-color: 25, 91, 255;border-radius: 70px;width: 40px;height: 40px;">

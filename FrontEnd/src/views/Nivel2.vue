@@ -75,8 +75,8 @@
                         <div class="card-head text-center">
                           Mayúscula - Minúscula
                         </div>
-                      <div class="card estilodecard" :class="{'seleccionado':tr.status}" @click="seleccionar_silabas(index, tr, index_h)">
-                        <img :src="'archivos/imagenes/silabas/'+tr.valor+'.png'" class="w-100" style="border-radius: 50px"/>
+                      <div class="card estilodecard estilocard" :class="{'seleccionado':tr.status}" @click="seleccionar_silabas(index, tr, index_h)">
+                        <img :src="'archivos/imagenes/silabas/'+tr.valor+'.png'" style="border-radius: 50px"/>
                       </div><br>
                     </vs-col>
                   </vs-row>
@@ -417,5 +417,10 @@ export default {
   .card-ajuste img{
     width: 300px;
     height: 250px;
+  }
+
+  .estilocard img{
+    width: 200px;
+    height: 300px;
   }
 </style>

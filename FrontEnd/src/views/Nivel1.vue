@@ -42,8 +42,8 @@
         <vs-row>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" v-for="(tr,index) in comparacion" :key="index">
             <div class="col-lg-12 mb-4"> 
-              <div class="card" style="border-radius: 50px">
-                <img :src="'archivos/imagenes/ejercicios/'+tr+'.png'" class="w-100" style="border-radius: 50px"/>
+              <div class="card estilocard2" style="border-radius: 50px">
+                <img :src="'archivos/imagenes/ejercicios/'+tr+'.png'"  style="border-radius: 50px"/>
                 <div class="card-head text-center">
                   Mayúscula - Minúscula
                 </div>
@@ -66,8 +66,8 @@
       <div class="tab-pane fade  mt-5" id="contact" role="tabpanel" aria-labelledby="contact-tab">
         <vs-row>
           <vs-col vs-type="flex" w="6" v-for="(tr,index) in silabas.preguntas" :key="index">
-              <div class="card m-3" style="width: 609px;height: 540px;">
-                <img :src="'archivos/imagenes/silabas/'+tr+'.png'" class="w-100"/>
+              <div class="card m-4 estilocard" style="border-radius: 50px">
+                <img :src="'archivos/imagenes/silabas/'+tr+'.png'" style="border-radius: 50px"/>
                 <vs-row vs-justify="flex-end" style="position:absolute;bottom: 0px;display: block;">
                   <vs-button color="primary" type="gradient" style="float: right;margin-right: -12px;margin-bottom: -10px;--vs-color: 25, 91, 255;border-radius: 89px;width: 40px;height: 40px;" @click.prevent="sonido(tr)">
                     <vs-tooltip circle>
@@ -107,3 +107,22 @@ export default {
   }
 }
 </script>
+
+<style>
+  .estilocard{
+    display: block;
+    text-align: center;
+  }
+  .estilocard img{
+    width: 200px;
+    height: 350px;
+  }
+  .estilocard2{
+    display: block;
+    text-align: center;
+  }
+  .estilocard2 img{
+    width: 400px;
+    height: 390px;
+  }
+</style>
