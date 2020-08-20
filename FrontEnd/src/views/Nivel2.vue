@@ -103,12 +103,12 @@
                   <img :src="'archivos/imagenes/ima_ejer/'+tr.imagen+'.jpg'" class="card-img-top" style="border-radius: 50px"  alt="Card image cap"/>
                   <div class="card-body">
                     <vs-row>
-                      <vs-col vs-type="flex" vs-justify="center" vs-align="center" style="margin: 15px" >
+                      <vs-col vs-type="flex" vs-justify="center" vs-align="center" style="margin: 15px">
                         <div class="card-head text-center" style="position: center;margin-bottom: 20px">
                           <h2><span>{{tr.oracion}}</span></h2>
                         </div>
-                        <div class="center content-inputs">
-                        <vs-input   color="#7d33ff" label-placeholder="Escribir" style="margin-bottom: 15px"/>
+                        <div class="center content-inputs" v-for="(tr,index_2) in tr" :key="index_2">
+                        <vs-input   color="#7d33ff" label-placeholder="Escribir" style="margin-bottom: 15px" @click="selec_oraciones(index, tr, index_2)"/>
                         </div>
                       </vs-col>
                     </vs-row>
@@ -312,7 +312,6 @@ export default {
       value:"",
       seleccionado:null,  
       variable_seleccionado:[],
-      lista: []
     };
   },
   methods: {
@@ -345,6 +344,16 @@ export default {
       this.silabas.preguntas[index].respuestas[index_h].status = true;
       this.variable_seleccionado.splice(index, 1, tr)
     },
+    selec_oraciones(index, tr, index_2){
+      if(this.variable_seleccionado.length==0){
+        this.oraciones.preguntas.forEach(el => {
+          this.variable_seleccionado.push({})
+        })
+      }
+      this.oraciones.preguntas[index].respuesta[index_2];
+      this.variable_seleccionado.splice(index,1,tr)
+    },
+    
     enviarletras(){
       Api.enviarletras(this.variable_seleccionado).then( ({data}) => {
         // console.log(data);

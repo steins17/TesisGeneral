@@ -29,15 +29,17 @@
                       </template>
                     </vs-tooltip>
                   </vs-button>
-                  <vs-input state="success"  placeholder="Escribir" style="margin-bottom: 20px"></vs-input>
+                  <div v-for="(tr,index_hijo) in tr.respuesta" :key="index_hijo">
+                    <vs-input state="success"  placeholder="Escribir" style="margin-bottom: 20px" @click="seleccionar_letras(index, tr, index_hijo)"></vs-input>
+                  </div>
                 </vs-row>
               </div>
             </div>
           </div>
         </vs-col>
       </vs-row>
-      <div class="content-inputs ">
-        <vs-button color="primary"  style="float: right;margin-bottom: 20px;--vs-color: 25, 91, 255;width: 100px;height: 100px;" type="gradient" @click="enviarletras()">
+      <div class="content-inputs " >
+        <vs-button color="primary"  style="float: right;margin-bottom: 20px;--vs-color: 25, 91, 255;width: 100px;height: 100px;" type="gradient">
           <vs-tooltip circl>
             <i class="fas fa-check fa-2x"></i>
             <template #tooltip>
@@ -46,7 +48,6 @@
           </vs-tooltip>
         </vs-button>
       </div>
-      {{variable_seleccionado}}
     </div>
     <!-- silabas -->
     <div  class="tab-pane fade show  mt-5" id="b" role="tabpanel" aria-labelledby="leve3-tab">
@@ -65,7 +66,9 @@
                       </template>
                     </vs-tooltip>
                   </vs-button>
-                    <vs-input state="success"   placeholder="Escribir" style="margin-bottom: 20px"></vs-input>
+                  <div v-for="(tr,index_h) in tr" :key="index_h">
+                    <vs-input state="success"   placeholder="Escribir" style="margin-bottom: 20px" @click="seleccionar_silabas(index, tr, index_h)"/>
+                  </div>
                 </vs-row>
               </div>
             </div>
@@ -82,6 +85,7 @@
           </vs-tooltip>
         </vs-button>
         </div>
+        {{variable_seleccionado}}
     </div>
     <!-- palabra -->
     <div  class="tab-pane fade show  mt-5" id="c" role="tabpanel" aria-labelledby="lev3-tab">
@@ -100,7 +104,9 @@
                       </template>
                     </vs-tooltip>
                   </vs-button>
-                    <vs-input state="success"   placeholder="Escribir" style="margin-bottom: 20px"></vs-input>
+                  <div v-for="(tr,index_hi) in tr" :key="index_hi">
+                    <vs-input state="success"   placeholder="Escribir" style="margin-bottom: 20px" @click="seleccionar_palabras(index, tr, index_hi)"></vs-input>
+                  </div>
                 </vs-row>  
               </div>
             </div>
@@ -119,6 +125,7 @@
       </div>
     </div>
   </div>
+  {{variable_seleccionado}}
 </div>
 </template>
 <script src="archivos/voz.js"></script>
@@ -300,6 +307,33 @@ export default {
       responsiveVoice.speak(palabra, "Spanish Latin American Female");
       //var voicelist = responsiveVoice.getVoices();
       //console.log(voicelist);
+    },
+    seleccionar_letras(index, tr, index_hijo){
+      if(this.variable_seleccionado.length==0){
+        this.letras.preguntas.forEach(el => {
+          this.variable_seleccionado.push({});
+        });
+      } 
+      this.letras.preguntas[index].respuesta[index_hijo];
+      this.variable_seleccionado.splice(index,1,tr);
+    },
+    seleccionar_silabas(index, tr, index_h){
+      if(this.variable_seleccionado.length==0){
+        this.silabas.preguntas.forEach(el => {
+          this.variable_seleccionado.push({});
+        });
+      } 
+      this.silabas.preguntas[index].respuesta[index_h];
+      this.variable_seleccionado.splice(index,1,tr);
+    },
+    seleccionar_palabras(index, tr, index_hi){
+      if(this.variable_seleccionado.length==0){
+        this.letras.preguntas.forEach(el => {
+          this.variable_seleccionado.push({});
+        });
+      } 
+      this.letras.preguntas[index].respuesta[index_hi];
+      this.variable_seleccionado.splice(index,1,tr);
     },
     enviarletras(){
       Api.enviarletras(this.variable_seleccionado).then( ({data}) => {

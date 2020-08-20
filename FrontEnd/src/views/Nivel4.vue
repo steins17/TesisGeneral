@@ -21,10 +21,10 @@
                 </div>
               </vs-col>
               <vs-col vs-justify="flex" class="container" w="4">
-                <div class="center content-inputs">
-                  <vs-input state="success" success v-model="value" placeholder="Escribir" style="float: right;margin-right: 87px;margin-bottom: 35px"></vs-input>
+                <div class="center content-inputs" v-for="(tr,index_hijo) in tr" :key="index_hijo">
+                  <vs-input state="success" success v-model="value" placeholder="Escribir" style="float: right;margin-right: 87px;margin-bottom: 35px"@click="seleccionar_oraciones(index, tr, index_hijo)"/>
                 </div>
-                <div class="container" style="position:absolute;display: block;">
+                <div class="container" style=";display: block;">
                   <vs-button  style="float: right;margin-right: 80px;margin-bottom: 20px;--vs-color: 25, 91, 255;border-radius: 70px;width: 40px;height: 40px;">
                     <vs-tooltip circle>
                       <i class="fas fa-microphone-alt fa-2x"></i>
@@ -39,6 +39,7 @@
           </div>     
         </vs-col>
       </vs-row>
+      {{variable_seleccionado}}
     </div>
     <!-- frases -->
     <div  class="tab-pane fade show mt-5" id="b" role="tabpanel" aria-labelledby="leve3-tab">
@@ -52,10 +53,10 @@
                 </div>
               </vs-col>
               <vs-col vs-justify="flex" class="container" w="4">
-                <div class="center content-inputs">
-                  <vs-input state="success" success v-model="value" placeholder="Escribir" style="float: right;margin-right: 87px;margin-bottom: 35px"></vs-input>
+                <div class="center content-inputs" v-for="(tr,index_h) in tr" :key="index_h">
+                  <vs-input state="success" success v-model="value" placeholder="Escribir" style="float: right;margin-right: 87px;margin-bottom: 35px"@click="seleccionar_frases(index, tr, index_h)"/>
                 </div>
-                <div class="container" style="position:absolute;bottom: 0px;display: block;">
+                <div class="container" style="bottom: 0px;display: block;">
                   <vs-button  style="float: right;margin-right: 80px;margin-bottom: 20px;--vs-color: 25, 91, 255;border-radius: 70px;width: 40px;height: 40px;">
                     <vs-tooltip circle>
                       <i class="fas fa-microphone-alt fa-2x"></i>
@@ -70,6 +71,7 @@
           </div>     
         </vs-col>
       </vs-row>
+      {{variable_seleccionado}}
     </div>
     
 
@@ -160,6 +162,24 @@ export default {
     }
   },
   methods: {
+    seleccionar_oraciones(index, tr, index_hijo){
+      if(this.variable_seleccionado.length==0){
+        this.oraciones.preguntas.forEach(el => {
+          this.variable_seleccionado.push({});
+        });
+      } 
+      this.oraciones.preguntas[index].respuesta[index_hijo];
+      this.variable_seleccionado.splice(index,1,tr);
+    },
+    seleccionar_frases(index, tr, index_hijo){
+      if(this.variable_seleccionado.length==0){
+        this.frases.preguntas.forEach(el => {
+          this.variable_seleccionado.push({});
+        });
+      } 
+      this.frases.preguntas[index].respuesta[index_hijo];
+      this.variable_seleccionado.splice(index,1,tr);
+    },
     enviaroraciones(){
       Api.enviaroraciones(this.variable_seleccionado).then( ({data}) => {
         // console.log(data);
@@ -174,11 +194,6 @@ export default {
         console.log(error);
       });
     },
-    // nivel(){
-    //   Api.llamardatos().then(({data}) => {
-    //     console.log(data);
-    //   })
-    // }
   }
 }
 </script>
