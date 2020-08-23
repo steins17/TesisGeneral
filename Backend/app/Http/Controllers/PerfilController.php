@@ -92,4 +92,26 @@ class PerfilController extends Controller
         $user = User::where('id', $id)->first();
         return $user->createToken("browser")->plainTextToken;
     }
+    public function password(Request $request){
+        $id = Auth::user()->id;
+
+        $user = User::where('id', $id)->first();
+        if (!$user || !Hash::check($request->old_password, $user->password)) {
+            throw ValidationException::withMessages([
+                'old_password' => ['The provided credentials are incorrect.'],
+            ]);
+        }
+
+        $request->validate([
+            'password' => ['required', 'min:8', 'confirmed']
+        ]);
+
+        $userc = User::findOrFail($request->id);
+        $userc->password = Hash::make($request->password);
+        $userc->save();
+
+        $request->user()->tokens()->delete();
+        $user = User::where('id', $id)->first();
+        return $user->createToken("browser")->plainTextToken;
+    }
 }

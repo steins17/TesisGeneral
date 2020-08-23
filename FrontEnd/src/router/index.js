@@ -16,18 +16,6 @@ const router = new Router({
       path: '',
       component: () => import('../components/Navigation'),
       children: [
-        /*{
-          path: "/login",
-          name: "Login",
-          component: () => import('../views/Login'),
-          meta: { guestOnly: true }
-        },
-        {
-          path: "/registro",
-          name: "Registro",
-          component: () => import('../views/Registro'),
-          meta: { guestOnly: true }
-        },*/
         {
           path: "/",
           name: "Inicio",

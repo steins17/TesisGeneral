@@ -1,7 +1,10 @@
 <template>
   <div class="container">
     <div class="card" style="border-radius: 20px">
-      <div class="row form-material">
+      <div class="row form-material" v-if="tipo">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+          <h3 class="mt-4 text-center mb-5">Mi perfil de usuario</h3>
+        </div>
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-4">
           <div class="form-group" style="margin: 10px">
             <label for="name">Nombre:</label>
@@ -115,11 +118,59 @@
           </div>
         </div>
       </div>
-      <div class="form-group" style="margin: 10px">
-        <vs-button @click="restablecer" class="btn btn-primary btn-block" style="float: right;margin-right: 2px">Guardar</vs-button>
+      <div class="row form-material" v-else>
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+          <h3 class="mt-4 text-center mb-5">Reestablecer contraseña</h3>
+        </div>
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-4">
+          <div class="form-group" style="margin: 10px">
+            <label for="name">Contraseña Anterior:</label>
+            <div class="input-group mb-2">
+              <input type="text"  class="form-control" id="name" v-model="form.old_password">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fas fa-key"></i></div>
+              </div>
+            </div>
+            <span class="text-danger" v-if="error_validacion.old_password">
+              {{ error_validacion.old_password[0] }}
+            </span>
+          </div>
+        </div>
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-4">
+          <div class="form-group" style="margin: 10px">
+            <label for="name">Contraseña Nueva:</label>
+            <div class="input-group mb-2">
+              <input type="text"  class="form-control" id="name" v-model="form.password">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fas fa-lock"></i></div>
+              </div>
+            </div>
+            <span class="text-danger" v-if="error_validacion.password">
+              {{ error_validacion.password[0] }}
+            </span>
+          </div>
+        </div>
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-4">
+          <div class="form-group" style="margin: 10px">
+            <label for="edad">Repetir Contraseña Nueva:</label>
+            <div class="input-group mb-2">
+              <input type="text" class="form-control" id="inlineFormInputGroup" v-model="form.password_confirmation">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fas fa-lock"></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="form-group mt-3 mb-4 text-center">
-        Quieres cambiar de contraseña? <a href="Restablecer" >Restablecer contreseña</a>
+      <div class="form-group" style="margin: 10px">
+        <vs-button @click="restablecer" class="btn btn-primary btn-block" style="float: right;margin-right: 2px" v-if="tipo">Guardar</vs-button>
+        <vs-button @click="restablecer_pass" class="btn btn-primary btn-block" style="float: right;margin-right: 2px" v-else>Guardar</vs-button>
+      </div>
+      <div class="form-group mt-3 mb-4 text-center" v-if="tipo">
+        Quieres cambiar de contraseña? <a href="javascript:void(0)" @click="tipo=false">Restablecer contreseña</a>
+      </div>
+      <div class="form-group mt-3 mb-4 text-center" v-else>
+        Quieres cambiar tus datos? <a href="javascript:void(0)" @click="tipo=true">Volver a mi perfil</a>
       </div>
     </div>
   </div>
@@ -141,6 +192,7 @@ export default {
       form: {
         name: "",
         email: "",
+        old_password:"",
         password: "",
         password_confirmation: "",
         fecha_nacimiento:"",
@@ -154,6 +206,7 @@ export default {
       error:[],
       error_validacion:[],
       previewImage: null,
+      tipo: true,
     }
   },
   methods: {
@@ -163,6 +216,7 @@ export default {
       });
     },
     restablecer(){
+      this.clean();
       Persona.restablecer(this.form).then(() => {
         let formData = new FormData();
         formData.append("imagen", this.form.foto);
@@ -188,6 +242,31 @@ export default {
           this.error_validacion = error.response.data.errors;
         }
       });
+    },
+    restablecer_pass(){
+      this.clean();
+      Persona.password(this.form).then(({data}) => {
+        console.log(data);
+        this.$root.$emit("login", true);
+        localStorage.setItem("token", data);
+        this.$vs.notification({
+          square: true,
+          color:'success',
+          title: 'Cambios guardados satisfactoriamente',
+          text: 'La contraseña se ha guardado en el sistema'
+        })
+        setTimeout(() => {
+          location.reload();
+        }, 1000);
+      }).catch(error => {
+        console.log(error.response.data.errors);
+        if (error.response.status === 422) {
+          this.error_validacion = error.response.data.errors;
+        }
+      });
+    },
+    clean(){
+      this.error_validacion = [];
     },
     //imagen
     selectImage() {

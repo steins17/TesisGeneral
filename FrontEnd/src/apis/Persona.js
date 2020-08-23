@@ -9,5 +9,8 @@ export default {
   },
   imagen(form) {
     return Api().post("/imagen", form );
+  },
+  password(form) {
+    return Api().post("/password", form );
   }
 };

@@ -27,6 +27,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/perfil', 'PerfilController@recuperar');
     Route::post('/perfil', 'PerfilController@restablecer');
     Route::post('/imagen', 'PerfilController@imagen');
+    Route::post('/password', 'PerfilController@password');
 
     Route::get('/nivel2/llamardatos', 'Nivel2Controller@llamardatos');
 
@@ -48,6 +49,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 Route::get('/nivel2/llamardatos', 'Nivel2Controller@llamardatos');
 Route::get('/nivel3/llamardatos', 'Nivel3Controller@llamardatos');
 Route::get('/nivel4/llamardatos', 'Nivel4Controller@llamardatos');
+
+Route::get('/lang/{lang}', 'Controller@set_language')->name('set_language');
 
 //visualizar imagenes almacenados en el servidor
 Route::get('/perfil/imagenver/{imagen}', function ($imagen) {

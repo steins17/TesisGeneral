@@ -15,16 +15,16 @@
       <template #right v-if="user">
         <dropdown-menu v-model="menuver" :interactive="interactive">
           <button type="button" left="" class="vs-con-dropdown parent-dropdown cursor-pointer pr-2 pl-2 ml-1 mr-md-3">
-            <a href="#" class="text-white-dark user-image">
+            <a href="javascript:void(0)" class="text-white-dark user-image">
               <img :src="baseURL+'/perfil/imagenver/'+user.foto" alt="User">
             </a>
           </button>   
           <div slot="dropdown"> 
-              <a class="dropdown-item vs-sidebar__item__text color-drem" href="Restablecer"><i class="fas fa-user"></i> Mi perfil</a>
-              <a class="dropdown-item vs-sidebar__item__text color-drem" href="#"> <i class="fas fa-poll-h"></i> Mis respuestas</a>
-              <a class="dropdown-item vs-sidebar__item__text color-drem" href="#"> <i class="fas fa-cogs"></i> Configuración</a>
-              <hr>
-              <a class="dropdown-item vs-sidebar__item__text color-drem" href="#" @click="logout()"> <i class="fa fa-sign-out"></i> Cerrar sesión</a>
+            <router-link class="dropdown-item vs-sidebar__item__text color-drem" to="/prolife"> <i class="fas fa-user"></i> Mi perfil</router-link>
+            <router-link class="dropdown-item vs-sidebar__item__text color-drem" to="/prolife"> <i class="fas fa-poll-h"></i> Mis respuestas</router-link>
+            <router-link class="dropdown-item vs-sidebar__item__text color-drem" to="/prolife"> <i class="fas fa-cogs"></i> Configuración</router-link>
+            <hr>
+            <a class="dropdown-item vs-sidebar__item__text color-drem" href="javascript:void(0)" @click="logout()"> <i class="fa fa-sign-out"></i> Cerrar sesión</a>
           </div>
         </dropdown-menu>
       </template>
@@ -278,10 +278,13 @@
             if (error.response.status === 401) {
               localStorage.removeItem("token");
               console.log("debes iniciar sesión");
-            }
-            if (error.response.status === 500) {
+            }else if (error.response.status === 500) {
               localStorage.removeItem("token");
               console.log("debes iniciar sesión");
+            }else{
+              localStorage.removeItem("token");
+              console.log("debes iniciar sesión");
+              location.reload();
             }
           });
         }
@@ -420,6 +423,7 @@
   }
   .vs-avatar--con-img img {
     width: 100%;
+    height: 100%;
   }
   .small, small {
     font-size: 80%;
@@ -565,7 +569,8 @@
   }
   .user-image img {
     border-radius: 100%;
-    width: 32px;
+    width: 35px;
+    height: 35px;
   }
   .vs-con-dropdown {
     position: relative;
