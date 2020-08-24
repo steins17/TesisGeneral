@@ -20,7 +20,7 @@
             <div class="card m-3" style="border-radius: 50px">
               <img :src="'archivos/imagenes/escuchar'+'.png'" class="card-img-top" style="border-radius: 50px"  alt="Card image cap"/>
               <div class="card-body">
-                <vs-row vs-justify="flex-end" style=";bottom: 0px;display: block;">
+                <vs-row vs-justify="flex-end" style=";bottom: 10px;">
                   <vs-button color="dark" type="gradient" style="margin: 15px;border-radius:;width: 90px;height: 90px;" @click.prevent="sonido(tr.audio)">
                     <vs-tooltip circle>
                       <i class="fas fa-volume-up fa-2x"></i>
@@ -29,8 +29,8 @@
                       </template>
                     </vs-tooltip>
                   </vs-button>
-                  <div v-for="(tr,index_hijo) in tr.respuesta" :key="index_hijo">
-                    <vs-input state="success"  placeholder="Escribir" style="margin-bottom: 20px" @click="seleccionar_letras(index, tr, index_hijo)"></vs-input>
+                  <div v-for="(tr,index_hijo) in tr.respuestas" :key="index_hijo">
+                    <vs-input state="success" v-model="tr.respuesta_campo" class="w-100  mb-3 mt-5"  placeholder="Escribir" style="margin-bottom: 20px" @click="seleccionar_letras(index, tr, index_hijo)"></vs-input>
                   </div>
                 </vs-row>
               </div>
@@ -57,7 +57,7 @@
             <div class="card m-3 " style="border-radius: 50px" >
               <img :src="'archivos/imagenes/escuchar'+'.png'" class="card-img-top" style="border-radius: 50px"  alt="Card image cap"/>
               <div class="card-body" >
-                <vs-row vs-justify="flex-end" style="bottom: 0px;display: block;">
+                <vs-row vs-justify="flex-end" style="bottom: 0px">
                   <vs-button color="dark" type="gradient" style="margin: 15px;border-radius:;width: 90px;height: 90px;" @click.prevent="sonido(tr.audio)">
                     <vs-tooltip circle>
                       <i class="fas fa-volume-up fa-2x"></i>
@@ -66,8 +66,8 @@
                       </template>
                     </vs-tooltip>
                   </vs-button>
-                  <div v-for="(tr,index_h) in tr" :key="index_h">
-                    <vs-input state="success"   placeholder="Escribir" style="margin-bottom: 20px" @click="seleccionar_silabas(index, tr, index_h)"/>
+                  <div v-for="(tr,index_h) in tr.respuestas" :key="index_h">
+                    <vs-input state="success" v-model="tr.respuesta_campo" class="w-100  mb-3 mt-5"  placeholder="Escribir" style="margin-bottom: 20px" @click="seleccionar_silabas(index, tr, index_h)"/>
                   </div>
                 </vs-row>
               </div>
@@ -95,7 +95,7 @@
             <div class="card m-3 " style="border-radius: 50px">
               <img :src="'archivos/imagenes/escuchar'+'.png'" class="card-img-top" style="border-radius: 50px"  alt="Card image cap"/>
               <div class="card-body" >
-                <vs-row vs-justify="flex-end" style="bottom: 0px;display: block;">
+                <vs-row vs-justify="flex-end" style="bottom: 0px;">
                   <vs-button color="dark" type="gradient" style="margin: 15px;border-radius:;width: 90px;height: 90px;" @click.prevent="sonido(tr.audio)">
                     <vs-tooltip circle>
                       <i class="fas fa-volume-up fa-2x"></i>
@@ -104,8 +104,8 @@
                       </template>
                     </vs-tooltip>
                   </vs-button>
-                  <div v-for="(tr,index_hi) in tr" :key="index_hi">
-                    <vs-input state="success"   placeholder="Escribir" style="margin-bottom: 20px" @click="seleccionar_palabras(index, tr, index_hi)"></vs-input>
+                  <div v-for="(tr,index_hi) in tr.respuestas" :key="index_hi">
+                    <vs-input state="success" v-model="tr.respuesta_campo" class="w-100  mb-3 mt-5"  placeholder="Escribir" style="margin-bottom: 20px" @click="seleccionar_palabras(index, tr, index_hi)"></vs-input>
                   </div>
                 </vs-row>  
               </div>
@@ -138,163 +138,284 @@ export default {
       letras:{
         preguntas:[
           {
-            id:"1",
+            foto:"escuchar.png",
             audio:"s",
-            respuesta:"s"
+            respuestas:[
+              {
+                nombre: "s"
+              }
+            ]
           },
           {
-            id:"2",
+            foto:"escuchar.png",
             audio:"r",
-            respuesta:"r"
+            respuestas:[
+              {
+                nombre: "r"
+              }
+            ]
           },
           {
-            id:"3",
+            foto:"escuchar.png",
             audio:"t",
-            respuesta:"t"
+            respuestas:[
+              {
+                nombre: "t"
+              }
+            ]
           },
           {
-            id:"4",
+            foto:"escuchar.png",
             audio:"l",
-            respuesta:"l"
+            respuestas:[
+              {
+                nombre: "l"
+              }
+            ]
           },
           {
-            id:"5",
+            foto:"escuchar.png",
             audio:"f",
-            respuesta:"f"
+            respuestas:[
+              {
+                nombre: "f"
+              }
+            ]
           },
           {
-            id:"6",
+            foto:"escuchar.png",
             audio:"b",
-            respuesta:"b"
+            respuestas:[
+              {
+                nombre: "b"
+              }
+            ]
           },
           {
-            id:"7",
+            foto:"escuchar.png",
             audio:"x",
-            respuesta:"x"
+            respuestas:[
+              {
+                nombre: "x"
+              }
+            ]
           },
           {
-            id:"8",
+            foto:"escuchar.png",
             audio:"y",
-            respuesta:"y"
+            respuestas:[
+              {
+                nombre: "y"
+              }
+            ]
           },
           {
-            id:"9",
+            foto:"escuchar.png",
             audio:"o",
-            respuesta:"o"
+            respuestas:[
+              {
+                nombre: "o"
+              }
+            ]
           },
           {
-            id:"10",
+            foto:"escuchar.png",
             audio:"c",
-            respuesta:"c"
+            respuestas:[
+              {
+                nombre: "c"
+              }
+            ]
           },
+          
         ]
       },
       silabas:{
         preguntas:[
           {
-            id:"1",
+            foto:"escuchar.png",
             audio:"con",
-            respuesta:"con"
+            respuestas:[
+              {
+                nombre: "con"
+              }
+            ]
           },
           {
-            id:"2",
+            foto:"escuchar.png",
             audio:"ir",
-            respuesta:"ir"
+            respuestas:[
+              {
+                nombre: "ir"
+              }
+            ]
           },
           {
-            id:"3",
+            foto:"escuchar.png",
             audio:"que",
-            respuesta:"que"
+            respuestas:[
+              {
+                nombre: "que"
+              }
+            ]
           },
           {
-            id:"4",
+            foto:"escuchar.png",
             audio:"ya",
-            respuesta:"ya"
+            respuestas:[
+              {
+                nombre: "ya"
+              }
+            ]
           },
           {
-            id:"5",
+            foto:"escuchar.png",
             audio:"un",
-            respuesta:"un"
+            respuestas:[
+              {
+                nombre: "un"
+              }
+            ]
           },
           {
-            id:"6",
+            foto:"escuchar.png",
             audio:"in",
-            respuesta:"in"
+            respuestas:[
+              {
+                nombre: "in"
+              }
+            ]
           },
           {
-            id:"7",
-            audio:"immmm",
-            respuesta:"im"
+            foto:"escuchar.png",
+            audio:"im",
+            respuestas:[
+              {
+                nombre: "im"
+              }
+            ]
           },
           {
-            id:"8",
+            foto:"escuchar.png",
             audio:"si",
-           respuesta:"si" 
+            respuestas:[
+              {
+                nombre: "si"
+              }
+            ]
           },
           {
-            id:"9",
+            foto:"escuchar.png",
             audio:"por",
-            respuesta:"por"
+            respuestas:[
+              {
+                nombre: "por"
+              }
+            ]
           },
           {
-            id:"10",
-            audio:"ttoos",
-            respuesta:"tos"
+            foto:"escuchar.png",
+            audio:"tos",
+            respuestas:[
+              {
+                nombre: "tos"
+              }
+            ]
           },
+          
         ]
       },
       palabras:{
         preguntas:[
           {
-
-            id:"1",
+            foto:"escuchar.png",
             audio:"Cafetería",
-            respuesta:"Cafetería"
+            respuestas:[
+              {
+                nombre: "Cafetería"
+              }
+            ]
           },
           {
-            id:"2",
+            foto:"escuchar.png",
             audio:"Jinete",
-            respuesta:"Jinete"
+            respuestas:[
+              {
+                nombre: "Jinete"
+              }
+            ]
           },
           {
-            id:"3",
+            foto:"escuchar.png",
             audio:"Naranja",
-            respuesta:"Naranja"
+            respuestas:[
+              {
+                nombre: "Naranja"
+              }
+            ]
           },
           {
-            id:"4",
+            foto:"escuchar.png",
             audio:"Presentador",
-            respuesta:"Presentador"
+            respuestas:[
+              {
+                nombre: "Presentador"
+              }
+            ]
           },
           {
-            id:"5",
+            foto:"escuchar.png",
             audio:"Ballena",
-            respuesta:"Ballena"
+            respuestas:[
+              {
+                nombre: "Ballena"
+              }
+            ]
           },
           {
-            id:"6",
+            foto:"escuchar.png",
             audio:"Sandía",
-            respuesta:"Sandía"
+            respuestas:[
+              {
+                nombre: "Sandía"
+              }
+            ]
           },
           {
-            id:"7",
+            foto:"escuchar.png",
             audio:"Árboles",
-            respuesta:"Árboles"
+            respuestas:[
+              {
+                nombre: "Árboles"
+              }
+            ]
           },
           {
-            id:"8",
+            foto:"escuchar.png",
             audio:"Tablero",
-            respuesta:"Tablero"
+            respuestas:[
+              {
+                nombre: "Tablero"
+              }
+            ]
           },
           {
-            id:"9",
+            foto:"escuchar.png",
             audio:"Complejo",
-            respuesta:"Complejo"
+            respuestas:[
+              {
+                nombre: "Complejo"
+              }
+            ]
           },
           {
-            id:"10",
+            foto:"escuchar.png",
             audio:"Opinión",
-            respuesta:"opinion"
+            respuestas:[
+              {
+                nombre: "Opinión"
+              }
+            ]
           },
         ]
       },
@@ -314,7 +435,7 @@ export default {
           this.variable_seleccionado.push({});
         });
       } 
-      this.letras.preguntas[index].respuesta[index_hijo];
+      this.letras.preguntas[index].respuestas[index_hijo];
       this.variable_seleccionado.splice(index,1,tr);
     },
     seleccionar_silabas(index, tr, index_h){
@@ -323,7 +444,7 @@ export default {
           this.variable_seleccionado.push({});
         });
       } 
-      this.silabas.preguntas[index].respuesta[index_h];
+      this.silabas.preguntas[index].respuestas[index_h];
       this.variable_seleccionado.splice(index,1,tr);
     },
     seleccionar_palabras(index, tr, index_hi){
@@ -332,7 +453,7 @@ export default {
           this.variable_seleccionado.push({});
         });
       } 
-      this.letras.preguntas[index].respuesta[index_hi];
+      this.letras.preguntas[index].respuestas[index_hi];
       this.variable_seleccionado.splice(index,1,tr);
     },
     enviarletras(){
@@ -356,11 +477,13 @@ export default {
         console.log(error);
       });
     },
-    // nivel(){
-    //   Api.llamardatos().then(({data}) => {
-    //     console.log(data);
-    //   })
-    // }
+
   }
 }
 </script>
+
+<style >
+  .w-100 input{
+    width: 100%!important;
+  }
+</style>

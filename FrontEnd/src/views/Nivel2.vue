@@ -76,7 +76,7 @@
                           Mayúscula - Minúscula
                         </div>
                       <div class="card estilodecard estilocard" :class="{'seleccionado':tr.status}" @click="seleccionar_silabas(index, tr, index_h)">
-                        <img :src="'archivos/imagenes/silabas/'+tr.valor+'.png'" style="border-radius: 50px"/>
+                        <img :src="'archivos/imagenes/silabas/'+tr.foto" class="w-100" style="border-radius: 50px"/>
                       </div><br>
                     </vs-col>
                   </vs-row>
@@ -144,76 +144,14 @@ export default {
       },
       silabas:{
         preguntas:[
+          
           {
             audio:"da",
             respuestas:[
-              {id:1, valor:"add",},
-              {id:2, valor:"da",}
+              {id:9, valor:"ad"},
+              {id:10, valor:"da"}
             ]
-          },
-          {
-            audio:"li",
-            respuestas:[
-              {id:3, valor:"li",},
-              {id:4, valor:"ill",}
-            ]
-          },
-          {
-            audio:"om",
-            respuestas:[
-              {id:5, valor:"mmoo",},
-              {id:6, valor:"om",}
-            ]
-          },
-          {
-            audio:"ne",
-            respuestas:[
-              {id:7, valor:"ne",},
-              {id:8, valor:"eennn",}
-            ]
-          },
-          {
-            audio:"saaa",
-            respuestas:[
-              {id:9, valor:"saaa",},
-              {id:10, valor:"as",}
-            ]
-          },
-          {
-            audio:"eerr",
-            respuestas:[
-              {id:11, valor:"re",},
-              {id:12, valor:"eer",}
-            ]
-          },
-          {
-            audio:"rrii",
-            respuestas:[
-              {id:13, valor:"rrii",},
-              {id:14, valor:"ir",}
-            ]
-          },
-          {
-            audio:"iip",
-            respuestas:[
-              {id:15, valor:"pi",},
-              {id:16, valor:"iip",}
-            ]
-          },
-          {
-            audio:"di",
-            respuestas:[
-              {id:17, valor:"di",},
-              {id:18, valor:"id",}
-            ]
-          },
-          {
-            audio:"pu",
-            respuestas:[
-              {id:19, valor:"uupp",},
-              {id:20, valor:"pu",}
-            ]
-          },
+          }
         ],
       },
       oraciones:{
@@ -223,7 +161,7 @@ export default {
             nombre:"Misombreroesdecopa.",
             respuestas:[
               {
-                nombre: "Escriba la oración"
+                nombre: "Mi sombrero es de copa."
               }
             ]
           },
@@ -232,64 +170,82 @@ export default {
             nombre:"Borjatienepecas.",
             respuestas:[
               {
-                nombre: "Escriba la oración"
+                nombre: "Borja tiene pecas."
               }
             ]
           },
-          /*{
-            id:"2",
-            imagen:"joven",
-            oracion:"Borjatienepecas.",
-            respuesta:"Borja tiene pecas"
+          {
+            foto:"vaca.jpg",
+            nombre:"Lavacatienecuernos.",
+            respuestas:[
+              {
+                nombre: "La vaca tiene cuernos."
+              }
+            ]
           },
           {
-            id:"3",
-            imagen:"vaca",
-            oracion:"Lavacatienecuernos.",
-            respuesta:"La vaca tiene cuernos"
+            foto:"pastel.jpg",
+            nombre:"Pedroquierepastel.",
+            respuestas:[
+              {
+                nombre: "Pedro quiere pastel."
+              }
+            ]
           },
           {
-            id:"4",
-            imagen:"pastel",
-            oracion:"Pedroquierepastel.",
-            respuesta:"Pedro quiere pastel"
+            foto:"perro.jpg",
+            nombre:"Miperroladramucho.",
+            respuestas:[
+              {
+                nombre: "Mi perro ladra mucho."
+              }
+            ]
           },
           {
-            id:"5",
-            imagen:"perro",
-            oracion:"Miperroladramucho.",
-            respuesta:"Mi perro ladra mucho"
+            foto:"compras.jpg",
+            nombre:"Sofíavadecompras.",
+            respuestas:[
+              {
+                nombre: "Sofía va de compras."
+              }
+            ]
           },
           {
-            id:"6",
-            imagen:"compras",
-            oracion:"Sofíavadecompras.",
-            respuesta:"Sofía va de compras"
+            foto:"manzano.jpg",
+            nombre:"Albertotieneunmanzano.",
+            respuestas:[
+              {
+                nombre: "Alberto tiene un manzano."
+              }
+            ]
           },
           {
-            id:"7",
-            imagen:"manzano",
-            oracion:"Albertotieneunmanzano.",
-            respuesta:"Alberto tiene un manzano"
+            foto:"raton.jpg",
+            nombre:"ElratónPereztienemidiente.",
+            respuestas:[
+              {
+                nombre: "El raton Perez tiene mi diente."
+              }
+            ]
           },
           {
-            id:"8",
-            imagen:"raton",
-            oracion:"ElratonPereztienemidiente.",
-            respuesta:"El ratón Perez tiene mi diente"
+            foto:"cerro.jpg",
+            nombre:"Juancaminaporelcerro.",
+            respuestas:[
+              {
+                nombre: "Juan camina por el cerro."
+              }
+            ]
           },
           {
-            id:"9",
-            imagen:"cerro",
-            oracion:"Juancaminaporelcerro.",
-            respuesta:"Juan camina por el cerro"
+            foto:"playa.jpg",
+            nombre:"Laplayaeshermosa.",
+            respuestas:[
+              {
+                nombre: "La playa es hermosa."
+              }
+            ]
           },
-          {
-            id:"10",
-            imagen:"playa",
-            oracion:"Laplayaeshermosa",
-            respuesta:"La playa es hermosa"
-          },*/
         ]
       },
       value:"",
@@ -396,8 +352,37 @@ export default {
       });
     },
     enviarsilabas(){
+      if(this.variable_seleccionado.length<=0){
+        this.$vs.notification({
+          square: true,
+          progress: 'auto',
+          color:'danger',
+          title: 'Debes responder',
+          text: 'Debes seleccionar una de las respuestas'
+        });
+      }
+      for(var i=0; i<this.variable_seleccionado.length; i++){
+        if($.isEmptyObject(this.variable_seleccionado[i])){
+          this.$vs.notification({
+            square: true,
+            progress: 'auto',
+            color:'danger',
+            title: 'Debes responder',
+            text: 'Debes seleccionar una de las respuestas'
+          });
+          return;
+        }
+      }
       Api.enviarsilabas(this.variable_seleccionado).then( ({data}) => {
-        // console.log(data);
+        var resultado = data[0].suma * 10 / data[0].total;
+        this.$vs.notification({
+          square: true,
+          progress: 'auto',
+          color:'primary',
+          position:'top-center',
+          title: `obtuviste un total de ${resultado}/10`,
+          text: `obtuviste un total de ${data[0].suma} aciertos de ${data[0].total} preguntas`
+        });
       }).catch( error => {
         console.log(error);
       });

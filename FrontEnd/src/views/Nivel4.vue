@@ -17,12 +17,12 @@
             <vs-row>
               <vs-col vs-type="flex" vs-justify="center" vs-align="center" style="margin: 30px">
                 <div class="card-head text-center" style="margin-bottom: 12px">
-                  <h2><span>{{tr.oracion}}</span></h2>
+                  <h2><span>{{tr.nombre}}</span></h2>
                 </div>
               </vs-col>
-              <vs-col vs-justify="flex" class="container" w="4">
-                <div class="center content-inputs" v-for="(tr,index_hijo) in tr" :key="index_hijo">
-                  <vs-input state="success" success v-model="value" placeholder="Escribir" style="float: right;margin-right: 87px;margin-bottom: 35px"@click="seleccionar_oraciones(index, tr, index_hijo)"/>
+              <vs-col vs-justify="flex" class="container" w="6">
+                <div class="center content-inputs" v-for="(tr,index_hijo) in tr.respuestas" :key="index_hijo">
+                  <vs-input color="#195bff" disabled v-model="tr.respuesta_campo" class="w-100  mb-3 mt-5" placeholder="Escribir" style="margin-bottom: 35px" @click="seleccionar_oraciones(index, tr, index_hijo)"/>
                 </div>
                 <div class="container" style=";display: block;">
                   <vs-button  style="float: right;margin-right: 80px;margin-bottom: 20px;--vs-color: 25, 91, 255;border-radius: 70px;width: 40px;height: 40px;">
@@ -49,12 +49,12 @@
             <vs-row>
               <vs-col vs-type="flex" vs-justify="center" vs-align="center" style="margin: 30px">
                 <div class="card-head text-center" style="margin-bottom: 12px">
-                  <h2><span>{{tr.oracion}}</span></h2>
+                  <h2><span>{{tr.nombre}}</span></h2>
                 </div>
               </vs-col>
-              <vs-col vs-justify="flex" class="container" w="4">
-                <div class="center content-inputs" v-for="(tr,index_h) in tr" :key="index_h">
-                  <vs-input state="success"  placeholder="Escribir" style="float: right;margin-right: 87px;margin-bottom: 35px"@click="seleccionar_frases(index, tr, index_h)"/>
+              <vs-col vs-justify="flex" class="container" w="6">
+                <div class="center content-inputs" v-for="(tr,index_h) in tr.respuestas" :key="index_h">
+                  <vs-input color="#195bff" disabled v-model="tr.respuesta_campo" class="w-100  mb-3 mt-5"  placeholder="Escribir" style="margin-bottom: 35px" @click="seleccionar_frases(index, tr, index_h)"/>
                 </div>
                 <div class="container" style="bottom: 0px;display: block;">
                   <vs-button  style="float: right;margin-right: 80px;margin-bottom: 20px;--vs-color: 25, 91, 255;border-radius: 70px;width: 40px;height: 40px;">
@@ -85,73 +85,112 @@ export default {
       oraciones:{
         preguntas:[
           {
-            id:"1",
-            oracion:"Yo abrí la boca para que el odontólogo la revisara.",
-            respuesta:"Yo abrí la boca para que el odontólogo la revisara"
+            nombre:"Yo abrí la boca para que el odontólogo la revisara.",
+            respuestas:[
+              {
+                nombre: "Yo abrí la boca para que el odontólogo la revisara."
+              }
+            ]
           },
           {
-            id:"2",
-            oracion:"Bárbara bendita, eres mujer entre las santas.",
-            respuesta:"Bárbara bendita, eres mujer entre las santas"
+            nombre:"Bárbara bendita, eres mujer entre las santas.",
+            respuestas:[
+              {
+                nombre: "Bárbara bendita, eres mujer entre las santas."
+              }
+            ]
           },
           {
-            id:"3",
-            oracion:"La Barbacoa estaba deliciosa.",
-            respuesta:"La Barbacoa estaba deliciosa"
+            nombre:"La Barbacoa estaba deliciosa.",
+            respuestas:[
+              {
+                nombre: "La Barbacoa estaba deliciosa."
+              }
+            ]
           },
           {
-            id:"4",
-            oracion:"La rosa es roja.",
-            respuesta:"La rosa es roja"
+            nombre:"La rosa es roja.",
+            respuestas:[
+              {
+                nombre: "La rosa es roja."
+              }
+            ]
           },
           {
-            id:"5",
-            oracion:"El pan es de Natalia.",
-            respuesta:"El pan es de Natalia"
+            nombre:"El pan es de Natalia.",
+            respuestas:[
+              {
+                nombre: "El pan es de Natalia."
+              }
+            ]
           },
           {
-            id:"6",
-            oracion:"Yo repaso un rato.",
-            respuesta:"Yo repaso un rato"
+            nombre:"Yo repaso un rato.",
+            respuestas:[
+              {
+                nombre: "Yo repaso un rato."
+              }
+            ]
           },
           {
-            id:"7",
-            oracion:"Zapatero a su zapato.",
-            respuesta:"Zapatero a su zapato"
+            nombre:"Zapatero a su zapato.",
+            respuestas:[
+              {
+                nombre: "Zapatero a su zapato."
+              }
+            ]
           },
           {
-            id:"8",
-            oracion:"Mi mamá me ama.",
-            respuesta:"Mi mamá me ama"
+            nombre:"Mi mamá me ama.",
+            respuestas:[
+              {
+                nombre: "Mi mamá me ama."
+              }
+            ]
           },
         ]
       },
       frases:{
         preguntas:[
           {
-            id:"1",
-            oracion:"En la casa de la señora sofía, a la sombra de un peral me comí un pastel. Por la ventana apareció su sobrino, el de la cara redonda y le mandó un saludo para mi tía.",
-            respuesta:"En la casa de la señora sofía, a la sombra de un peral me comí un pastel. Por la ventana apareció su sobrino, el de la cara redonda y le mandó un saludo para mi tía." 
+            nombre:"En la casa de la señora sofía, a la sombra de un peral me comí un pastel. Por la ventana apareció su sobrino, el de la cara redonda y le mandó un saludo para mi tía.",
+            respuestas:[
+              {
+                nombre: "En la casa de la señora sofía, a la sombra de un peral me comí un pastel. Por la ventana apareció su sobrino, el de la cara redonda y le mandó un saludo para mi tía."
+              }
+            ]
           },
           {
-            id:"2",
-            oracion:"Lola es la hermana de Sara. Lola es una niña pequeña que le gusta jugar en la nieve, cada vez que nieva Lola se pone sus botas, su abrigo, sus orejeras y sale a jugar.",
-            respuesta:"Lola es la hermana de Sara. Lola es una niña pequeña que le gusta jugar en la nieve, cada vez que nieva Lola se pone sus botas, su abrigo, sus orejeras y sale a jugar." 
+            nombre:"Lola es la hermana de Sara. Lola es una niña pequeña que le gusta jugar en la nieve, cada vez que nieva Lola se pone sus botas, su abrigo, sus orejeras y sale a jugar.",
+            respuestas:[
+              {
+                nombre: "Lola es la hermana de Sara. Lola es una niña pequeña que le gusta jugar en la nieve, cada vez que nieva Lola se pone sus botas, su abrigo, sus orejeras y sale a jugar."
+              }
+            ]
           },
           {
-            id:"3",
-            oracion:"La gallina roja vive en una granja, ella trabaja mucho, siembra y cosecha el trigo. Ella hace un pan muy rico. Cuando acaba su trabajo ella se come todo el pan.",
-            respuesta:"La gallina roja vive en una granja, ella trabaja mucho, siembra y cosecha el trigo. Ella hace un pan muy rico. Cuando acaba su trabajo ella se come todo el pan." 
+            nombre:"La gallina roja vive en una granja, ella trabaja mucho, siembra y cosecha el trigo. Ella hace un pan muy rico. Cuando acaba su trabajo ella se come todo el pan.",
+            respuestas:[
+              {
+                nombre: "La gallina roja vive en una granja, ella trabaja mucho, siembra y cosecha el trigo. Ella hace un pan muy rico. Cuando acaba su trabajo ella se come todo el pan."
+              }
+            ]
           },
           {
-            id:"4",
-            oracion:"Carlos es un mono muy divertido, le gusta comer bananas todo el día. A carlos le gusta ser perezoso y hacer reir a sus amigos.",
-            respuesta:"Carlos es un mono muy divertido, le gusta comer bananas todo el día. A carlos le gusta ser perezoso y hacer reir a sus amigos." 
+            nombre:"Carlos es un mono muy divertido, le gusta comer bananas todo el día. A carlos le gusta ser perezoso y hacer reir a sus amigos.",
+            respuestas:[
+              {
+                nombre: "Carlos es un mono muy divertido, le gusta comer bananas todo el día. A carlos le gusta ser perezoso y hacer reir a sus amigos."
+              }
+            ]
           },
           {
-            id:"5",
-            oracion:"Miguel le gusta la playa, a Miguel lee muchas horas. Cuando viaja miguel a la playa siempre lo acompañan sus libros.",
-            respuesta:"Miguel le gusta la playa, a Miguel lee muchas horas. Cuando viaja miguel a la playa siempre lo acompañan sus libros." 
+            nombre:"Miguel le gusta la playa, a Miguel lee muchas horas. Cuando viaja miguel a la playa siempre lo acompañan sus libros.",
+            respuestas:[
+              {
+                nombre: "Miguel le gusta la playa, a Miguel lee muchas horas. Cuando viaja miguel a la playa siempre lo acompañan sus libros."
+              }
+            ]
           },
         ]
       },
@@ -166,7 +205,7 @@ export default {
           this.variable_seleccionado.push({});
         });
       } 
-      this.oraciones.preguntas[index].respuesta[index_hijo];
+      this.oraciones.preguntas[index].respuestas[index_hijo];
       this.variable_seleccionado.splice(index,1,tr);
     },
     seleccionar_frases(index, tr, index_h){
@@ -175,7 +214,7 @@ export default {
           this.variable_seleccionado.push({});
         });
       } 
-      this.frases.preguntas[index].respuesta[index_h];
+      this.frases.preguntas[index].respuestas[index_h];
       this.variable_seleccionado.splice(index,1,tr);
     },
     enviaroraciones(){
@@ -195,3 +234,10 @@ export default {
   }
 }
 </script>
+
+<style>
+  .w-100 input{
+    width: 100%!important;
+  }
+  
+</style>
