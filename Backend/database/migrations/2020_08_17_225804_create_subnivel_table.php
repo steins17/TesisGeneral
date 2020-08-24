@@ -15,10 +15,12 @@ class CreateSubnivelTable extends Migration
     {
         Schema::create('subnivel', function (Blueprint $table) {
             $table->bigIncrements('id')->autoIncrement();
-            $table->string('nombre');
+            $table->string('nombre')->nullable();
             $table->string('descripcion')->nullable();
             $table->text('foto')->nullable();
             $table->text('audio')->nullable();
+            $table->integer('nivel');
+            $table->integer('subnivel');
             $table->timestamps();
 
             $table->unsignedBigInteger('usuario_crea');
@@ -26,9 +28,6 @@ class CreateSubnivelTable extends Migration
 
             $table->unsignedBigInteger('usuario_modifica')->nullable();
             $table->foreign('usuario_modifica')->references('id')->on('users')->onDelete('cascade');
-
-            $table->unsignedBigInteger('id_nivel');
-            $table->foreign('id_nivel')->references('id')->on('nivel');
         });
     }
 

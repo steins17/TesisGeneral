@@ -228,7 +228,7 @@ export default {
             color:'success',
             title: 'Cambios guardados satisfactoriamente',
             text: 'Los cambios se guardaron en el sistema'
-          })
+          });
           setTimeout(() => {
             location.reload();
           }, 1000);

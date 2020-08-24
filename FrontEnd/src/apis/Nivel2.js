@@ -10,7 +10,7 @@ export default {
   enviaroraciones(form) {
     return Api().post("/nivel2/oraciones/respuesta", form);
   },
-  llamardatos() {
-    return Api().post("/nivel2/llamardatos");
+  llamarpreguntas() {
+    return Api().get("/nivel2/llamardatos");
   },
 };

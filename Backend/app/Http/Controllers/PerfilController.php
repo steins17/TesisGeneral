@@ -40,7 +40,7 @@ class PerfilController extends Controller
             5=>ver-hablar
         */
 
-        $user = User::findOrFail($request->id);
+        $user = User::findOrFail($id);
         $user->name= $request->name;
         $user->email= $request->email;
         $user->save();
@@ -55,7 +55,7 @@ class PerfilController extends Controller
             $perfil->telefono= $request->telefono;
             $perfil->celular= $request->celular;
             $perfil->direccion= $request->direccion;
-            $perfil->id_users= $request->id;
+            $perfil->id_users= $id;
             $perfil->save();
         }else{
             $perfil = new Persona();
@@ -64,7 +64,7 @@ class PerfilController extends Controller
             $perfil->telefono= $request->telefono;
             $perfil->celular= $request->celular;
             $perfil->direccion= $request->direccion;
-            $perfil->id_users= $request->id;
+            $perfil->id_users= $id;
             $perfil->save();
         }
     }

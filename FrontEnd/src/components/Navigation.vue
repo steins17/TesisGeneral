@@ -16,7 +16,8 @@
         <dropdown-menu v-model="menuver" :interactive="interactive">
           <button type="button" left="" class="vs-con-dropdown parent-dropdown cursor-pointer pr-2 pl-2 ml-1 mr-md-3">
             <a href="javascript:void(0)" class="text-white-dark user-image">
-              <img :src="baseURL+'/perfil/imagenver/'+user.foto" alt="User">
+              <img :src="baseURL+'/perfil/imagenver/'+user.foto" alt="User" v-if="verfoto">
+              <img :src="baseURL+'/perfil/imagenver/descarga.jpg'" alt="User" v-else>
             </a>
           </button>   
           <div slot="dropdown"> 
@@ -44,7 +45,8 @@
         <header class="vs-sidebar--header" v-if="user">
           <div class="header-sidebar text-center">
             <div class="con-vs-avatar 70px" style="width: 70px; height: 70px; background: rgb(195, 195, 195);">
-              <div class="con-img vs-avatar--con-img"><img :src="baseURL+'/perfil/imagenver/'+user.foto" alt="">
+              <div class="con-img vs-avatar--con-img"><img :src="baseURL+'/perfil/imagenver/'+user.foto" alt="" v-if="verfoto">
+              <img :src="baseURL+'/perfil/imagenver/descarga.jpg'" alt="" v-else>
               </div></div>
               <h4>{{ user.name }}<br><small>{{ user.email }}</small></h4>
           </div>
@@ -263,6 +265,7 @@
         password_confirmation: ""
       },
       errors_registro: [],
+      verfoto:false,
     }),
     methods:{
       settings(){
@@ -274,6 +277,7 @@
         if(localStorage.getItem("token")){
           User.auth().then(response => {
             this.user = response.data;
+            if(this.user.foto) this.verfoto=true;
           }).catch(error => {
             if (error.response.status === 401) {
               localStorage.removeItem("token");
@@ -317,6 +321,7 @@
       login() {
         User.login(this.form_login)
           .then(response => {
+            this.modal.login = false;
             this.$root.$emit("login", true);
             localStorage.setItem("token", response.data);
             location.reload();
@@ -331,7 +336,14 @@
       register() {
         User.register(this.form_registro)
           .then(() => {
+            this.cambiarmodales();
             this.$router.push({ name: "Inicio" });
+            this.$vs.notification({
+              square: true,
+              color:'success',
+              title: 'Usuario Creado',
+              text: 'Usuario Creado satisfactoriamente'
+            })
           })
           .catch(error => {
             if (error.response.status === 422) {
