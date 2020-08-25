@@ -11,7 +11,7 @@ export default {
     return Api().post("/nivel3/palabras/respuesta", form);
   },
 
-  llamardatos() {
-    return Api().post("/nive3/llamardatos");
+  llamarpreguntas() {
+    return Api().get("/nivel3/llamardatos");
   },
 };

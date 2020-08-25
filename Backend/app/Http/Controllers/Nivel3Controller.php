@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\Nivel;
 use App\Models\Subnivel;
+use App\Models\Usuario_pregunta;
 use App\Models\Preguntas_subnivel;
+
 
 class Nivel3Controller extends Controller
 {

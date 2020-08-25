@@ -148,7 +148,6 @@ export default {
       oraciones:{
         preguntas:[],
       },
-      value:"",
       seleccionado:null,  
       variable_seleccionado:[],
     };
@@ -200,10 +199,10 @@ export default {
           this.variable_seleccionado.push({})
         })
       }
-      this.silabas.preguntas[index].respuesta.forEach(hijo => {
+      this.silabas.preguntas[index].respuestas.forEach(hijo => {
         hijo.status= false
       })
-      this.silabas.preguntas[index].respuesta[index_h].status = true;
+      this.silabas.preguntas[index].respuestas[index_h].status = true;
       this.variable_seleccionado.splice(index, 1, tr)
     },
     selec_oraciones(index, tr, index_2){
