@@ -71,7 +71,7 @@
                         </vs-button>
                       </center>
                     </vs-col>
-                    <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 container" v-for="(tr,index_h) in tr.respuestas" :key="index_h">
+                    <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 container" v-for="(tr,index_h) in tr" :key="index_h">
                         <div class="card-head text-center">
                           Mayúscula - Minúscula
                         </div>
@@ -107,7 +107,7 @@
                         <div class="card-head text-center" style="position: center;margin-bottom: 20px">
                           <h2><span>{{tr.nombre}}</span></h2>
                         </div>
-                        <div class="center content-inputs" v-for="(tr,index_2) in tr.respuestas" :key="index_2">
+                        <div class="center content-inputs" v-for="(tr,index_2) in tr" :key="index_2">
                         <vs-input color="#195bff" v-model="tr.respuesta_campo" label-placeholder="Escribir" class="w-100 mb-3 mt-5" @keyup="selec_oraciones(index, tr, index_2)"/>
                         </div>
                       </vs-col>
@@ -147,102 +147,6 @@ export default {
       },
       oraciones:{
         preguntas:[],
-      
-        // oraciones:{
-        //   preguntas:[
-        //     {
-        //       id:39,
-        //       foto:"sombrero.jpg",
-        //       nombre:"Misombreroesdecopa.",
-        //       respuestas:[
-        //         {
-        //           nombre: "Mi sombrero es de copa."
-        //         }
-        //       ]
-        //     },
-        //     {
-        //       foto:"joven.jpg",
-        //       nombre:"Borjatienepecas.",
-        //       respuestas:[
-        //         {
-        //           nombre: "Borja tiene pecas."
-        //         }
-        //       ]
-        //     },
-        //     {
-        //       foto:"vaca.jpg",
-        //       nombre:"Lavacatienecuernos.",
-        //       respuestas:[
-        //         {
-        //           nombre: "La vaca tiene cuernos."
-        //         }
-        //       ]
-        //     },
-        //     {
-        //       foto:"pastel.jpg",
-        //       nombre:"Pedroquierepastel.",
-        //       respuestas:[
-        //         {
-        //           nombre: "Pedro quiere pastel."
-        //         }
-        //       ]
-        //     },
-        //     {
-        //       foto:"perro.jpg",
-        //       nombre:"Miperroladramucho.",
-        //       respuestas:[
-        //         {
-        //           nombre: "Mi perro ladra mucho."
-        //         }
-        //       ]
-        //     },
-        //     {
-        //       foto:"compras.jpg",
-        //       nombre:"Sofíavadecompras.",
-        //       respuestas:[
-        //         {
-        //           nombre: "Sofía va de compras."
-        //         }
-        //       ]
-        //     },
-        //     {
-        //       foto:"manzano.jpg",
-        //       nombre:"Albertotieneunmanzano.",
-        //       respuestas:[
-        //         {
-        //           nombre: "Alberto tiene un manzano."
-        //         }
-        //       ]
-        //     },
-        //     {
-        //       foto:"raton.jpg",
-        //       nombre:"ElratónPereztienemidiente.",
-        //       respuestas:[
-        //         {
-        //           nombre: "El raton Perez tiene mi diente."
-        //         }
-        //       ]
-        //     },
-        //     {
-        //       foto:"cerro.jpg",
-        //       nombre:"Juancaminaporelcerro.",
-        //       respuestas:[
-        //         {
-        //           nombre: "Juan camina por el cerro."
-        //         }
-        //       ]
-        //     },
-        //     {
-        //       foto:"playa.jpg",
-        //       nombre:"Laplayaeshermosa.",
-        //       respuestas:[
-        //         {
-        //           nombre: "La playa es hermosa."
-        //         }
-        //       ]
-        //     },
-        //   ]
-        // },
       },
       value:"",
       seleccionado:null,  
@@ -255,7 +159,7 @@ export default {
         data.subnivel.forEach((el,index) => {
           if(el.subnivel==1) this.letras.preguntas.push({audio:el.audio, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
           if(el.subnivel==2) this.silabas.preguntas.push({audio:el.audio, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
-          if(el.subnivel==3) this.oraciones.preguntas.push({audio:el.audio, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
+          if(el.subnivel==3) this.oraciones.preguntas.push({nombre:el.nombre,foto:el.foto, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
           data.preguntas.forEach(pr => {
             if(el.id==pr.id_subnivel && el.subnivel==1){  
               if(!this.letras.preguntas[index].respuestas) this.letras.preguntas[index].respuestas = [];
@@ -263,7 +167,7 @@ export default {
               if(el.id==pr.id_subnivel && el.subnivel==2){  
                 if(!this.silabas.preguntas[index].respuestas) this.silabas.preguntas[index].respuestas = [];
                 this.silabas.preguntas[index].respuestas.push(pr); 
-              };
+              }
               if(el.id==pr.id_subnivel && el.subnivel==3){  
                 if(!this.oraciones.preguntas[index].respuestas) this.oraciones.preguntas[index].respuestas = [];
                 this.oraciones.preguntas[index].respuestas.push(pr); 
@@ -296,10 +200,10 @@ export default {
           this.variable_seleccionado.push({})
         })
       }
-      this.silabas.preguntas[index].respuestas.forEach(hijo => {
+      this.silabas.preguntas[index].respuesta.forEach(hijo => {
         hijo.status= false
       })
-      this.silabas.preguntas[index].respuestas[index_h].status = true;
+      this.silabas.preguntas[index].respuesta[index_h].status = true;
       this.variable_seleccionado.splice(index, 1, tr)
     },
     selec_oraciones(index, tr, index_2){
