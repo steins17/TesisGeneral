@@ -143,110 +143,106 @@ export default {
         preguntas:[],
       },
       silabas:{
-        preguntas:[
-          
-          {
-            audio:"da",
-            respuestas:[
-              {id:9, valor:"ad"},
-              {id:10, valor:"da"}
-            ]
-          }
-        ],
+        preguntas:[],
       },
       oraciones:{
-        preguntas:[
-          {
-            foto:"sombrero.jpg",
-            nombre:"Misombreroesdecopa.",
-            respuestas:[
-              {
-                nombre: "Mi sombrero es de copa."
-              }
-            ]
-          },
-          {
-            foto:"joven.jpg",
-            nombre:"Borjatienepecas.",
-            respuestas:[
-              {
-                nombre: "Borja tiene pecas."
-              }
-            ]
-          },
-          {
-            foto:"vaca.jpg",
-            nombre:"Lavacatienecuernos.",
-            respuestas:[
-              {
-                nombre: "La vaca tiene cuernos."
-              }
-            ]
-          },
-          {
-            foto:"pastel.jpg",
-            nombre:"Pedroquierepastel.",
-            respuestas:[
-              {
-                nombre: "Pedro quiere pastel."
-              }
-            ]
-          },
-          {
-            foto:"perro.jpg",
-            nombre:"Miperroladramucho.",
-            respuestas:[
-              {
-                nombre: "Mi perro ladra mucho."
-              }
-            ]
-          },
-          {
-            foto:"compras.jpg",
-            nombre:"Sofíavadecompras.",
-            respuestas:[
-              {
-                nombre: "Sofía va de compras."
-              }
-            ]
-          },
-          {
-            foto:"manzano.jpg",
-            nombre:"Albertotieneunmanzano.",
-            respuestas:[
-              {
-                nombre: "Alberto tiene un manzano."
-              }
-            ]
-          },
-          {
-            foto:"raton.jpg",
-            nombre:"ElratónPereztienemidiente.",
-            respuestas:[
-              {
-                nombre: "El raton Perez tiene mi diente."
-              }
-            ]
-          },
-          {
-            foto:"cerro.jpg",
-            nombre:"Juancaminaporelcerro.",
-            respuestas:[
-              {
-                nombre: "Juan camina por el cerro."
-              }
-            ]
-          },
-          {
-            foto:"playa.jpg",
-            nombre:"Laplayaeshermosa.",
-            respuestas:[
-              {
-                nombre: "La playa es hermosa."
-              }
-            ]
-          },
-        ]
+        preguntas:[],
+      
+        // oraciones:{
+        //   preguntas:[
+        //     {
+        //       id:39,
+        //       foto:"sombrero.jpg",
+        //       nombre:"Misombreroesdecopa.",
+        //       respuestas:[
+        //         {
+        //           nombre: "Mi sombrero es de copa."
+        //         }
+        //       ]
+        //     },
+        //     {
+        //       foto:"joven.jpg",
+        //       nombre:"Borjatienepecas.",
+        //       respuestas:[
+        //         {
+        //           nombre: "Borja tiene pecas."
+        //         }
+        //       ]
+        //     },
+        //     {
+        //       foto:"vaca.jpg",
+        //       nombre:"Lavacatienecuernos.",
+        //       respuestas:[
+        //         {
+        //           nombre: "La vaca tiene cuernos."
+        //         }
+        //       ]
+        //     },
+        //     {
+        //       foto:"pastel.jpg",
+        //       nombre:"Pedroquierepastel.",
+        //       respuestas:[
+        //         {
+        //           nombre: "Pedro quiere pastel."
+        //         }
+        //       ]
+        //     },
+        //     {
+        //       foto:"perro.jpg",
+        //       nombre:"Miperroladramucho.",
+        //       respuestas:[
+        //         {
+        //           nombre: "Mi perro ladra mucho."
+        //         }
+        //       ]
+        //     },
+        //     {
+        //       foto:"compras.jpg",
+        //       nombre:"Sofíavadecompras.",
+        //       respuestas:[
+        //         {
+        //           nombre: "Sofía va de compras."
+        //         }
+        //       ]
+        //     },
+        //     {
+        //       foto:"manzano.jpg",
+        //       nombre:"Albertotieneunmanzano.",
+        //       respuestas:[
+        //         {
+        //           nombre: "Alberto tiene un manzano."
+        //         }
+        //       ]
+        //     },
+        //     {
+        //       foto:"raton.jpg",
+        //       nombre:"ElratónPereztienemidiente.",
+        //       respuestas:[
+        //         {
+        //           nombre: "El raton Perez tiene mi diente."
+        //         }
+        //       ]
+        //     },
+        //     {
+        //       foto:"cerro.jpg",
+        //       nombre:"Juancaminaporelcerro.",
+        //       respuestas:[
+        //         {
+        //           nombre: "Juan camina por el cerro."
+        //         }
+        //       ]
+        //     },
+        //     {
+        //       foto:"playa.jpg",
+        //       nombre:"Laplayaeshermosa.",
+        //       respuestas:[
+        //         {
+        //           nombre: "La playa es hermosa."
+        //         }
+        //       ]
+        //     },
+        //   ]
+        // },
       },
       value:"",
       seleccionado:null,  
@@ -264,15 +260,15 @@ export default {
             if(el.id==pr.id_subnivel && el.subnivel==1){  
               if(!this.letras.preguntas[index].respuestas) this.letras.preguntas[index].respuestas = [];
               this.letras.preguntas[index].respuestas.push(pr); 
-            }
-            if(el.id==pr.id_subnivel && el.subnivel==2){  
-              if(!this.silabas.preguntas[index].respuestas) this.silabas.preguntas[index].respuestas = [];
-              this.silabas.preguntas[index].respuestas.push(pr); 
-            }
-            if(el.id==pr.id_subnivel && el.subnivel==3){  
-              if(!this.oraciones.preguntas[index].respuestas) this.oraciones.preguntas[index].respuestas = [];
-              this.oraciones.preguntas[index].respuestas.push(pr); 
-            }
+              if(el.id==pr.id_subnivel && el.subnivel==2){  
+                if(!this.silabas.preguntas[index].respuestas) this.silabas.preguntas[index].respuestas = [];
+                this.silabas.preguntas[index].respuestas.push(pr); 
+              };
+              if(el.id==pr.id_subnivel && el.subnivel==3){  
+                if(!this.oraciones.preguntas[index].respuestas) this.oraciones.preguntas[index].respuestas = [];
+                this.oraciones.preguntas[index].respuestas.push(pr); 
+              }
+            };
           });
         });
       });

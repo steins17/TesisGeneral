@@ -55,7 +55,6 @@ class Nivel2Controller extends Controller
         }
         return DB::select("SELECT sum(tipo) AS suma, count(*) AS total FROM usuario_pregunta WHERE nivel = 2 AND subnivel = 2");
     }
-
     function oraciones_respuesta(Request $rp){
         $user = Auth::user()->id;
         for($i=0; $i<strlen($rq); $i++){
@@ -77,6 +76,7 @@ class Nivel2Controller extends Controller
             $nv2->save();
         }
     }
+    
     function llamardatos(){
         $subnivel = Subnivel::select('*')->where("nivel", "=", 2)->get();
 

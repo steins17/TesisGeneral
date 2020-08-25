@@ -199,6 +199,29 @@ export default {
     }
   },
   methods: {
+    llamarpreguntas(){
+      Api.llamarpreguntas().then(({data}) => {
+        data.subnivel.forEach((el,index) => {
+          if(el.subnivel==1) this.letras.preguntas.push({audio:el.audio, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
+          if(el.subnivel==2) this.silabas.preguntas.push({audio:el.audio, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
+          if(el.subnivel==3) this.oraciones.preguntas.push({audio:el.audio, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
+          data.preguntas.forEach(pr => {
+            if(el.id==pr.id_subnivel && el.subnivel==1){  
+              if(!this.letras.preguntas[index].respuestas) this.letras.preguntas[index].respuestas = [];
+              this.letras.preguntas[index].respuestas.push(pr); 
+            }
+            if(el.id==pr.id_subnivel && el.subnivel==2){  
+              if(!this.silabas.preguntas[index].respuestas) this.silabas.preguntas[index].respuestas = [];
+              this.silabas.preguntas[index].respuestas.push(pr); 
+            }
+            if(el.id==pr.id_subnivel && el.subnivel==3){  
+              if(!this.oraciones.preguntas[index].respuestas) this.oraciones.preguntas[index].respuestas = [];
+              this.oraciones.preguntas[index].respuestas.push(pr); 
+            }
+          });
+        });
+      });
+    },
     seleccionar_oraciones(index, tr, index_hijo){
       if(this.variable_seleccionado.length==0){
         this.oraciones.preguntas.forEach(el => {
