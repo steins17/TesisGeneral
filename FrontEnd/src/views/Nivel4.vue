@@ -21,7 +21,7 @@
                 </div>
               </vs-col>
               <vs-col vs-justify="flex" class="container" w="6">
-                <div class="center content-inputs" v-for="(tr,index_hijo) in tr.respuestas" :key="index_hijo">
+                <div class="center content-inputs" v-for="(tr,index_hijo) in tr" :key="index_hijo">
                   <vs-input color="#195bff" disabled v-model="tr.respuesta_campo" class="w-100  mb-3 mt-5" placeholder="Escribir" style="margin-bottom: 35px" @click="seleccionar_oraciones(index, tr, index_hijo)"/>
                 </div>
                 <div class="container" style=";display: block;">
@@ -53,7 +53,7 @@
                 </div>
               </vs-col>
               <vs-col vs-justify="flex" class="container" w="6">
-                <div class="center content-inputs" v-for="(tr,index_h) in tr.respuestas" :key="index_h">
+                <div class="center content-inputs" v-for="(tr,index_h) in tr" :key="index_h">
                   <vs-input color="#195bff" disabled v-model="tr.respuesta_campo" class="w-100  mb-3 mt-5"  placeholder="Escribir" style="margin-bottom: 35px" @click="seleccionar_frases(index, tr, index_h)"/>
                 </div>
                 <div class="container" style="bottom: 0px;display: block;">
@@ -83,118 +83,11 @@ export default {
   data() {
     return {
       oraciones:{
-        preguntas:[
-          {
-            nombre:"Yo abrí la boca para que el odontólogo la revisara.",
-            respuestas:[
-              {
-                nombre: "Yo abrí la boca para que el odontólogo la revisara."
-              }
-            ]
-          },
-          {
-            nombre:"Bárbara bendita, eres mujer entre las santas.",
-            respuestas:[
-              {
-                nombre: "Bárbara bendita, eres mujer entre las santas."
-              }
-            ]
-          },
-          {
-            nombre:"La Barbacoa estaba deliciosa.",
-            respuestas:[
-              {
-                nombre: "La Barbacoa estaba deliciosa."
-              }
-            ]
-          },
-          {
-            nombre:"La rosa es roja.",
-            respuestas:[
-              {
-                nombre: "La rosa es roja."
-              }
-            ]
-          },
-          {
-            nombre:"El pan es de Natalia.",
-            respuestas:[
-              {
-                nombre: "El pan es de Natalia."
-              }
-            ]
-          },
-          {
-            nombre:"Yo repaso un rato.",
-            respuestas:[
-              {
-                nombre: "Yo repaso un rato."
-              }
-            ]
-          },
-          {
-            nombre:"Zapatero a su zapato.",
-            respuestas:[
-              {
-                nombre: "Zapatero a su zapato."
-              }
-            ]
-          },
-          {
-            nombre:"Mi mamá me ama.",
-            respuestas:[
-              {
-                nombre: "Mi mamá me ama."
-              }
-            ]
-          },
-        ]
+        preguntas:[]
       },
       frases:{
-        preguntas:[
-          {
-            nombre:"En la casa de la señora sofía, a la sombra de un peral me comí un pastel. Por la ventana apareció su sobrino, el de la cara redonda y le mandó un saludo para mi tía.",
-            respuestas:[
-              {
-                nombre: "En la casa de la señora sofía, a la sombra de un peral me comí un pastel. Por la ventana apareció su sobrino, el de la cara redonda y le mandó un saludo para mi tía."
-              }
-            ]
-          },
-          {
-            nombre:"Lola es la hermana de Sara. Lola es una niña pequeña que le gusta jugar en la nieve, cada vez que nieva Lola se pone sus botas, su abrigo, sus orejeras y sale a jugar.",
-            respuestas:[
-              {
-                nombre: "Lola es la hermana de Sara. Lola es una niña pequeña que le gusta jugar en la nieve, cada vez que nieva Lola se pone sus botas, su abrigo, sus orejeras y sale a jugar."
-              }
-            ]
-          },
-          {
-            nombre:"La gallina roja vive en una granja, ella trabaja mucho, siembra y cosecha el trigo. Ella hace un pan muy rico. Cuando acaba su trabajo ella se come todo el pan.",
-            respuestas:[
-              {
-                nombre: "La gallina roja vive en una granja, ella trabaja mucho, siembra y cosecha el trigo. Ella hace un pan muy rico. Cuando acaba su trabajo ella se come todo el pan."
-              }
-            ]
-          },
-          {
-            nombre:"Carlos es un mono muy divertido, le gusta comer bananas todo el día. A carlos le gusta ser perezoso y hacer reir a sus amigos.",
-            respuestas:[
-              {
-                nombre: "Carlos es un mono muy divertido, le gusta comer bananas todo el día. A carlos le gusta ser perezoso y hacer reir a sus amigos."
-              }
-            ]
-          },
-          {
-            nombre:"Miguel le gusta la playa, a Miguel lee muchas horas. Cuando viaja miguel a la playa siempre lo acompañan sus libros.",
-            respuestas:[
-              {
-                nombre: "Miguel le gusta la playa, a Miguel lee muchas horas. Cuando viaja miguel a la playa siempre lo acompañan sus libros."
-              }
-            ]
-          },
-        ]
+        preguntas:[]
       },
-      value:"",
       variable_seleccionado:[],
     }
   },
@@ -202,21 +95,16 @@ export default {
     llamarpreguntas(){
       Api.llamarpreguntas().then(({data}) => {
         data.subnivel.forEach((el,index) => {
-          if(el.subnivel==1) this.letras.preguntas.push({audio:el.audio, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
-          if(el.subnivel==2) this.silabas.preguntas.push({audio:el.audio, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
-          if(el.subnivel==3) this.oraciones.preguntas.push({audio:el.audio, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
+          if(el.subnivel==1) this.oraciones.preguntas.push({nombre:el.nombre, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
+          if(el.subnivel==2) this.frases.preguntas.push({nombre:el.nombre, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
           data.preguntas.forEach(pr => {
             if(el.id==pr.id_subnivel && el.subnivel==1){  
-              if(!this.letras.preguntas[index].respuestas) this.letras.preguntas[index].respuestas = [];
-              this.letras.preguntas[index].respuestas.push(pr); 
-            }
-            if(el.id==pr.id_subnivel && el.subnivel==2){  
-              if(!this.silabas.preguntas[index].respuestas) this.silabas.preguntas[index].respuestas = [];
-              this.silabas.preguntas[index].respuestas.push(pr); 
-            }
-            if(el.id==pr.id_subnivel && el.subnivel==3){  
               if(!this.oraciones.preguntas[index].respuestas) this.oraciones.preguntas[index].respuestas = [];
               this.oraciones.preguntas[index].respuestas.push(pr); 
+            }
+            if(el.id==pr.id_subnivel && el.subnivel==2){  
+              if(!this.frases.preguntas[index].respuestas) this.frases.preguntas[index].respuestas = [];
+              this.frases.preguntas[index].respuestas.push(pr); 
             }
           });
         });
@@ -254,7 +142,10 @@ export default {
         console.log(error);
       });
     },
-  }
+  },
+  mounted() {
+    this.llamarpreguntas();
+  },
 }
 </script>
 

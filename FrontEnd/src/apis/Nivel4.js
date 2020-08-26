@@ -10,7 +10,7 @@ export default {
     return Api().post("/nivel4/palabras/respuesta", form);
   },
 
-  llamardatos() {
-    return Api().post("/nivel4/llamardatos");
+  llamarpreguntas() {
+    return Api().get("/nivel4/llamardatos");
   },
 };
