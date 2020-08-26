@@ -101,10 +101,10 @@ export default {
             if(el.id==pr.id_subnivel && el.subnivel==1){  
               if(!this.oraciones.preguntas[index].respuestas) this.oraciones.preguntas[index].respuestas = [];
               this.oraciones.preguntas[index].respuestas.push(pr); 
-            }
-            if(el.id==pr.id_subnivel && el.subnivel==2){  
-              if(!this.frases.preguntas[index].respuestas) this.frases.preguntas[index].respuestas = [];
-              this.frases.preguntas[index].respuestas.push(pr); 
+              if(el.id==pr.id_subnivel && el.subnivel==2){  
+                if(!this.frases.preguntas[index].respuestas) this.frases.preguntas[index].respuestas = [];
+                this.frases.preguntas[index].respuestas.push(pr); 
+              }
             }
           });
         });
