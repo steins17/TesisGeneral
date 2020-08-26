@@ -36,6 +36,7 @@
                         </div>
                       <div class="card estilodecard" :class="{'seleccionado':tr.status}" @click="seleccionar_letras(index, tr, index_hijo)">
                         <img :src="'archivos/imagenes/ejercicios/'+tr.foto" class="w-100" style="border-radius: 50px"/>
+                        {{tr}}
                       </div><br>
                     </vs-col>
                   </vs-row>
@@ -71,12 +72,13 @@
                         </vs-button>
                       </center>
                     </vs-col>
-                    <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 container" v-for="(tr,index_h) in tr" :key="index_h">
+                    <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 container" ><!--v-for="(tr,index_h) in tr" :key="index_h"-->
                         <div class="card-head text-center">
                           Mayúscula - Minúscula
                         </div>
-                      <div class="card estilodecard estilocard" :class="{'seleccionado':tr.status}" @click="seleccionar_silabas(index, tr, index_h)">
+                      <div class="card estilodecard estilocard" :class="{'seleccionado':tr.status}"> <!--@click="seleccionar_silabas(index, tr, index_h)"-->
                         <img :src="'archivos/imagenes/silabas/'+tr.foto" class="w-100" style="border-radius: 50px"/>
+                        {{tr}}
                       </div><br>
                     </vs-col>
                   </vs-row>
