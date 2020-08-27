@@ -45,9 +45,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/nivel4/llamardatos', 'Nivel4Controller@llamardatos');
     Route::post('/nivel4/oraciones/respuestas', 'Nivel4Controller@oraciones_respuesta');
     Route::post('/nivel4/frases/respuestas', 'Nivel4Controller@frases_respuesta');
-
-    Route::get('/lang/{lang}', 'Controller@set_language')->name('set_language');
 });
+Route::get('/lang/{lang}', 'Controller@set_language')->name('set_language');
 //visualizar imagenes almacenados en el servidor
 Route::get('/perfil/imagenver/{imagen}', function ($imagen) {
     $filePath = base_path().'/imagenes/'.$imagen;

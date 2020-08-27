@@ -72,11 +72,11 @@
                         </vs-button>
                       </center>
                     </vs-col>
-                    <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 container" ><!--v-for="(tr,index_h) in tr" :key="index_h"-->
+                    <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 container" v-for="(tr,index_h) in tr.respuestas" :key="index_h">
                         <div class="card-head text-center">
                           Mayúscula - Minúscula
                         </div>
-                      <div class="card estilodecard estilocard" :class="{'seleccionado':tr.status}"> <!--@click="seleccionar_silabas(index, tr, index_h)"-->
+                      <div class="card estilodecard estilocard" :class="{'seleccionado':tr.status}" @click="seleccionar_silabas(index, tr, index_h)">
                         <img :src="'archivos/imagenes/silabas/'+tr.foto" class="w-100" style="border-radius: 50px"/>
                         {{tr}}
                       </div><br>
@@ -157,23 +157,27 @@ export default {
   methods: {
     llamarpreguntas(){
       Api.llamarpreguntas().then(({data}) => {
+        var valores = [ {letras:0,valor:0}, {silabas:0,valor:0}, {oraciones:0,valor:0} ];
         data.subnivel.forEach((el,index) => {
           if(el.subnivel==1) this.letras.preguntas.push({audio:el.audio, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
           if(el.subnivel==2) this.silabas.preguntas.push({audio:el.audio, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
           if(el.subnivel==3) this.oraciones.preguntas.push({nombre:el.nombre,foto:el.foto, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
-          data.preguntas.forEach(pr => {
-            if(el.id==pr.id_subnivel && el.subnivel==1){  
-              if(!this.letras.preguntas[index].respuestas) this.letras.preguntas[index].respuestas = [];
-              this.letras.preguntas[index].respuestas.push(pr); 
-              if(el.id==pr.id_subnivel && el.subnivel==2){  
-                if(!this.silabas.preguntas[index].respuestas) this.silabas.preguntas[index].respuestas = [];
-                this.silabas.preguntas[index].respuestas.push(pr); 
-              }
-              if(el.id==pr.id_subnivel && el.subnivel==3){  
-                if(!this.oraciones.preguntas[index].respuestas) this.oraciones.preguntas[index].respuestas = [];
-                this.oraciones.preguntas[index].respuestas.push(pr); 
-              }
+          data.preguntas.forEach((pr,index1) => {
+            if(el.id==pr.id_subnivel && el.subnivel==1){
+              if(index!=valores[0].letras) valores[0].letras = index, valores[0].valor++;
+              if(!this.letras.preguntas[valores[0].valor].respuestas) this.letras.preguntas[valores[0].valor].respuestas = [];
+              this.letras.preguntas[valores[0].valor].respuestas.push(pr);
             };
+            if(el.id==pr.id_subnivel && el.subnivel==2){  
+              if(index!=valores[1].silabas) valores[1].silabas = index, valores[1].valor++;
+              if(!this.silabas.preguntas[valores[1].valor-1].respuestas) this.silabas.preguntas[valores[1].valor-1].respuestas = [];
+              this.silabas.preguntas[valores[1].valor-1].respuestas.push(pr); 
+            }
+            if(el.id==pr.id_subnivel && el.subnivel==3){  
+              if(index!=valores[2].oraciones) valores[2].oraciones = index, valores[2].valor++;
+              if(!this.oraciones.preguntas[valores[2].valor-1].respuestas) this.oraciones.preguntas[valores[2].valor-1].respuestas = [];
+              this.oraciones.preguntas[valores[2].valor-1].respuestas.push(pr); 
+            }
           });
         });
       });
