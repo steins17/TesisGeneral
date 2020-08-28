@@ -20,7 +20,7 @@
                   <h2><span>{{tr.nombre}}</span></h2>
                 </div>
               </vs-col>
-              <vs-col vs-justify="flex"  class="col-lg-4 col-md-6 p-0">
+              <vs-col vs-justify="flex"  class="container" w="6">
                 <div class="center content-inputs" v-for="(tr,index_hijo) in tr.respuestas" :key="index_hijo">
                   <vs-input color="#195bff"  v-model="tr.respuesta_campo" class="w-100 mb-3 mt-5" placeholder="Escribir" style="margin-bottom: 35px" @click="seleccionar_oraciones(index, tr, index_hijo)"/>
                 </div>
@@ -39,6 +39,16 @@
           </div>     
         </vs-col>
       </vs-row>
+      <div >
+        <vs-button color="primary"  style="float: right;margin-bottom: 20px;--vs-color: 25, 91, 255;width: 100px;height: 100px;" type="gradient" @click="enviaroraciones()">
+          <vs-tooltip circl>
+            <i class="fas fa-check fa-2x"></i>
+            <template #tooltip>
+              Verificar
+            </template>
+          </vs-tooltip>
+        </vs-button>
+      </div>
       {{variable_seleccionado}}
     </div>
     <!-- frases -->
@@ -71,6 +81,16 @@
           </div>     
         </vs-col>
       </vs-row>
+      <div >
+        <vs-button color="primary"  style="float: right;margin-bottom: 20px;--vs-color: 25, 91, 255;width: 100px;height: 100px;" type="gradient" @click="enviarfrases()">
+          <vs-tooltip circl>
+            <i class="fas fa-check fa-2x"></i>
+            <template #tooltip>
+              Verificar
+            </template>
+          </vs-tooltip>
+        </vs-button>
+      </div>
       {{variable_seleccionado}}
     </div>
   </div>
@@ -132,15 +152,73 @@ export default {
       this.variable_seleccionado.splice(index,1,tr);
     },
     enviaroraciones(){
+      if(this.variable_seleccionado.length<=0){
+        this.$vs.notification({
+          square: true,
+          progress: 'auto',
+          color:'danger',
+          title: 'Debes responder',
+          text: 'Debes seleccionar una de las respuestas'
+        });
+      }
+      for(var i=0; i<this.variable_seleccionado.length; i++){
+        if($.isEmptyObject(this.variable_seleccionado[i])){
+          this.$vs.notification({
+            square: true,
+            progress: 'auto',
+            color:'danger',
+            title: 'Debes responder',
+            text: 'Debes seleccionar una de las respuestas'
+          });
+          return;
+        }
+      }
       Api.enviaroraciones(this.variable_seleccionado).then( ({data}) => {
-        // console.log(data);
+        var resultado = data[0].suma * 10 / data[0].total;
+        this.$vs.notification({
+          square: true,
+          progress: 'auto',
+          color:'primary',
+          position:'top-center',
+          title: `obtuviste un total de ${resultado}/10`,
+          text: `obtuviste un total de ${data[0].suma} aciertos de ${data[0].total} preguntas`
+        });
       }).catch( error => {
         console.log(error);
       });
     },
     enviarfrases(){
+      if(this.variable_seleccionado.length<=0){
+        this.$vs.notification({
+          square: true,
+          progress: 'auto',
+          color:'danger',
+          title: 'Debes responder',
+          text: 'Debes seleccionar una de las respuestas'
+        });
+      }
+      for(var i=0; i<this.variable_seleccionado.length; i++){
+        if($.isEmptyObject(this.variable_seleccionado[i])){
+          this.$vs.notification({
+            square: true,
+            progress: 'auto',
+            color:'danger',
+            title: 'Debes responder',
+            text: 'Debes seleccionar una de las respuestas'
+          });
+          return;
+        }
+      }
       Api.enviarfrases(this.variable_seleccionado).then( ({data}) => {
-        // console.log(data);
+        var resultado = data[0].suma * 10 / data[0].total;
+        this.$vs.notification({
+          square: true,
+          progress: 'auto',
+          color:'primary',
+          position:'top-center',
+          title: `obtuviste un total de ${resultado}/10`,
+          text: `obtuviste un total de ${data[0].suma} aciertos de ${data[0].total} preguntas`
+        });
       }).catch( error => {
         console.log(error);
       });

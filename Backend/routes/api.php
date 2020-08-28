@@ -37,14 +37,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
     
     //rutas del nivel 3
     Route::get('/nivel3/llamardatos', 'Nivel3Controller@llamardatos');
-    Route::post('/nivel3/letras/respuestas', 'Nivel3Controller@letras_respuesta');
-    Route::post('/nivel3/silabas/respuestas', 'Nivel3Controller@silabas_respuesta');
-    Route::post('/nivel3/palabras/respuestas', 'Nivel3Controller@palabras_respuesta');
+    Route::post('/nivel3/letras/respuesta', 'Nivel3Controller@letras_respuesta');
+    Route::post('/nivel3/silabas/respuesta', 'Nivel3Controller@silabas_respuesta');
+    Route::post('/nivel3/palabras/respuesta', 'Nivel3Controller@palabras_respuesta');
 
     //rutas del nivel 4
     Route::get('/nivel4/llamardatos', 'Nivel4Controller@llamardatos');
-    Route::post('/nivel4/oraciones/respuestas', 'Nivel4Controller@oraciones_respuesta');
-    Route::post('/nivel4/frases/respuestas', 'Nivel4Controller@frases_respuesta');
+    Route::post('/nivel4/oraciones/respuesta', 'Nivel4Controller@oraciones_respuesta');
+    Route::post('/nivel4/frases/respuesta', 'Nivel4Controller@frases_respuesta');
 });
 Route::get('/lang/{lang}', 'Controller@set_language')->name('set_language');
 //visualizar imagenes almacenados en el servidor

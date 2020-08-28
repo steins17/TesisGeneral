@@ -36,7 +36,6 @@
                         </div>
                       <div class="card estilodecard mb-3 p-3" :class="{'seleccionado':tr.status}" @click="seleccionar_letras(index, tr, index_hijo)">
                         <img :src="'archivos/imagenes/ejercicios/'+tr.foto" class="w-100" style="border-radius: 50px"/>
-                        {{tr}}
                       </div><br>
                     </vs-col>
                   </vs-row>
@@ -53,6 +52,7 @@
               </vs-tooltip>
             </vs-button>
           </div>
+          {{variable_seleccionado}}
         </div>
         <!-- silabas -->
         <div class="tab-pane fade show mt-5" id="level" role="tabpanel" aria-labelledby="level-tab">
@@ -293,7 +293,37 @@ export default {
       });
     },
     enviaroraciones(){
+      if(this.variable_seleccionado.length<=0){
+        this.$vs.notification({
+          square: true,
+          progress: 'auto',
+          color:'danger',
+          title: 'Debes responder',
+          text: 'Debes escribir la respuesta'
+        });
+      }
+      for(var i=0; i<this.variable_seleccionado.length; i++){
+        if($.isEmptyObject(this.variable_seleccionado[i])){
+          this.$vs.notification({
+            square: true,
+            progress: 'auto',
+            color:'danger',
+            title: 'Debes responder',
+            text: 'Debes seleccionar una de las respuestas'
+          });
+          return;
+        }
+      }
       Api.enviaroraciones(this.variable_seleccionado).then( ({data}) => {
+        var resultado = data[0].suma * 10 / data[0].total;
+        this.$vs.notification({
+          square: true,
+          progress: 'auto',
+          color:'primary',
+          position:'top-center',
+          title: `obtuviste un total de ${resultado}/10`,
+          text: `obtuviste un total de ${data[0].suma} aciertos de ${data[0].total} preguntas`
+        });
       }).catch( error => {
         console.log(error);
       });

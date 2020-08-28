@@ -14,46 +14,46 @@ class Nivel4Controller extends Controller
 {
     function oraciones_respuesta(Request $rq){
         $user = Auth::user()->id;
-        for($i=0; $i<strlen($rq); $i++){
+        DB::delete("DELETE FROM usuario_pregunta WHERE nivel = 4 AND subnivel = 1");
+        for($i=0; $i<8; $i++){
             $id = $rq[$i]["id"];
-            $bddres = DB::select("SELECT ps.*, sb.id_nivel FROM preguntas_subnivel ps INNER JOIN subnivel sb ON sb.id_subnivel=ps.id_subnivel WHERE id_preguntas_subnivel = $id");
+            $bddres = DB::select("SELECT ps.* FROM preguntas_subnivel ps INNER JOIN subnivel sb ON sb.id=ps.id_subnivel WHERE ps.id = $id");
             $res = $bddres[0];
             $tipo = $res->tipo;
-            $nivel = $res->id_nivel;
-            $subnivel = $res->id_subnivel;
-            $preguntas_subnivel = $res->id_preguntas_subnivel;
+            $preguntas_subnivel = $res->id_subnivel;
 
-            $nv3 = new Preguntas_subnivel();
-            $nv3->tipo = $tipo;
-            $nv3->id_users = $user;
-            $nv3->id_nivel = $nivel;
-            $nv3->id_subnivel = $subnivel;
-            $nv3->id_pre_nive = $preguntas_subnivel;
-            $nv3->usuario_crea = $user;
-            $nv3->save();
+            $nv2 = new Usuario_pregunta();
+            $nv2->tipo = $tipo;
+            $nv2->nivel = 4;
+            $nv2->subnivel = 1;
+            $nv2->id_users = $user;
+            $nv2->id_pre_nivel = $preguntas_subnivel;
+            $nv2->usuario_crea = $user;
+            $nv2->save();
         }
+        return DB::select("SELECT sum(tipo) AS suma, count(*) AS total FROM usuario_pregunta WHERE nivel = 4 AND subnivel = 1");
     }
     
     function frases_respuesta(Request $rp){
         $user = Auth::user()->id;
-        for($i=0; $i<strlen($rq); $i++){
+        DB::delete("DELETE FROM usuario_pregunta WHERE nivel = 4 AND subnivel = 2");
+        for($i=0; $i<5; $i++){
             $id = $rq[$i]["id"];
-            $bddres = DB::select("SELECT ps.*, sb.id_nivel FROM preguntas_subnivel ps INNER JOIN subnivel sb ON sb.id_subnivel=ps.id_subnivel WHERE id_preguntas_subnivel = $id");
+            $bddres = DB::select("SELECT ps.* FROM preguntas_subnivel ps INNER JOIN subnivel sb ON sb.id=ps.id_subnivel WHERE ps.id = $id");
             $res = $bddres[0];
             $tipo = $res->tipo;
-            $nivel = $res->id_nivel;
-            $subnivel = $res->id_subnivel;
-            $preguntas_subnivel = $res->id_preguntas_subnivel;
+            $preguntas_subnivel = $res->id_subnivel;
 
-            $nv3 = new Preguntas_subnivel();
-            $nv3->tipo = $tipo;
-            $nv3->id_users = $user;
-            $nv3->id_nivel = $nivel;
-            $nv3->id_subnivel = $subnivel;
-            $nv3->id_pre_nive = $preguntas_subnivel;
-            $nv3->usuario_crea = $user;
-            $nv3->save();
+            $nv2 = new Usuario_pregunta();
+            $nv2->tipo = $tipo;
+            $nv2->nivel = 4;
+            $nv2->subnivel = 2;
+            $nv2->id_users = $user;
+            $nv2->id_pre_nivel = $preguntas_subnivel;
+            $nv2->usuario_crea = $user;
+            $nv2->save();
         }
+        return DB::select("SELECT sum(tipo) AS suma, count(*) AS total FROM usuario_pregunta WHERE nivel = 4 AND subnivel = 2");
     }
 
     function llamardatos(){
