@@ -21,8 +21,8 @@
                 </div>
               </vs-col>
               <vs-col vs-justify="flex" class="container" w="6">
-                <div class="center content-inputs" v-for="(tr,index_hijo) in tr" :key="index_hijo">
-                  <vs-input color="#195bff" disabled v-model="tr.respuesta_campo" class="w-100  mb-3 mt-5" placeholder="Escribir" style="margin-bottom: 35px" @click="seleccionar_oraciones(index, tr, index_hijo)"/>
+                <div class="center content-inputs" v-for="(tr,index_hijo) in tr.respuestas" :key="index_hijo">
+                  <vs-input color="#195bff"  v-model="tr.respuesta_campo" class="w-100  mb-3 mt-5" placeholder="Escribir" style="margin-bottom: 35px" @click="seleccionar_oraciones(index, tr, index_hijo)"/>
                 </div>
                 <div class="container" style=";display: block;">
                   <vs-button  style="float: right;margin-right: 80px;margin-bottom: 20px;--vs-color: 25, 91, 255;border-radius: 70px;width: 40px;height: 40px;">
@@ -53,8 +53,8 @@
                 </div>
               </vs-col>
               <vs-col vs-justify="flex" class="container" w="6">
-                <div class="center content-inputs" v-for="(tr,index_h) in tr" :key="index_h">
-                  <vs-input color="#195bff" disabled v-model="tr.respuesta_campo" class="w-100  mb-3 mt-5"  placeholder="Escribir" style="margin-bottom: 35px" @click="seleccionar_frases(index, tr, index_h)"/>
+                <div class="center content-inputs" v-for="(tr,index_h) in tr.respuestas" :key="index_h">
+                  <vs-input color="#195bff"  v-model="tr.respuesta_campo" class="w-100  mb-3 mt-5"  placeholder="Escribir" style="margin-bottom: 35px" @click="seleccionar_frases(index, tr, index_h)"/>
                 </div>
                 <div class="container" style="bottom: 0px;display: block;">
                   <vs-button  style="float: right;margin-right: 80px;margin-bottom: 20px;--vs-color: 25, 91, 255;border-radius: 70px;width: 40px;height: 40px;">
@@ -94,17 +94,20 @@ export default {
   methods: {
     llamarpreguntas(){
       Api.llamarpreguntas().then(({data}) => {
+        var valores = [ {oraciones:0,valor:0}, {frases:0,valor:0}];
         data.subnivel.forEach((el,index) => {
           if(el.subnivel==1) this.oraciones.preguntas.push({nombre:el.nombre, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
           if(el.subnivel==2) this.frases.preguntas.push({nombre:el.nombre, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
           data.preguntas.forEach(pr => {
             if(el.id==pr.id_subnivel && el.subnivel==1){  
-              if(!this.oraciones.preguntas[index].respuestas) this.oraciones.preguntas[index].respuestas = [];
-              this.oraciones.preguntas[index].respuestas.push(pr); 
-              if(el.id==pr.id_subnivel && el.subnivel==2){  
-                if(!this.frases.preguntas[index].respuestas) this.frases.preguntas[index].respuestas = [];
-                this.frases.preguntas[index].respuestas.push(pr); 
-              }
+              if(index!=valores[0].oraciones) valores[0].oraciones = index, valores[0].valor++;
+              if(!this.oraciones.preguntas[valores[0].valor].respuestas) this.oraciones.preguntas[valores[0].valor].respuestas = [];
+              this.oraciones.preguntas[valores[0].valor].respuestas.push(pr);
+            }
+            if(el.id==pr.id_subnivel && el.subnivel==2){  
+              if(index!=valores[1].frases) valores[1].frases = index, valores[1].valor++;
+              if(!this.frases.preguntas[valores[1].valor-1].respuestas) this.frases.preguntas[valores[1].valor-1].respuestas = [];
+              this.frases.preguntas[valores[1].valor-1].respuestas.push(pr);
             }
           });
         });

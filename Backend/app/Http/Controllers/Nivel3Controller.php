@@ -82,7 +82,7 @@ class Nivel3Controller extends Controller
     function llamardatos(){
         $subnivel = Subnivel::select('*')->where("nivel", "=", 3)->get();
 
-        $preguntas = Preguntas_subnivel::select('id',  'nivel', 'id_subnivel')->where("nivel", "=", 3)->get();
+        $preguntas = Preguntas_subnivel::select('id','valor_campo',  'nivel', 'id_subnivel')->where("nivel", "=", 3)->get();
         return [
             'subnivel' => $subnivel,
             'preguntas' => $preguntas,

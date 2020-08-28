@@ -109,7 +109,7 @@
                         <div class="card-head text-center" style="position: center;margin-bottom: 20px">
                           <h2><span>{{tr.nombre}}</span></h2>
                         </div>
-                        <div class="center content-inputs" v-for="(tr,index_2) in tr" :key="index_2">
+                        <div class="center content-inputs" v-for="(tr,index_2) in tr.respuestas" :key="index_2">
                         <vs-input color="#195bff" v-model="tr.respuesta_campo" label-placeholder="Escribir" class="w-100 mb-3 mt-5" @keyup="selec_oraciones(index, tr, index_2)"/>
                         </div>
                       </vs-col>

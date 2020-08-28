@@ -80,7 +80,7 @@ class Nivel2Controller extends Controller
     function llamardatos(){
         $subnivel = Subnivel::select('*')->where("nivel", "=", 2)->get();
 
-        $preguntas = Preguntas_subnivel::select('id', 'foto', 'nivel', 'id_subnivel')->where("nivel", "=", 2)->get();
+        $preguntas = Preguntas_subnivel::select('id', 'foto','valor_campo', 'nivel', 'id_subnivel')->where("nivel", "=", 2)->get();
         return [
             'subnivel' => $subnivel,
             'preguntas' => $preguntas,

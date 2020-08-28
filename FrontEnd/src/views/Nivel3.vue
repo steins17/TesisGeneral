@@ -29,8 +29,8 @@
                       </template>
                     </vs-tooltip>
                   </vs-button>
-                  <div v-for="(tr,index_hijo) in tr" :key="index_hijo">
-                    <vs-input state="success" v-model="tr.respuesta_campo" class="w-100  mb-3 mt-5"  placeholder="Escribir" style="margin-bottom: 20px" @keyup="seleccionar_letras(index, tr, index_hijo)"></vs-input>
+                  <div v-for="(tr,index_hijo) in tr.respuestas" :key="index_hijo">
+                    <vs-input color="#195bff" v-model="tr.respuesta_campo" class="w-100  mb-3 mt-5"  placeholder="Escribir" style="margin-bottom: 20px" @keyup="seleccionar_letras(index, tr, index_hijo)"></vs-input>
                   </div>
                 </vs-row>
               </div>
@@ -66,8 +66,8 @@
                       </template>
                     </vs-tooltip>
                   </vs-button>
-                  <div v-for="(tr,index_h) in tr" :key="index_h">
-                    <vs-input state="success" v-model="tr.respuesta_campo" class="w-100  mb-3 mt-5"  placeholder="Escribir" style="margin-bottom: 20px" @keyup="seleccionar_silabas(index, tr, index_h)"/>
+                  <div v-for="(tr,index_h) in tr.respuestas" :key="index_h">
+                    <vs-input color="#195bff" v-model="tr.respuesta_campo" class="w-100  mb-3 mt-5"  placeholder="Escribir" style="margin-bottom: 20px" @keyup="seleccionar_silabas(index, tr, index_h)"/>
                   </div>
                 </vs-row>
               </div>
@@ -85,7 +85,6 @@
           </vs-tooltip>
         </vs-button>
         </div>
-        {{variable_seleccionado}}
     </div>
     <!-- palabra -->
     <div  class="tab-pane fade show  mt-5" id="c" role="tabpanel" aria-labelledby="lev3-tab">
@@ -104,9 +103,9 @@
                       </template>
                     </vs-tooltip>
                   </vs-button>
-                  <div v-for="(tr,index_hi) in tr" :key="index_hi">
-                    <vs-input state="success" v-model="tr.respuesta_campo" class="w-100  mb-3 mt-5"  placeholder="Escribir" style="margin-bottom: 20px" @click="seleccionar_palabras(index, tr, index_hi)"></vs-input>
-                  </div>
+                  <div v-for="(tr,index_hi) in tr.respuestas" :key="index_hi">
+                    <vs-input color="#195bff" v-model="tr.respuesta_campo" class="w-100  mb-3 mt-5"  placeholder="Escribir" style="margin-bottom: 20px" @keyup="seleccionar_palabras(index, tr, index_hi)"/>
+                  </div> 
                 </vs-row>  
               </div>
             </div>
@@ -149,22 +148,26 @@ export default {
   methods:{
     llamarpreguntas(){
       Api.llamarpreguntas().then(({data}) => {
+        var valores = [ {letras:0,valor:0}, {silabas:0,valor:0}, {palabras:0,valor:0} ];
         data.subnivel.forEach((el,index) => {
           if(el.subnivel==1) this.letras.preguntas.push({audio:el.audio,foto:el.foto, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
           if(el.subnivel==2) this.silabas.preguntas.push({audio:el.audio,foto:el.foto, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
-          if(el.subnivel==3) this.palabras.preguntas.push({audio:el.audio, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
+          if(el.subnivel==3) this.palabras.preguntas.push({audio:el.audio,foto:el.foto, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
           data.preguntas.forEach(pr => {
-            if(el.id==pr.id_subnivel && el.subnivel==1){  
-              if(!this.letras.preguntas[index].respuestas) this.letras.preguntas[index].respuestas = [];
-              this.letras.preguntas[index].respuestas.push(pr); 
-              if(el.id==pr.id_subnivel && el.subnivel==2){  
-                if(!this.silabas.preguntas[index].respuestas) this.silabas.preguntas[index].respuestas = [];
-                this.silabas.preguntas[index].respuestas.push(pr); 
-              }
-              if(el.id==pr.id_subnivel && el.subnivel==3){  
-                if(!this.palabras.preguntas[index].respuestas) this.palabras.preguntas[index].respuestas = [];
-                this.palabras.preguntas[index].respuestas.push(pr); 
-              }
+            if(el.id==pr.id_subnivel && el.subnivel==1){
+              if(index!=valores[0].letras) valores[0].letras = index, valores[0].valor++;
+              if(!this.letras.preguntas[valores[0].valor].respuestas) this.letras.preguntas[valores[0].valor].respuestas = [];
+              this.letras.preguntas[valores[0].valor].respuestas.push(pr);
+            };
+            if(el.id==pr.id_subnivel && el.subnivel==2){  
+              if(index!=valores[1].silabas) valores[1].silabas = index, valores[1].valor++;
+              if(!this.silabas.preguntas[valores[1].valor-1].respuestas) this.silabas.preguntas[valores[1].valor-1].respuestas = [];
+              this.silabas.preguntas[valores[1].valor-1].respuestas.push(pr); 
+            }
+            if(el.id==pr.id_subnivel && el.subnivel==3){  
+              if(index!=valores[2].palabras) valores[2].palabras = index, valores[2].valor++;
+              if(!this.palabras.preguntas[valores[2].valor-1].respuestas) this.palabras.preguntas[valores[2].valor-1].respuestas = [];
+              this.palabras.preguntas[valores[2].valor-1].respuestas.push(pr); 
             }
           });
         });
@@ -195,11 +198,11 @@ export default {
     },
     seleccionar_palabras(index, tr, index_hi){
       if(this.variable_seleccionado.length==0){
-        this.letras.preguntas.forEach(el => {
+        this.palabras.preguntas.forEach(el => {
           this.variable_seleccionado.push({});
         });
       } 
-      this.letras.preguntas[index].respuestas[index_hi];
+      this.palabras.preguntas[index].respuestas[index_hi];
       this.variable_seleccionado.splice(index,1,tr);
     },
     enviarletras(){
