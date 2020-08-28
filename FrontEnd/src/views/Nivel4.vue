@@ -20,9 +20,9 @@
                   <h2><span>{{tr.nombre}}</span></h2>
                 </div>
               </vs-col>
-              <vs-col vs-justify="flex" class="container" w="6">
+              <vs-col vs-justify="flex"  class="col-lg-4 col-md-6 p-0">
                 <div class="center content-inputs" v-for="(tr,index_hijo) in tr.respuestas" :key="index_hijo">
-                  <vs-input color="#195bff"  v-model="tr.respuesta_campo" class="w-100  mb-3 mt-5" placeholder="Escribir" style="margin-bottom: 35px" @click="seleccionar_oraciones(index, tr, index_hijo)"/>
+                  <vs-input color="#195bff"  v-model="tr.respuesta_campo" class="w-100 mb-3 mt-5" placeholder="Escribir" style="margin-bottom: 35px" @click="seleccionar_oraciones(index, tr, index_hijo)"/>
                 </div>
                 <div class="container" style=";display: block;">
                   <vs-button  style="float: right;margin-right: 80px;margin-bottom: 20px;--vs-color: 25, 91, 255;border-radius: 70px;width: 40px;height: 40px;">

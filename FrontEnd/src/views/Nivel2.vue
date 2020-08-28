@@ -34,7 +34,7 @@
                         <div class="card-head text-center">
                           Mayúscula - Minúscula
                         </div>
-                      <div class="card estilodecard" :class="{'seleccionado':tr.status}" @click="seleccionar_letras(index, tr, index_hijo)">
+                      <div class="card estilodecard mb-3 p-3" :class="{'seleccionado':tr.status}" @click="seleccionar_letras(index, tr, index_hijo)">
                         <img :src="'archivos/imagenes/ejercicios/'+tr.foto" class="w-100" style="border-radius: 50px"/>
                         {{tr}}
                       </div><br>
@@ -76,8 +76,8 @@
                         <div class="card-head text-center">
                           Mayúscula - Minúscula
                         </div>
-                      <div class="card estilodecard estilocard" :class="{'seleccionado':tr.status}" @click="seleccionar_silabas(index, tr, index_h)">
-                        <img :src="'archivos/imagenes/silabas/'+tr.foto" class="w-100" style="border-radius: 50px"/>
+                      <div class="card estilodecard estilocard mb-3 p-3" :class="{'seleccionado':tr.status}" @click="seleccionar_silabas(index, tr, index_h)">
+                        <img :src="'archivos/imagenes/silabas/'+tr.foto" class="w-100 " style="border-radius: 50px"/>
                         {{tr}}
                       </div><br>
                     </vs-col>
@@ -99,10 +99,10 @@
         <!-- oraciones -->
         <div class="tab-pane fade show  mt-5" id="p" role="tabpanel" aria-labelledby="p-tab">
           <vs-row >
-            <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-6 col-md-6 p-0" v-for="(tr,index) in oraciones.preguntas " :key="index">
+            <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-6 col-md-6 p-3" v-for="(tr,index) in oraciones.preguntas " :key="index">
               <div class="col-lg-12 mb-4">
-                <div class="card card-ajuste m-3" style="border-radius: 50px">
-                  <img :src="'archivos/imagenes/ima_ejer/'+tr.foto" class="card-img-top" style="border-radius: 50px"  alt="Card image cap"/>
+                <div class="card card-ajuste mb-3 p-3" style="border-radius: 50px">
+                  <img :src="'archivos/imagenes/ima_ejer/'+tr.foto" class="card-img-top " style="border-radius: 50px"  alt="Card image cap"/>
                   <div class="card-body">
                     <vs-row>
                       <vs-col vs-type="flex" vs-justify="center" vs-align="center" style="margin: 15px">

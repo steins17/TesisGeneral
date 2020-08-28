@@ -39,7 +39,7 @@
         </vs-col>
       </vs-row>
       <div class="content-inputs " >
-        <vs-button color="primary"  style="float: right;margin-bottom: 20px;--vs-color: 25, 91, 255;width: 100px;height: 100px;" type="gradient">
+        <vs-button color="primary"  style="width: 100px;height: 100px;" type="gradient">
           <vs-tooltip circl>
             <i class="fas fa-check fa-2x"></i>
             <template #tooltip>
