@@ -15,7 +15,7 @@ class CreateUsuarioPreguntaTable extends Migration
     {
         Schema::create('usuario_pregunta', function (Blueprint $table) {
             $table->bigIncrements('id')->autoIncrement();
-            $table->string('tipo');
+            $table->integer('tipo');
             $table->string('respuesta_campo')->nullable();
             $table->integer('nivel');
             $table->integer('subnivel');
