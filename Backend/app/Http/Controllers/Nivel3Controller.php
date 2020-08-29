@@ -24,7 +24,7 @@ class Nivel3Controller extends Controller
             $res = $bddres[0];
             $valor_campo = $res->valor_campo;
             $tipo=0;
-            $campo_r= strtolower(rtrim($pr->valor_campo, '.'));
+            $campo_r= strtolower(rtrim($rq->valor_campo, '.'));
             if($valor_campo==$campo_r){
                 $tipo=1;
             }
@@ -50,7 +50,7 @@ class Nivel3Controller extends Controller
             $res = $bddres[0];
             $valor_campo = $res->valor_campo;
             $tipo=0;
-            $campo_r= strtolower(rtrim($pr->valor_campo, '.'));
+            $campo_r= strtolower(rtrim($rq->valor_campo, '.'));
             if($valor_campo==$campo_r){
                 $tipo=1;
             }
@@ -76,7 +76,7 @@ class Nivel3Controller extends Controller
             $res = $bddres[0];
             $valor_campo = $res->valor_campo;
             $tipo=0;
-            $campo_r= strtolower(rtrim($pr->valor_campo, '.'));
+            $campo_r= strtolower(rtrim($rq->valor_campo, '.'));
             if($valor_campo==$campo_r){
                 $tipo=1;
             }
