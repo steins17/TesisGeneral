@@ -65,10 +65,15 @@ class Nivel3Controller extends Controller
             $bddres = DB::select("SELECT ps.* FROM preguntas_subnivel ps INNER JOIN subnivel sb ON sb.id=ps.id_subnivel WHERE ps.id = $id");
             $res = $bddres[0];
             $valor_campo = $res->valor_campo;
+            $tipo=0;
+            $campo_r= strtolower(rtrim($pr->valor_campo, '.'));
+            if($valor_campo==$campo_r){
+                $tipo=1;
+            }
             $preguntas_subnivel = $res->id_subnivel;
 
             $nv3 = new Usuario_pregunta();
-            $nv3->tipo = $valor_campo;
+            $nv3->tipo = $tipo;
             $nv3->nivel = 3;
             $nv3->subnivel = 3;
             $nv3->id_users = $user;
