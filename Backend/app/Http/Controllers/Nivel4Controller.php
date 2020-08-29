@@ -48,12 +48,13 @@ class Nivel4Controller extends Controller
             $id = $rq[$i]["id"];
             $bddres = DB::select("SELECT ps.* FROM preguntas_subnivel ps INNER JOIN subnivel sb ON sb.id=ps.id_subnivel WHERE ps.id = $id");
             $res = $bddres[0];
-            $tipo = $res->tipo;
-            $preguntas_subnivel = $res->id_subnivel;
             $valor_campo = $res->valor_campo;
+            $preguntas_subnivel = $res->id;
+
             $tipo=0;
-            $campo_r= strtolower(rtrim($rq->valor_campo, '.'));
-            if($valor_campo==$campo_r){
+            $campo_r = mb_strtolower(rtrim($rq[$i]["respuesta_campo"], '.'));
+            $valor_r = mb_strtolower(rtrim($valor_campo, '.'));
+            if($valor_r==$campo_r){
                 $tipo=1;
             }
 

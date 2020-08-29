@@ -21,7 +21,7 @@ class Nivel2Controller extends Controller
             $bddres = DB::select("SELECT ps.* FROM preguntas_subnivel ps INNER JOIN subnivel sb ON sb.id=ps.id_subnivel WHERE ps.id = $id");
             $res = $bddres[0];
             $tipo = $res->tipo;
-            $preguntas_subnivel = $res->id_subnivel;
+            $preguntas_subnivel = $res->id;
 
             $nv2 = new Usuario_pregunta();
             $nv2->tipo = $tipo;
@@ -42,7 +42,7 @@ class Nivel2Controller extends Controller
             $bddres = DB::select("SELECT ps.* FROM preguntas_subnivel ps INNER JOIN subnivel sb ON sb.id=ps.id_subnivel WHERE ps.id = $id");
             $res = $bddres[0];
             $tipo = $res->tipo;
-            $preguntas_subnivel = $res->id_subnivel;
+            $preguntas_subnivel = $res->id;
 
             $nv2 = new Usuario_pregunta();
             $nv2->tipo = $tipo;
@@ -68,7 +68,7 @@ class Nivel2Controller extends Controller
             if($valor_campo==$campo_r){
                 $tipo=1;
             }
-            $preguntas_subnivel = $res->id_subnivel;
+            $preguntas_subnivel = $res->id;
 
             $nv2 = new Usuario_pregunta();
             $nv2->tipo = $tipo;
