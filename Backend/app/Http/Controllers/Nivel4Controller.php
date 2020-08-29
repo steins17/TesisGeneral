@@ -41,7 +41,7 @@ class Nivel4Controller extends Controller
         return DB::select("SELECT sum(tipo) AS suma, count(*) AS total FROM usuario_pregunta WHERE nivel = 4 AND subnivel = 1");
     }
     
-    function frases_respuesta(Request $rp){
+    function frases_respuesta(Request $rq){
         $user = Auth::user()->id;
         DB::delete("DELETE FROM usuario_pregunta WHERE nivel = 4 AND subnivel = 2");
         for($i=0; $i<5; $i++){
