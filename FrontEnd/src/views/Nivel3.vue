@@ -164,40 +164,40 @@
     <div class="tab-content" id="myTabContent2">
       <!-- letras -->
       <div  class="tab-pane fade show active mt-5" id="a" role="tabpanel" aria-labelledby="level3-tab">
-          <div class="col-lg-12 mb-3">
-            <vs-row justify="flex-end">
-              <vs-col w="1">
-                <vs-button class="w-100" @click="modal('agregar')">Agregar</vs-button>
-              </vs-col>
-            </vs-row>
-          </div>
-          <div class="card mb-5">
-            <vs-table>
-              <template #thead>
-                <vs-tr>
-                  <vs-th> Pregunta </vs-th>
-                  <vs-th> Estado </vs-th>
-                  <vs-th> Imagen </vs-th>
-                  <vs-th> Fecha Creado </vs-th>
-                  <vs-th> Opciones </vs-th>
-                </vs-tr>
-              </template>
-              <template #tbody v-if="lista">
-                <vs-tr :key="i" v-for="(tr, i) in lista.letras" :data="tr">
-                  <vs-td> {{ tr.valor_campo }} </vs-td>
-                  <vs-th v-if="tr.estado==1" style="color:green">Activo</vs-th><vs-th v-else style="color:red">Inactivo</vs-th>
-                  <vs-td><img :src="'archivos/imagenes/'+tr.fotosb" style="width: 70px;height: 70px;"/></vs-td>
-                  <vs-td>{{ tr.updated_at | fecha }}</vs-td>
-                  <vs-td>
-                    <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
-                    <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
-                    <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar', tr)"></i>
-                    <i class="fas fa-trash ml-2 pointer eventsalto"></i>
-                  </vs-td>
-                </vs-tr>
-              </template>
-            </vs-table>
-          </div>
+        <div class="col-lg-12 mb-3">
+          <vs-row justify="flex-end">
+            <vs-col w="1">
+              <vs-button class="w-100" @click="modal('agregar')">Agregar</vs-button>
+            </vs-col>
+          </vs-row>
+        </div>
+        <div class="card mb-5">
+          <vs-table>
+            <template #thead>
+              <vs-tr>
+                <vs-th> Pregunta </vs-th>
+                <vs-th> Estado </vs-th>
+                <vs-th> Imagen </vs-th>
+                <vs-th> Fecha Creado </vs-th>
+                <vs-th> Opciones </vs-th>
+              </vs-tr>
+            </template>
+            <template #tbody v-if="lista">
+              <vs-tr :key="i" v-for="(tr, i) in lista.letras" :data="tr">
+                <vs-td> {{ tr.valor_campo }} </vs-td>
+                <vs-th v-if="tr.estado==1" style="color:green">Activo</vs-th><vs-th v-else style="color:red">Inactivo</vs-th>
+                <vs-td><img :src="'archivos/imagenes/'+tr.fotosb" style="width: 70px;height: 70px;"/></vs-td>
+                <vs-td>{{ tr.updated_at | fecha }}</vs-td>
+                <vs-td>
+                  <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
+                  <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
+                  <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar', tr)"></i>
+                  <i class="fas fa-trash ml-2 pointer eventsalto"></i>
+                </vs-td>
+              </vs-tr>
+            </template>
+          </vs-table>
+        </div>
       </div>
       <!-- silabas -->
       <div  class="tab-pane fade show  mt-5" id="b" role="tabpanel" aria-labelledby="leve3-tab">
@@ -336,6 +336,7 @@
 import Api from "../apis/Nivel3";
 import store from "../store/store";
 import moment from "moment";
+moment.locale("es");
 export default {
   data(){
     return{
@@ -624,6 +625,8 @@ filters: {
   mounted() {
     this.llamarpreguntas();
     this.llamarresultados();
+    this.usuario();
+    this.listar();
   },
 }
 </script>

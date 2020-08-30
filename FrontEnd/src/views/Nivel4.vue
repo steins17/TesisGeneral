@@ -123,97 +123,73 @@
     <div class="tab-content" id="myTabContent2">
       <!-- oraciones -->
       <div  class="tab-pane fade show active mt-5" id="a" role="tabpanel" aria-labelledby="level3-tab">
-        <vs-row>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" >
-            <vs-alert dark class="mb-3" :progress="alerta.progress" v-model="alerta.active" v-if="resultados.subnivel1 >= 7">
-              <template #title>
-                Calificación de la Unidad
+        <div class="col-lg-12 mb-3">
+            <vs-row justify="flex-end">
+              <vs-col w="1">
+                <vs-button class="w-100" @click="modal('agregar')">Agregar</vs-button>
+              </vs-col>
+            </vs-row>
+          </div>
+          <div class="card mb-5">
+            <vs-table>
+              <template #thead>
+                <vs-tr>
+                  <vs-th> Pregunta </vs-th>
+                  <vs-th> Estado </vs-th>
+                  <vs-th> Fecha Creado </vs-th>
+                  <vs-th> Opciones </vs-th>
+                </vs-tr>
               </template>
-                Felicidades, obtuviste una calificación de {{resultados.subnivel1}}/10, ya puedes ingresar a oraciones de este nivel
-            </vs-alert>
-            <div class="card m-3" style="border-radius: 50px" v-for="(tr,index) in oraciones.preguntas" :key="index">
-              <vs-row>
-                <vs-col vs-type="flex" vs-justify="center" vs-align="center" style="margin: 30px">
-                  <div class="card-head text-center" style="margin-bottom: 12px">
-                    <h2><span>{{tr.nombre}}</span></h2>
-                  </div>
-                </vs-col>
-                <vs-col vs-justify="flex"  class="container" w="6">
-                  <div class="center content-inputs" v-for="(tr,index_hijo) in tr.respuestas" :key="index_hijo">
-                    <vs-input color="#195bff"  v-model="tr.respuesta_campo" :class="'w-100 mb-3 mt-5 index'+index" style="margin-bottom: 35px" @click="seleccionar_oraciones(index, tr, index_hijo)"/>
-                  </div>
-                  <div class="container" style=";display: block;">
-                    <vs-button  style="float: right;margin-right: 80px;margin-bottom: 20px;--vs-color: 25, 91, 255;border-radius: 70px;width: 40px;height: 40px;" @click="hablar(index)">
-                      <vs-tooltip circle>
-                        <i class="fas fa-microphone-alt fa-2x"></i>
-                        <template #tooltip>
-                          Hablar
-                        </template>
-                      </vs-tooltip>
-                    </vs-button>
-                  </div>
-                </vs-col>
-              </vs-row>
-            </div>     
-          </vs-col>
-        </vs-row>
-        <div >
-          <vs-button color="primary"  style="float: right;margin-bottom: 20px;--vs-color: 25, 91, 255;width: 100px;height: 100px;" type="gradient" @click="enviaroraciones()">
-            <vs-tooltip circl>
-              <i class="fas fa-check fa-2x"></i>
-              <template #tooltip>
-                Verificar
+              <template #tbody v-if="lista">
+                <vs-tr :key="i" v-for="(tr, i) in lista.oraciones" :data="tr">
+                  <vs-td> {{ tr.valor_campo }} </vs-td>
+                  <vs-th v-if="tr.estado==1" style="color:green">Activo</vs-th><vs-th v-else style="color:red">Inactivo</vs-th>
+                  <vs-td>{{ tr.updated_at | fecha }}</vs-td>
+                  <vs-td>
+                    <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
+                    <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
+                    <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar', tr)"></i>
+                    <i class="fas fa-trash ml-2 pointer eventsalto"></i>
+                  </vs-td>
+                </vs-tr>
               </template>
-            </vs-tooltip>
-          </vs-button>
-        </div>
+            </vs-table>
+          </div>
       </div>
       <!-- frases -->
       <div  class="tab-pane fade show mt-5" id="b" role="tabpanel" aria-labelledby="leve3-tab">
-        <vs-row>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center">
-            <vs-alert dark class="mb-3" :progress="alerta.progress" v-model="alerta.active">
-              <template #title>
-                Calificación de la Unidad
+        <div class="col-lg-12 mb-3">
+            <vs-row justify="flex-end">
+              <vs-col w="1">
+                <vs-button class="w-100" @click="modal('agregar')">Agregar</vs-button>
+              </vs-col>
+            </vs-row>
+          </div>
+          <div class="card mb-5">
+            <vs-table>
+              <template #thead>
+                <vs-tr>
+                  <vs-th> Pregunta </vs-th>
+                  <vs-th> Estado </vs-th>
+                  <vs-th> Fecha Creado </vs-th>
+                  <vs-th> Opciones </vs-th>
+                </vs-tr>
               </template>
-                Felicidades, obtuviste una calificación de {{resultados.subnivel2}}/10, ya has aprobado el curso
-            </vs-alert>
-            <div class="card m-3" style="border-radius: 50px" v-for="(tr,index) in frases.preguntas" :key="index">
-              <vs-row>
-                <vs-col vs-type="flex" vs-justify="center" vs-align="center" style="margin: 30px">
-                  <div class="card-head text-center" style="margin-bottom: 12px">
-                    <h2><span>{{tr.nombre}}</span></h2>
-                  </div>
-                </vs-col>
-                <vs-col vs-justify="flex" class="container" w="6">
-                  <div class="center content-inputs" v-for="(tr,index_h) in tr.respuestas" :key="index_h">
-                    <vs-input color="#195bff"  v-model="tr.respuesta_campo" :class="'w-100  mb-3 mt-5 index'+index"  placeholder="Escribir" style="margin-bottom: 35px" @click="seleccionar_frases(index, tr, index_h)"/>
-                  </div>
-                  <div class="container" style="bottom: 0px;display: block;">
-                    <vs-button  style="float: right;margin-right: 80px;margin-bottom: 20px;--vs-color: 25, 91, 255;border-radius: 70px;width: 40px;height: 40px;" @click="hablarc(index)">
-                      <vs-tooltip circle>
-                        <i class="fas fa-microphone-alt fa-2x"></i>
-                        <template #tooltip>
-                          Hablar
-                        </template>
-                      </vs-tooltip>
-                    </vs-button>
-                  </div>
-                </vs-col>
-              </vs-row>
-            </div>     
-          </vs-col>
-        </vs-row>
-        <div >
-          <vs-button color="primary"  style="float: right;margin-bottom: 20px;--vs-color: 25, 91, 255;width: 100px;height: 100px;" type="gradient" @click="enviarfrases()">
-            <vs-tooltip circl>
-              <i class="fas fa-check fa-2x"></i>
-              <template #tooltip>
-                Verificar
+              <template #tbody v-if="lista">
+                <vs-tr :key="i" v-for="(tr, i) in lista.frases" :data="tr">
+                  <vs-td> {{ tr.valor_campo }} </vs-td>
+                  <vs-th v-if="tr.estado==1" style="color:green">Activo</vs-th><vs-th v-else style="color:red">Inactivo</vs-th>
+                  <vs-td>{{ tr.updated_at | fecha }}</vs-td>
+                  <vs-td>
+                    <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
+                    <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
+                    <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar', tr)"></i>
+                    <i class="fas fa-trash ml-2 pointer eventsalto"></i>
+                  </vs-td>
+                </vs-tr>
               </template>
-            </vs-tooltip>
-          </vs-button>
-        </div>
+            </vs-table>
+          </div>
       </div>
     </div>
   </div>
@@ -494,6 +470,8 @@ export default {
   mounted() {
     this.llamarpreguntas();
     this.llamarresultados();
+    this.usuario();
+    this.listar();
   },
   
 }
