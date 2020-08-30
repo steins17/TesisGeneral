@@ -14,12 +14,12 @@ use Carbon\Carbon;
 
 class PerfilController extends Controller
 {
-    public function recuperar(){
+    function recuperar(){
         $user = Auth::user()->id;
         $data = User::select("*")->leftJoin("persona", "persona.id_users", "=", "users.id")->where("users.id", "=", $user)->get();
         return $data[0];
     }
-    public function restablecer(Request $request){
+    function restablecer(Request $request){
         $id = Auth::user()->id;
         $request->validate([
             'name' => ['required'],
@@ -68,7 +68,7 @@ class PerfilController extends Controller
             $perfil->save();
         }
     }
-    public function imagen(Request $request){
+    function imagen(Request $request){
         $id = Auth::user()->id;
         if ($request->file('imagen')) {
             $file_imagen = $request->file('imagen');
@@ -92,7 +92,7 @@ class PerfilController extends Controller
         $user = User::where('id', $id)->first();
         return $user->createToken("browser")->plainTextToken;
     }
-    public function password(Request $request){
+    function password(Request $request){
         $id = Auth::user()->id;
 
         $user = User::where('id', $id)->first();
@@ -113,5 +113,13 @@ class PerfilController extends Controller
         $request->user()->tokens()->delete();
         $user = User::where('id', $id)->first();
         return $user->createToken("browser")->plainTextToken;
+    }
+    function notastotales(){
+        $res = DB::select("SELECT ((sum(tipo) * 10) / count(*)) AS nota FROM usuario_pregunta GROUP BY nivel, subnivel");
+        $nota = 0;
+        for($i=0; $i<count($res); $i++){
+            $nota = $nota + $res[$i]->nota;
+        }
+        return $nota;
     }
 }

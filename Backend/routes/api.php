@@ -24,6 +24,8 @@ Route::post('/login', 'LoginController@login');
 Route::post('/logout', 'LoginController@logout')->middleware('auth:sanctum');
 
 Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/notastotales', 'PerfilController@notastotales');
+
     Route::get('/perfil', 'PerfilController@recuperar');
     Route::post('/perfil', 'PerfilController@restablecer');
     Route::post('/imagen', 'PerfilController@imagen');
@@ -34,6 +36,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/nivel2/letras/respuesta', 'Nivel2Controller@letras_respuesta');
     Route::post('/nivel2/silabas/respuesta', 'Nivel2Controller@silabas_respuesta');
     Route::post('/nivel2/oraciones/respuesta', 'Nivel2Controller@oraciones_respuesta');
+    Route::get('/nivel2/llamarresultados', 'Nivel2Controller@llamarresultados');
     
     //rutas del nivel 3
     Route::get('/nivel3/llamardatos', 'Nivel3Controller@llamardatos');
@@ -46,6 +49,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/nivel4/oraciones/respuesta', 'Nivel4Controller@oraciones_respuesta');
     Route::post('/nivel4/frases/respuesta', 'Nivel4Controller@frases_respuesta');
 });
+
 Route::get('/lang/{lang}', 'Controller@set_language')->name('set_language');
 //visualizar imagenes almacenados en el servidor
 Route::get('/perfil/imagenver/{imagen}', function ($imagen) {

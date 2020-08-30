@@ -64,7 +64,8 @@ class Nivel2Controller extends Controller
             $res = $bddres[0];
             $valor_campo = $res->valor_campo;
             $tipo=0;
-            $campo_r= strtolower(rtrim($rq->valor_campo, '.'));
+            $campo_r= strtolower(rtrim($rq[$i]["respuesta_campo"], '.'));
+            
             if($valor_campo==$campo_r){
                 $tipo=1;
             }
@@ -81,7 +82,6 @@ class Nivel2Controller extends Controller
         }
         return DB::select("SELECT sum(tipo) AS suma, count(*) AS total FROM usuario_pregunta WHERE nivel = 2 AND subnivel = 3");
     }
-    
     function llamardatos(){
         $subnivel = Subnivel::select('*')->where("nivel", "=", 2)->get();
 
@@ -90,5 +90,11 @@ class Nivel2Controller extends Controller
             'subnivel' => $subnivel,
             'preguntas' => $preguntas,
         ];
+    }
+    function llamarresultados(){
+        $subnivel1 = DB::select("SELECT sum(tipo) AS suma, count(*) AS total FROM usuario_pregunta WHERE nivel = 2 AND subnivel = 1");
+        $subnivel2 = DB::select("SELECT sum(tipo) AS suma, count(*) AS total FROM usuario_pregunta WHERE nivel = 2 AND subnivel = 2");
+        $subnivel3 = DB::select("SELECT sum(tipo) AS suma, count(*) AS total FROM usuario_pregunta WHERE nivel = 2 AND subnivel = 3");
+        return [ 'subnivel1' => $subnivel1, 'subnivel2' => $subnivel2, 'subnivel3' => $subnivel3 ];
     }
 }

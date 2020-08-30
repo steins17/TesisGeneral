@@ -12,5 +12,8 @@ export default {
   },
   password(form) {
     return Api().post("/password", form );
+  },
+  notas() {
+    return Api().get("/notastotales");
   }
 };

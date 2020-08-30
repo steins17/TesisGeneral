@@ -13,4 +13,7 @@ export default {
   llamarpreguntas() {
     return Api().get("/nivel2/llamardatos");
   },
+  llamarresultados() {
+    return Api().get("/nivel2/llamarresultados");
+  }
 };

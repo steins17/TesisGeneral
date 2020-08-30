@@ -75,13 +75,13 @@
           </template>
           Nivel 2
         </vs-sidebar-item>
-        <vs-sidebar-item id="nivel3" to="nivel3">
+        <vs-sidebar-item id="nivel3" to="nivel3" v-if="nota>=21">
           <template #icon>
             <i class="fas fa-circle-notch"><span class="subnumero">3</span></i>
           </template>
           Nivel 3
         </vs-sidebar-item>
-        <vs-sidebar-item id="nivel4" to="nivel4">
+        <vs-sidebar-item id="nivel4" to="nivel4" v-if="nota>=42">
           <template #icon>
             <i class="fas fa-circle-notch"><span class="subnumero">4</span></i>
           </template>
@@ -266,6 +266,7 @@
       },
       errors_registro: [],
       verfoto:false,
+      nota:0,
     }),
     methods:{
       settings(){
@@ -350,6 +351,11 @@
               this.errors_registro = error.response.data.errors;
             }
           });
+      },
+      notas(){
+        Persona.notas().then( ({data}) => { 
+          this.nota = data; 
+        });
       }
     },
     mounted() {
@@ -363,6 +369,7 @@
         this.hover = valor.hover;
       }
       this.usuario();
+      this.notas();
     }
   };
 </script>

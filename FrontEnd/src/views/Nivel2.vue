@@ -4,10 +4,10 @@
         <li class="nav-item col-lg-4 text-center">
           <a class="nav-link active" id="level2-tab" data-toggle="tab" href="#level2" role="tab" aria-controls="level2" aria-selected="true" style="border-radius: 50px">LETRAS</a>
         </li>
-        <li class="nav-item col-lg-4 text-center">
+        <li class="nav-item col-lg-4 text-center" v-if="resultados.subnivel1 >= 7">
           <a class="nav-link" id="level-tab" data-toggle="tab" href="#level" role="tab" aria-controls="level" aria-selected="false" style="border-radius: 50px">SÍLABAS</a>
         </li>
-        <li class="nav-item col-lg-4 text-center">
+        <li class="nav-item col-lg-4 text-center" v-if="resultados.subnivel2 >= 7">
           <a class="nav-link " id="p-tab" data-toggle="tab" href="#p" role="tab" aria-controls="p" aria-selected="false" style="border-radius: 50px">ORACIONES</a>
         </li>
       </ul> 
@@ -16,6 +16,12 @@
         <div class="tab-pane fade show active mt-5" id="level2" role="tabpanel" aria-labelledby="level2-tab">
           <vs-row>
             <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="12">
+                <vs-alert dark class="mb-3" :progress="alerta.progress" v-model="alerta.active" v-if="resultados.subnivel1 >= 7">
+                  <template #title>
+                    Calificación de la Unidad
+                  </template>
+                    Felicidades, obtuviste una calificación de {{resultados.subnivel1}}/10, ya puedes ingresar al Sílabas de este nivel
+                </vs-alert>
                 <div class="card mb-3 p-3" style="border-radius: 50px" v-for="(tr,index) in letras.preguntas" :key="index">
                   <vs-row>
                     <vs-col vs-justify="flex-end">
@@ -52,12 +58,18 @@
               </vs-tooltip>
             </vs-button>
           </div>
-          {{variable_seleccionado}}
+          <h1 style="display:none;">{{variable_seleccionado}}</h1>
         </div>
         <!-- silabas -->
-        <div class="tab-pane fade show mt-5" id="level" role="tabpanel" aria-labelledby="level-tab">
+        <div class="tab-pane fade show mt-5" id="level" role="tabpanel" aria-labelledby="level-tab" v-if="resultados.subnivel1 >= 7">
           <vs-row>
             <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="12">
+                <vs-alert dark class="mb-3" :progress="alerta.progress" v-model="alerta.active" v-if="resultados.subnivel2 >= 7">
+                  <template #title>
+                    Calificación de la Unidad
+                  </template>
+                    Felicidades, obtuviste una calificación de {{resultados.subnivel2}}/10, ya puedes ingresar a Oraciones de este nivel
+                </vs-alert>
                 <div class="card mb-3 p-3" style="border-radius: 50px" v-for="(tr,index) in silabas.preguntas" :key="index">
                   <vs-row>
                     <vs-col vs-justify="flex-end">
@@ -78,7 +90,6 @@
                         </div>
                       <div class="card estilodecard estilocard mb-3 p-3" :class="{'seleccionado':tr.status}" @click="seleccionar_silabas(index, tr, index_h)">
                         <img :src="'archivos/imagenes/silabas/'+tr.foto" class="w-100 " style="border-radius: 50px"/>
-                        {{tr}}
                       </div><br>
                     </vs-col>
                   </vs-row>
@@ -97,8 +108,14 @@
           </div>
         </div>
         <!-- oraciones -->
-        <div class="tab-pane fade show  mt-5" id="p" role="tabpanel" aria-labelledby="p-tab">
+        <div class="tab-pane fade show  mt-5" id="p" role="tabpanel" aria-labelledby="p-tab" v-if="resultados.subnivel2 >= 7">
           <vs-row >
+            <vs-alert dark class="mb-3" :progress="alerta.progress" v-model="alerta.active" v-if="resultados.subnivel3 >= 7">
+              <template #title>
+                Calificación de la Unidad
+              </template>
+                Felicidades, obtuviste una calificación de {{resultados.subnivel3}}/10, ya puedes ingresar al siguiente nivel
+            </vs-alert>
             <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-6 col-md-6 p-3" v-for="(tr,index) in oraciones.preguntas " :key="index">
               <div class="col-lg-12 mb-4">
                 <div class="card card-ajuste mb-3 p-3" style="border-radius: 50px">
@@ -130,7 +147,7 @@
             </vs-button>
           </div>
         </div>
-        {{variable_seleccionado}}
+        <h1 style="display:none;">{{variable_seleccionado}}</h1>
     </div>
   </div>
 </template>
@@ -152,6 +169,16 @@ export default {
       },
       seleccionado:null,  
       variable_seleccionado:[],
+      resultados:{
+        subnivel1:0,
+        subnivel2:0,
+        subnivel3:0
+      },
+      alerta: {
+        active: true,
+        time: 6000,
+        progress: 0
+      }
     };
   },
   methods: {
@@ -244,6 +271,7 @@ export default {
       }
       Api.enviarletras(this.variable_seleccionado).then( ({data}) => {
         var resultado = data[0].suma * 10 / data[0].total;
+        this.resultados.subnivel1 = resultado;
         this.$vs.notification({
           square: true,
           progress: 'auto',
@@ -280,6 +308,7 @@ export default {
       }
       Api.enviarsilabas(this.variable_seleccionado).then( ({data}) => {
         var resultado = data[0].suma * 10 / data[0].total;
+        this.resultados.subnivel2 = resultado;
         this.$vs.notification({
           square: true,
           progress: 'auto',
@@ -316,6 +345,7 @@ export default {
       }
       Api.enviaroraciones(this.variable_seleccionado).then( ({data}) => {
         var resultado = data[0].suma * 10 / data[0].total;
+        this.resultados.subnivel3 = resultado;
         this.$vs.notification({
           square: true,
           progress: 'auto',
@@ -328,9 +358,19 @@ export default {
         console.log(error);
       });
     },
+    llamarresultados(){
+      Api.llamarresultados().then(({data}) =>{
+        this.resultados = {
+          subnivel1: (data.subnivel1[0].suma * 10) / data.subnivel1[0].total,
+          subnivel2: (data.subnivel2[0].suma * 10) / data.subnivel2[0].total,
+          subnivel3: (data.subnivel3[0].suma * 10) / data.subnivel3[0].total
+        }
+      });
+    }
   },
   mounted() {
     this.llamarpreguntas();
+    this.llamarresultados();
   },
 };
 </script>
