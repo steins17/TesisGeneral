@@ -9,8 +9,10 @@ export default {
   enviarfrases(form) {
     return Api().post("/nivel4/frases/respuesta", form);
   },
-
   llamarpreguntas() {
     return Api().get("/nivel4/llamardatos");
   },
+  llamarresultados() {
+    return Api().get("/nivel4/llamarresultados");
+  }
 };

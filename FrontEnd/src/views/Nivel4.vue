@@ -4,7 +4,7 @@
     <li class="nav-item col-lg-6 text-center">
       <a class="nav-link active" id="level3-tab" data-toggle="tab" href="#a" role="tab" aria-controls="uno" aria-selected="true" style="border-radius: 50px">ORACIONES</a>
     </li>
-    <li class="nav-item col-lg-6 text-center">
+    <li class="nav-item col-lg-6 text-center" v-if="resultados.subnivel1 >= 7">
       <a class="nav-link " id="leve3-tab" data-toggle="tab" href="#b" role="tab" aria-controls="dos" aria-selected="false" style="border-radius: 50px">FRASES</a>
     </li>
   </ul>
@@ -12,8 +12,14 @@
     <!-- oraciones -->
     <div  class="tab-pane fade show active mt-5" id="a" role="tabpanel" aria-labelledby="level3-tab">
       <vs-row>
-        <vs-col vs-type="flex" vs-justify="center" vs-align="center" v-for="(tr,index) in oraciones.preguntas" :key="index">
-          <div class="card m-3" style="border-radius: 50px">
+        <vs-col vs-type="flex" vs-justify="center" vs-align="center" >
+          <vs-alert dark class="mb-3" :progress="alerta.progress" v-model="alerta.active" v-if="resultados.subnivel1 >= 7">
+            <template #title>
+              Calificación de la Unidad
+            </template>
+              Felicidades, obtuviste una calificación de {{resultados.subnivel1}}/10, ya puedes ingresar a oraciones de este nivel
+          </vs-alert>
+          <div class="card m-3" style="border-radius: 50px" v-for="(tr,index) in oraciones.preguntas" :key="index">
             <vs-row>
               <vs-col vs-type="flex" vs-justify="center" vs-align="center" style="margin: 30px">
                 <div class="card-head text-center" style="margin-bottom: 12px">
@@ -49,13 +55,18 @@
           </vs-tooltip>
         </vs-button>
       </div>
-      {{variable_seleccionado}}
     </div>
     <!-- frases -->
     <div  class="tab-pane fade show mt-5" id="b" role="tabpanel" aria-labelledby="leve3-tab">
       <vs-row>
-        <vs-col vs-type="flex" vs-justify="center" vs-align="center" v-for="(tr,index) in frases.preguntas" :key="index">
-          <div class="card m-3" style="border-radius: 50px">
+        <vs-col vs-type="flex" vs-justify="center" vs-align="center">
+          <vs-alert dark class="mb-3" :progress="alerta.progress" v-model="alerta.active" v-if="resultados.subnivel2 >= 7">
+            <template #title>
+              Calificación de la Unidad
+            </template>
+              Felicidades, obtuviste una calificación de {{resultados.subnivel2}}/10, ya has aprobado el curso
+          </vs-alert>
+          <div class="card m-3" style="border-radius: 50px" v-for="(tr,index) in frases.preguntas" :key="index">
             <vs-row>
               <vs-col vs-type="flex" vs-justify="center" vs-align="center" style="margin: 30px">
                 <div class="card-head text-center" style="margin-bottom: 12px">
@@ -91,7 +102,6 @@
           </vs-tooltip>
         </vs-button>
       </div>
-      {{variable_seleccionado}}
     </div>
   </div>
 </div>
@@ -109,6 +119,15 @@ export default {
         preguntas:[]
       },
       variable_seleccionado:[],
+      resultados:{
+        subnivel1:0,
+        subnivel2:0,
+      },
+      alerta: {
+        active: true,
+        time: 6000,
+        progress: 0
+      }
     }
   },
   methods: {
@@ -223,10 +242,20 @@ export default {
         console.log(error);
       });
     },
+    llamarresultados(){
+      Api.llamarresultados().then(({data}) =>{
+        this.resultados = {
+          subnivel1: (data.subnivel1[0].suma * 10) / data.subnivel1[0].total,
+          subnivel2: (data.subnivel2[0].suma * 10) / data.subnivel2[0].total,
+        }
+      });
+    }
   },
   mounted() {
     this.llamarpreguntas();
+    this.llamarresultados();
   },
+  
 }
 </script>
 
