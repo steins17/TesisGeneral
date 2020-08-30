@@ -97,7 +97,8 @@ export default {
       valores: ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','ñ','o','p','q','r','s','t','u','v','w','x','y','z'],
       comparacion: ['b','d','p','q','m','n','s','z'],
       silabas:{
-        preguntas:['la','le','li','lo','lu','al','el','ill','ooll','ull','da','de','di','do','du','add','ed','id','ooodd','uudd','ma','me','mi','mmoo','mu','aamm','em','im','om','uumm','naa','ne','ni','no','nu','an','eennn','in','on','un','pa','pe','pi','po','pu','app','epp','iip','op','uupp','ra','re','rrii','rroo','rruu','ar','eer','ir','or','ur','saaa','se','si','so','su','as','es','is','os','uus',]
+        preguntas:['la','le','li','lo','lu','al','el','il','ol','ul','da','de','di','do','du','ad','ed','id','od','ud','ma','me','mi','mo','mu','am','em','im','om','um','na','ne','ni','no','nu','an','en','in','on','un','pa','pe','pi','po','pu','ap','ep','ip','op','up','ra','re','ri','ro','ru','ar','er','ir','or','ur','sa','se','si','so','su','as','es','is','os','us',]
+        // preguntas:['la','le','li','lo','lu','al','el','ill','ooll','ull','da','de','di','do','du','add','ed','id','ooodd','uudd','ma','me','mi','mmoo','mu','aamm','em','im','om','uumm','naa','ne','ni','no','nu','an','eennn','in','on','un','pa','pe','pi','po','pu','app','epp','iip','op','uupp','ra','re','rrii','rroo','rruu','ar','eer','ir','or','ur','saaa','se','si','so','su','as','es','is','os','uus',]
       }
     }
   },
