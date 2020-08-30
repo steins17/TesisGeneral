@@ -117,9 +117,9 @@
                 Felicidades, obtuviste una calificación de {{resultados.subnivel3}}/10, ya puedes ingresar al siguiente nivel
             </vs-alert>
             <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-6 col-md-6 p-3" v-for="(tr,index) in oraciones.preguntas " :key="index">
-              <div class="col-lg-12 mb-4">
+              <div class="col-lg-12 mb-4 p-0">
                 <div class="card card-ajuste mb-3 p-3" style="border-radius: 50px">
-                  <img :src="'archivos/imagenes/ima_ejer/'+tr.foto" class="card-img-top " style="border-radius: 50px"  alt="Card image cap"/>
+                  <img :src="'archivos/imagenes/ima_ejer/'+tr.foto" class="card-img-top" style="border-radius: 50px"  alt="Card image cap"/>
                   <div class="card-body">
                     <vs-row>
                       <vs-col vs-type="flex" vs-justify="center" vs-align="center" style="margin: 15px">
@@ -404,7 +404,7 @@ export default {
     text-align: center;
   }
   .card-ajuste img{
-    width: 300px;
+    width: 200px;
     height: 250px;
   }
 
