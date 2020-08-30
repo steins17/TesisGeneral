@@ -69,19 +69,19 @@
           </template>
           Nivel 1
         </vs-sidebar-item>
-        <vs-sidebar-item id="nivel2" to="nivel2">
+        <vs-sidebar-item id="nivel2" to="nivel2" v-if="user">
           <template #icon>
             <i class="fas fa-circle-notch"><span class="subnumero">2</span></i>
           </template>
           Nivel 2
         </vs-sidebar-item>
-        <vs-sidebar-item id="nivel3" to="nivel3" v-if="nota>=21">
+        <vs-sidebar-item id="nivel3" to="nivel3" v-if="nota.nota2>=21">
           <template #icon>
             <i class="fas fa-circle-notch"><span class="subnumero">3</span></i>
           </template>
           Nivel 3
         </vs-sidebar-item>
-        <vs-sidebar-item id="nivel4" to="nivel4" v-if="nota>=42">
+        <vs-sidebar-item id="nivel4" to="nivel4" v-if="nota.nota3>=21">
           <template #icon>
             <i class="fas fa-circle-notch"><span class="subnumero">4</span></i>
           </template>
@@ -96,6 +96,9 @@
           </template>
           Mi Perfil
         </vs-sidebar-item>
+        <h4 class="w-100" v-if="!user">
+          <span class="small-cap text-center">Debes registrarte <br> para ver los otros niveles</span>
+        </h4>
         <!-- <vs-sidebar-item id="Perfil" to="Restablecer" >
           <template #icon>
             <i class="fas fa-cogs"></i>
@@ -266,7 +269,11 @@
       },
       errors_registro: [],
       verfoto:false,
-      nota:0,
+      nota: {
+        nota2:0,
+        nota3:0,
+        nota4:0,
+      },
     }),
     methods:{
       settings(){
@@ -353,9 +360,21 @@
           });
       },
       notas(){
-        Persona.notas().then( ({data}) => { 
-          this.nota = data; 
-        });
+        if(localStorage.getItem("token")){
+          Persona.notas().then( ({data}) => { 
+            this.nota = {
+              nota2:data.nota2,
+              nota3:data.nota3,
+              nota4:data.nota4,
+            } 
+          });
+        }else{
+          this.nota = {
+            nota2:0,
+            nota3:0,
+            nota4:0,
+          }
+        }
       }
     },
     mounted() {

@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Router from 'vue-router';
-import axios from "axios";
 import Api from "../apis/Persona";
+import store from "../store/store";
 
 const originalPush = Router.prototype.push;
 Router.prototype.push = function push(location) {
@@ -56,7 +56,7 @@ const router = new Router({
           path: '/Prolife',
           name: 'Prolife',
           component: () => import('../views/Restablecer'),
-          meta: { authOnly: true, nivel1:true }
+          meta: { authOnly: true} 
         }
       ]
     }
@@ -66,33 +66,30 @@ const router = new Router({
 function isLoggedIn() {
   return localStorage.getItem("token");
 }
-function nota() {
-  var dato = 0;
-  dato = Api.notas().then( ({data}) => { return data; });
-  return '22';
-}
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.nivel3)) {
-    if(nota()<21){
-      next({
-        path: "/nivel1",
-        query: { redirect: to.fullPath }
-      });
-    }else{
-      next();
+  store.dispatch('recuperanota').then((value) => {
+    if (to.matched.some(record => record.meta.nivel3)) {
+      if(value.nota2<21){
+        next({
+          path: "/nivel2",
+          query: { redirect: to.fullPath }
+        });
+      }else{
+        next();
+      }
     }
-  }
-  if (to.matched.some(record => record.meta.nivel4)) {
-    if(nota()<42){
-      next({
-        path: "/nivel2",
-        query: { redirect: to.fullPath }
-      });
-    }else{
-      next();
+    if (to.matched.some(record => record.meta.nivel4)) {
+      if(value.nota3<21){
+        next({
+          path: "/nivel3",
+          query: { redirect: to.fullPath }
+        });
+      }else{
+        next();
+      }
     }
-  }
+  });
   if (to.matched.some(record => record.meta.authOnly)) {
     if (!isLoggedIn()) {
       next({

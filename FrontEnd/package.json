@@ -19,7 +19,8 @@
     "vue": "^2.6.11",
     "vue-router": "^3.1.5",
     "vuejs-datepicker": "^1.6.2",
-    "vuesax": "^4.0.1-alpha.23"
+    "vuesax": "^4.0.1-alpha.23",
+    "vuex": "^3.5.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.2.0",
