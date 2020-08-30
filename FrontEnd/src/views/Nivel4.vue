@@ -1,106 +1,113 @@
 <template>
 <div>
-  <ul class="nav nav-tabs" id="mytab3" role="tablist3">
-    <li class="nav-item col-lg-6 text-center">
-      <a class="nav-link active" id="level3-tab" data-toggle="tab" href="#a" role="tab" aria-controls="uno" aria-selected="true" style="border-radius: 50px">ORACIONES</a>
-    </li>
-    <li class="nav-item col-lg-6 text-center" v-if="resultados.subnivel1 >= 7">
-      <a class="nav-link " id="leve3-tab" data-toggle="tab" href="#b" role="tab" aria-controls="dos" aria-selected="false" style="border-radius: 50px">FRASES</a>
-    </li>
-  </ul>
-  <div class="tab-content" id="myTabContent2">
-    <!-- oraciones -->
-    <div  class="tab-pane fade show active mt-5" id="a" role="tabpanel" aria-labelledby="level3-tab">
-      <vs-row>
-        <vs-col vs-type="flex" vs-justify="center" vs-align="center" >
-          <vs-alert dark class="mb-3" :progress="alerta.progress" v-model="alerta.active" v-if="resultados.subnivel1 >= 7">
-            <template #title>
-              Calificación de la Unidad
-            </template>
-              Felicidades, obtuviste una calificación de {{resultados.subnivel1}}/10, ya puedes ingresar a oraciones de este nivel
-          </vs-alert>
-          <div class="card m-3" style="border-radius: 50px" v-for="(tr,index) in oraciones.preguntas" :key="index">
-            <vs-row>
-              <vs-col vs-type="flex" vs-justify="center" vs-align="center" style="margin: 30px">
-                <div class="card-head text-center" style="margin-bottom: 12px">
-                  <h2><span>{{tr.nombre}}</span></h2>
-                </div>
-              </vs-col>
-              <vs-col vs-justify="flex"  class="container" w="6">
-                <div class="center content-inputs" v-for="(tr,index_hijo) in tr.respuestas" :key="index_hijo">
-                  <vs-input color="#195bff"  v-model="tr.respuesta_campo" class="w-100 mb-3 mt-5" placeholder="Escribir" style="margin-bottom: 35px" @click="seleccionar_oraciones(index, tr, index_hijo)"/>
-                </div>
-                <div class="container" style=";display: block;">
-                  <vs-button  style="float: right;margin-right: 80px;margin-bottom: 20px;--vs-color: 25, 91, 255;border-radius: 70px;width: 40px;height: 40px;">
-                    <vs-tooltip circle>
-                      <i class="fas fa-microphone-alt fa-2x"></i>
-                      <template #tooltip>
-                        Hablar
-                      </template>
-                    </vs-tooltip>
-                  </vs-button>
-                </div>
-              </vs-col>
-            </vs-row>
-          </div>     
-        </vs-col>
-      </vs-row>
-      <div >
-        <vs-button color="primary"  style="float: right;margin-bottom: 20px;--vs-color: 25, 91, 255;width: 100px;height: 100px;" type="gradient" @click="enviaroraciones()">
-          <vs-tooltip circl>
-            <i class="fas fa-check fa-2x"></i>
-            <template #tooltip>
-              Verificar
-            </template>
-          </vs-tooltip>
-        </vs-button>
-      </div>
+  <div v-if="cargado">
+    <div class="text-center centradv">
+      <div class="preloader"></div>
     </div>
-    <!-- frases -->
-    <div  class="tab-pane fade show mt-5" id="b" role="tabpanel" aria-labelledby="leve3-tab">
-      <vs-row>
-        <vs-col vs-type="flex" vs-justify="center" vs-align="center">
-          <vs-alert dark class="mb-3" :progress="alerta.progress" v-model="alerta.active" v-if="resultados.subnivel2 >= 7">
-            <template #title>
-              Calificación de la Unidad
-            </template>
-              Felicidades, obtuviste una calificación de {{resultados.subnivel2}}/10, ya has aprobado el curso
-          </vs-alert>
-          <div class="card m-3" style="border-radius: 50px" v-for="(tr,index) in frases.preguntas" :key="index">
-            <vs-row>
-              <vs-col vs-type="flex" vs-justify="center" vs-align="center" style="margin: 30px">
-                <div class="card-head text-center" style="margin-bottom: 12px">
-                  <h2><span>{{tr.nombre}}</span></h2>
-                </div>
-              </vs-col>
-              <vs-col vs-justify="flex" class="container" w="6">
-                <div class="center content-inputs" v-for="(tr,index_h) in tr.respuestas" :key="index_h">
-                  <vs-input color="#195bff"  v-model="tr.respuesta_campo" class="w-100  mb-3 mt-5"  placeholder="Escribir" style="margin-bottom: 35px" @click="seleccionar_frases(index, tr, index_h)"/>
-                </div>
-                <div class="container" style="bottom: 0px;display: block;">
-                  <vs-button  style="float: right;margin-right: 80px;margin-bottom: 20px;--vs-color: 25, 91, 255;border-radius: 70px;width: 40px;height: 40px;">
-                    <vs-tooltip circle>
-                      <i class="fas fa-microphone-alt fa-2x"></i>
-                      <template #tooltip>
-                        Hablar
-                      </template>
-                    </vs-tooltip>
-                  </vs-button>
-                </div>
-              </vs-col>
-            </vs-row>
-          </div>     
-        </vs-col>
-      </vs-row>
-      <div >
-        <vs-button color="primary"  style="float: right;margin-bottom: 20px;--vs-color: 25, 91, 255;width: 100px;height: 100px;" type="gradient" @click="enviarfrases()">
-          <vs-tooltip circl>
-            <i class="fas fa-check fa-2x"></i>
-            <template #tooltip>
-              Verificar
-            </template>
-          </vs-tooltip>
-        </vs-button>
+  </div>
+  <div v-else>
+    <ul class="nav nav-tabs" id="mytab3" role="tablist3">
+      <li class="nav-item col-lg-6 text-center">
+        <a class="nav-link active" id="level3-tab" data-toggle="tab" href="#a" role="tab" aria-controls="uno" aria-selected="true" style="border-radius: 50px">ORACIONES</a>
+      </li>
+      <li class="nav-item col-lg-6 text-center" v-if="resultados.subnivel1 >= 7">
+        <a class="nav-link " id="leve3-tab" data-toggle="tab" href="#b" role="tab" aria-controls="dos" aria-selected="false" style="border-radius: 50px">FRASES</a>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent2">
+      <!-- oraciones -->
+      <div  class="tab-pane fade show active mt-5" id="a" role="tabpanel" aria-labelledby="level3-tab">
+        <vs-row>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" >
+            <vs-alert dark class="mb-3" :progress="alerta.progress" v-model="alerta.active" v-if="resultados.subnivel1 >= 7">
+              <template #title>
+                Calificación de la Unidad
+              </template>
+                Felicidades, obtuviste una calificación de {{resultados.subnivel1}}/10, ya puedes ingresar a oraciones de este nivel
+            </vs-alert>
+            <div class="card m-3" style="border-radius: 50px" v-for="(tr,index) in oraciones.preguntas" :key="index">
+              <vs-row>
+                <vs-col vs-type="flex" vs-justify="center" vs-align="center" style="margin: 30px">
+                  <div class="card-head text-center" style="margin-bottom: 12px">
+                    <h2><span>{{tr.nombre}}</span></h2>
+                  </div>
+                </vs-col>
+                <vs-col vs-justify="flex"  class="container" w="6">
+                  <div class="center content-inputs" v-for="(tr,index_hijo) in tr.respuestas" :key="index_hijo">
+                    <vs-input color="#195bff"  v-model="tr.respuesta_campo" :class="'w-100 mb-3 mt-5 index'+index" style="margin-bottom: 35px" @click="seleccionar_oraciones(index, tr, index_hijo)"/>
+                  </div>
+                  <div class="container" style=";display: block;">
+                    <vs-button  style="float: right;margin-right: 80px;margin-bottom: 20px;--vs-color: 25, 91, 255;border-radius: 70px;width: 40px;height: 40px;" @click="hablar(index)">
+                      <vs-tooltip circle>
+                        <i class="fas fa-microphone-alt fa-2x"></i>
+                        <template #tooltip>
+                          Hablar
+                        </template>
+                      </vs-tooltip>
+                    </vs-button>
+                  </div>
+                </vs-col>
+              </vs-row>
+            </div>     
+          </vs-col>
+        </vs-row>
+        <div >
+          <vs-button color="primary"  style="float: right;margin-bottom: 20px;--vs-color: 25, 91, 255;width: 100px;height: 100px;" type="gradient" @click="enviaroraciones()">
+            <vs-tooltip circl>
+              <i class="fas fa-check fa-2x"></i>
+              <template #tooltip>
+                Verificar
+              </template>
+            </vs-tooltip>
+          </vs-button>
+        </div>
+      </div>
+      <!-- frases -->
+      <div  class="tab-pane fade show mt-5" id="b" role="tabpanel" aria-labelledby="leve3-tab">
+        <vs-row>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center">
+            <vs-alert dark class="mb-3" :progress="alerta.progress" v-model="alerta.active" v-if="resultados.subnivel2 >= 7">
+              <template #title>
+                Calificación de la Unidad
+              </template>
+                Felicidades, obtuviste una calificación de {{resultados.subnivel2}}/10, ya has aprobado el curso
+            </vs-alert>
+            <div class="card m-3" style="border-radius: 50px" v-for="(tr,index) in frases.preguntas" :key="index">
+              <vs-row>
+                <vs-col vs-type="flex" vs-justify="center" vs-align="center" style="margin: 30px">
+                  <div class="card-head text-center" style="margin-bottom: 12px">
+                    <h2><span>{{tr.nombre}}</span></h2>
+                  </div>
+                </vs-col>
+                <vs-col vs-justify="flex" class="container" w="6">
+                  <div class="center content-inputs" v-for="(tr,index_h) in tr.respuestas" :key="index_h">
+                    <vs-input color="#195bff"  v-model="tr.respuesta_campo" :class="'w-100  mb-3 mt-5 index'+index"  placeholder="Escribir" style="margin-bottom: 35px" @click="seleccionar_frases(index, tr, index_h)"/>
+                  </div>
+                  <div class="container" style="bottom: 0px;display: block;">
+                    <vs-button  style="float: right;margin-right: 80px;margin-bottom: 20px;--vs-color: 25, 91, 255;border-radius: 70px;width: 40px;height: 40px;" @click="hablarc(index)">
+                      <vs-tooltip circle>
+                        <i class="fas fa-microphone-alt fa-2x"></i>
+                        <template #tooltip>
+                          Hablar
+                        </template>
+                      </vs-tooltip>
+                    </vs-button>
+                  </div>
+                </vs-col>
+              </vs-row>
+            </div>     
+          </vs-col>
+        </vs-row>
+        <div >
+          <vs-button color="primary"  style="float: right;margin-bottom: 20px;--vs-color: 25, 91, 255;width: 100px;height: 100px;" type="gradient" @click="enviarfrases()">
+            <vs-tooltip circl>
+              <i class="fas fa-check fa-2x"></i>
+              <template #tooltip>
+                Verificar
+              </template>
+            </vs-tooltip>
+          </vs-button>
+        </div>
       </div>
     </div>
   </div>
@@ -127,7 +134,8 @@ export default {
         active: true,
         time: 6000,
         progress: 0
-      }
+      },
+      cargado:true,
     }
   },
   methods: {
@@ -150,6 +158,7 @@ export default {
             }
           });
         });
+        this.cargado=false;
       });
     },
     seleccionar_oraciones(index, tr, index_hijo){
@@ -249,6 +258,52 @@ export default {
           subnivel2: (data.subnivel2[0].suma * 10) / data.subnivel2[0].total,
         }
       });
+    },
+    hablar(index){
+      let rec;
+        if (!("webkitSpeechRecognition" in window)) {
+          alert("disculpas, no puedes usar la API");
+        } else {
+          rec = new webkitSpeechRecognition();
+          rec.lang = "es-AR";
+          rec.continuous = true;
+          rec.interim = true;
+          rec.addEventListener("result",iniciar);
+        }
+        let me = this;
+        function iniciar(event){
+          for (let i = event.resultIndex; i < event.results.length; i++){
+            me.oraciones.preguntas[index].respuestas[0].respuesta_campo = event.results[i][0].transcript;
+            $('.index'+index).children('div').children('input').val(event.results[i][0].transcript);
+          }
+        }
+      rec.start();
+      setTimeout(() => {
+        return;
+      }, 3000);
+    },
+    hablarc(index){
+      let rec;
+        if (!("webkitSpeechRecognition" in window)) {
+          alert("disculpas, no puedes usar la API");
+        } else {
+          rec = new webkitSpeechRecognition();
+          rec.lang = "es-AR";
+          rec.continuous = true;
+          rec.interim = true;
+          rec.addEventListener("result",iniciar);
+        }
+        let me = this;
+        function iniciar(event){
+          for (let i = event.resultIndex; i < event.results.length; i++){
+            me.frases.preguntas[index].respuestas[0].respuesta_campo = event.results[i][0].transcript;
+            $('.index'+index).children('div').children('input').val(event.results[i][0].transcript);
+          }
+        }
+      rec.start();
+      setTimeout(() => {
+        return;
+      }, 3000);
     }
   },
   mounted() {

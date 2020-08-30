@@ -1,5 +1,11 @@
 <template> 
   <div>
+    <div v-if="cargado">
+      <div class="text-center centradv">
+        <div class="preloader"></div>
+      </div>
+    </div>
+    <div v-else>
       <ul class="nav nav-tabs" id="myTab1" role="tablist1">
         <li class="nav-item col-lg-4 text-center">
           <a class="nav-link active" id="level2-tab" data-toggle="tab" href="#level2" role="tab" aria-controls="level2" aria-selected="true" style="border-radius: 50px">LETRAS</a>
@@ -148,6 +154,7 @@
           </div>
         </div>
         <h1 style="display:none;">{{variable_seleccionado}}</h1>
+      </div>
     </div>
   </div>
 </template>
@@ -178,7 +185,8 @@ export default {
         active: true,
         time: 6000,
         progress: 0
-      }
+      },
+      cargado:true,
     };
   },
   methods: {
@@ -207,6 +215,7 @@ export default {
             }
           });
         });
+        this.cargado=false;
       });
     },
     sonido(palabra){    
