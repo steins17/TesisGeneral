@@ -10,8 +10,10 @@ export default {
   enviarpalabras(form) {
     return Api().post("/nivel3/palabras/respuesta", form);
   },
-
   llamarpreguntas() {
     return Api().get("/nivel3/llamardatos");
   },
+  llamarresultados() {
+    return Api().get("/nivel3/llamarresultados");
+  }
 };
