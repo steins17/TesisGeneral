@@ -308,7 +308,7 @@
                   />
                 </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-6 mt-1">
                 <div class="center content-inputs">
                   <vs-input
                     label="Link Pregunta"
@@ -652,6 +652,9 @@ export default {
         }).catch( error => {
           console.log(error);
         });
+    },
+    eliminar(data){
+      this.data.delete();
     }
   },
   mounted() {

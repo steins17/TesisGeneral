@@ -37,6 +37,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/nivel2/silabas/respuesta', 'Nivel2Controller@silabas_respuesta');
     Route::post('/nivel2/oraciones/respuesta', 'Nivel2Controller@oraciones_respuesta');
     Route::get('/nivel2/llamarresultados', 'Nivel2Controller@llamarresultados');
+    
+    Route::post('nivel2/agregar', 'Nivel2Controller@agregar');
+    Route::post('nivel2/editar', 'Nivel2Controller@editar');
+    Route::delete('nivel2/eliminar', 'Nivel2Controller@eliminar');
 
     Route::get('/nivel2/listar', 'Nivel2Controller@listar');
     Route::post('/nivel2/guardar', 'Nivel2Controller@guardar');
