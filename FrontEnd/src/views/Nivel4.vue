@@ -16,7 +16,7 @@
           <template #title>
             Calificación de la Unidad
           </template>
-            Felicidades, obtuviste una calificación de {{resultados.subnivel1}}/10, ya puedes ingresar al Sílabas de este nivel
+            Felicidades, obtuviste una calificación de {{resultados.subnivel1}}/10, ya puedes ingresar a oraciones de este nivel
         </vs-alert>
         <vs-col vs-type="flex" vs-justify="center" vs-align="center" v-for="(tr,index) in oraciones.preguntas" :key="index">
           <div class="card m-3" style="border-radius: 50px">
@@ -59,13 +59,13 @@
     <!-- frases -->
     <div  class="tab-pane fade show mt-5" id="b" role="tabpanel" aria-labelledby="leve3-tab">
       <vs-row>
+        <vs-alert dark class="mb-3" :progress="alerta.progress" v-model="alerta.active" v-if="resultados.subnivel2 >= 7">
+          <template #title>
+            Calificación de la Unidad
+          </template>
+            Felicidades, obtuviste una calificación de {{resultados.subnivel2}}/10, ya has aprobado el curso
+        </vs-alert>
         <vs-col vs-type="flex" vs-justify="center" vs-align="center" v-for="(tr,index) in frases.preguntas" :key="index">
-          <vs-alert dark class="mb-3" :progress="alerta.progress" v-model="alerta.active" v-if="resultados.subnivel2 >= 7">
-            <template #title>
-              Calificación de la Unidad
-            </template>
-              Felicidades, obtuviste una calificación de {{resultados.subnivel2}}/10, ya puedes ingresar al Sílabas de este nivel
-          </vs-alert>
           <div class="card m-3" style="border-radius: 50px">
             <vs-row>
               <vs-col vs-type="flex" vs-justify="center" vs-align="center" style="margin: 30px">
