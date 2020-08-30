@@ -98,5 +98,18 @@ class Nivel2Controller extends Controller
         $subnivel3 = DB::select("SELECT sum(tipo) AS suma, count(*) AS total FROM usuario_pregunta WHERE nivel = 2 AND subnivel = 3 AND id_users = $id");
         return [ 'subnivel1' => $subnivel1, 'subnivel2' => $subnivel2, 'subnivel3' => $subnivel3 ];
     }
+    function listar(){
+        $letras = DB::select("SELECT ps.*, sb.foto AS fotosb, sb.audio AS audiosb FROM subnivel sb INNER JOIN preguntas_subnivel ps ON sb.id=ps.id_subnivel WHERE sb.nivel = 2 AND sb.subnivel = 1");
+        $silabas = DB::select("SELECT ps.*, sb.foto AS fotosb, sb.audio AS audiosb FROM subnivel sb INNER JOIN preguntas_subnivel ps ON sb.id=ps.id_subnivel WHERE sb.nivel = 2 AND sb.subnivel = 1");
+        $oraciones = DB::select("SELECT ps.*, sb.foto AS fotosb, sb.audio AS audiosb FROM subnivel sb INNER JOIN preguntas_subnivel ps ON sb.id=ps.id_subnivel WHERE sb.nivel = 2 AND sb.subnivel = 1");
+        return [ 'letras' => $letras, 'silabas' => $silabas, 'oraciones' => $oraciones ];
+    }
+    function guardar(Request $rq){
+        return $rq;
+        $letras = DB::select("SELECT ps.*, sb.foto AS fotosb, sb.audio AS audiosb FROM subnivel sb INNER JOIN preguntas_subnivel ps ON sb.id=ps.id_subnivel WHERE sb.nivel = 2 AND sb.subnivel = 1");
+        $silabas = DB::select("SELECT ps.*, sb.foto AS fotosb, sb.audio AS audiosb FROM subnivel sb INNER JOIN preguntas_subnivel ps ON sb.id=ps.id_subnivel WHERE sb.nivel = 2 AND sb.subnivel = 1");
+        $oraciones = DB::select("SELECT ps.*, sb.foto AS fotosb, sb.audio AS audiosb FROM subnivel sb INNER JOIN preguntas_subnivel ps ON sb.id=ps.id_subnivel WHERE sb.nivel = 2 AND sb.subnivel = 1");
+        return [ 'letras' => $letras, 'silabas' => $silabas, 'oraciones' => $oraciones ];
+    }
 }
 

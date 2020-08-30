@@ -5,7 +5,7 @@
         <div class="preloader"></div>
       </div>
     </div>
-    <div v-else>
+    <div v-else-if="!cargado && user.rol!=1">
       <ul class="nav nav-tabs" id="myTab1" role="tablist1">
         <li class="nav-item col-lg-4 text-center">
           <a class="nav-link active" id="level2-tab" data-toggle="tab" href="#level2" role="tab" aria-controls="level2" aria-selected="true" style="border-radius: 50px">LETRAS</a>
@@ -156,11 +156,181 @@
         <h1 style="display:none;">{{variable_seleccionado}}</h1>
       </div>
     </div>
+    <div v-else>
+      <ul class="nav nav-tabs" id="myTab1" role="tablist1">
+        <li class="nav-item col-lg-4 text-center">
+          <a class="nav-link active" id="level2-tab" data-toggle="tab" href="#level2" role="tab" aria-controls="level2" aria-selected="true" style="border-radius: 50px">LETRAS</a>
+        </li>
+        <li class="nav-item col-lg-4 text-center" v-if="resultados.subnivel1 >= 7">
+          <a class="nav-link" id="level-tab" data-toggle="tab" href="#level" role="tab" aria-controls="level" aria-selected="false" style="border-radius: 50px">SÍLABAS</a>
+        </li>
+        <li class="nav-item col-lg-4 text-center" v-if="resultados.subnivel2 >= 7">
+          <a class="nav-link " id="p-tab" data-toggle="tab" href="#p" role="tab" aria-controls="p" aria-selected="false" style="border-radius: 50px">ORACIONES</a>
+        </li>
+      </ul> 
+      <div class="tab-content" id="myTabContent1">
+        <!-- Letras -->
+        <div class="tab-pane fade show active mt-5" id="level2" role="tabpanel" aria-labelledby="level2-tab">
+          <div class="col-lg-12 mb-3">
+            <vs-row justify="flex-end">
+              <vs-col w="1">
+                <vs-button class="w-100" @click="modal('agregar')">Agregar</vs-button>
+              </vs-col>
+            </vs-row>
+          </div>
+          <div class="card mb-5">
+            <vs-table>
+              <template #thead>
+                <vs-tr>
+                  <vs-th> Pregunta </vs-th>
+                  <vs-th> Tipo </vs-th>
+                  <vs-th> Estado </vs-th>
+                  <vs-th> Respuesta Imagen </vs-th>
+                  <vs-th> Link Imagen </vs-th>
+                  <vs-th> Fecha Creado </vs-th>
+                  <vs-th> Opciones </vs-th>
+                </vs-tr>
+              </template>
+              <template #tbody v-if="lista">
+                <vs-tr :key="i" v-for="(tr, i) in lista.letras" :data="tr">
+                  <vs-td> {{ tr.audiosb }} </vs-td>
+                  <vs-th v-if="tr.tipo==1">Correcto</vs-th><vs-th v-else>Incorrecto</vs-th>
+                  <vs-th v-if="tr.estado==1" style="color:green">Activo</vs-th><vs-th v-else style="color:red">Inactivo</vs-th>
+                  <vs-td><img :src="'archivos/imagenes/ejercicios/'+tr.foto" style="width: 70px;height: 70px;"/></vs-td>
+                  <vs-td>{{tr.foto}}</vs-td>
+                  <vs-td>{{ tr.updated_at | fecha }}</vs-td>
+                  <vs-td>
+                    <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
+                    <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
+                    <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar', tr)"></i>
+                    <i class="fas fa-trash ml-2 pointer eventsalto"></i>
+                  </vs-td>
+                </vs-tr>
+              </template>
+            </vs-table>
+          </div>
+        </div>
+        <!-- silabas -->
+        <div class="tab-pane fade show mt-5" id="level" role="tabpanel" aria-labelledby="level-tab" v-if="resultados.subnivel1 >= 7">
+          <div class="col-lg-12 mb-3">
+            <vs-row justify="flex-end">
+              <vs-col w="1">
+                <vs-button class="w-100">Agregar</vs-button>
+              </vs-col>
+            </vs-row>
+          </div>
+          <div class="card">
+            <vs-table>
+              <template #thead>
+                <vs-tr>
+                  <vs-th> Name </vs-th>
+                  <vs-th> Email</vs-th>
+                  <vs-th> Id</vs-th>
+                </vs-tr>
+              </template>
+              <template #tbody>
+                <!--<vs-tr :key="i" v-for="(tr, i) in users" :data="tr">
+                  <vs-td> {{ tr.name }} </vs-td>
+                  <vs-td> {{ tr.email }} </vs-td>
+                  <vs-td> {{ tr.id }} </vs-td>
+                </vs-tr>-->
+              </template>
+            </vs-table>
+          </div>
+        </div>
+        <!-- oraciones -->
+        <div class="tab-pane fade show  mt-5" id="p" role="tabpanel" aria-labelledby="p-tab" v-if="resultados.subnivel2 >= 7">
+          <div class="col-lg-12 mb-3">
+            <vs-row justify="flex-end">
+              <vs-col w="1">
+                <vs-button class="w-100">Agregar</vs-button>
+              </vs-col>
+            </vs-row>
+          </div>
+          <div class="card">
+            <vs-table>
+              <template #thead>
+                <vs-tr>
+                  <vs-th> Name </vs-th>
+                  <vs-th> Email</vs-th>
+                  <vs-th> Id</vs-th>
+                </vs-tr>
+              </template>
+              <template #tbody>
+                <!--<vs-tr :key="i" v-for="(tr, i) in users" :data="tr">
+                  <vs-td> {{ tr.name }} </vs-td>
+                  <vs-td> {{ tr.email }} </vs-td>
+                  <vs-td> {{ tr.id }} </vs-td>
+                </vs-tr>-->
+              </template>
+            </vs-table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Modal del módulo-->
+    <vs-dialog v-model="datos_modal.activo">
+        <template #header>
+          <h4 class="not-margin">
+            {{datos_modal.titulo}}
+          </h4>
+        </template>
+        <div class="con-form">
+          <div class="row mb-4">
+            <div class="col-lg-12">
+                <div class="center content-inputs">
+                  <vs-input
+                    label="Audio Pregunta"
+                    v-model="form.audio"
+                    placeholder="Evan You"
+                  />
+                </div>
+            </div>
+          </div>
+          <div class="row" v-for="(tr, index) in form.preguntas" :key="index">
+            <div class="col-lg-8">
+                <div class="center content-inputs">
+                  <vs-input
+                    type="file"
+                    label="Audio Pregunta"
+                    v-model="tr.foto"
+                    placeholder="Evan You"
+                  />
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="center content-inputs mt-2">
+                  <vs-select label="Tipo" v-model="tr.tipo">
+                    <vs-option value="1" label="Correcto">Correcto</vs-option>
+                    <vs-option value="0" label="Incorrecto">Incorrecto</vs-option>
+                  </vs-select>
+                </div>
+            </div>
+            <div class="col-lg-1 mt-3">
+               <i class="fas fa-plus pointer" @click="agregar_objeto()"></i>
+            </div>
+          </div>
+        </div>
+
+        <template #footer>
+          <div class="footer-dialog">
+            <vs-button block @click="guardar()" v-if="datos_modal.tipo==1">
+              Ageragar
+            </vs-button>
+            <vs-button block @click="editar()" v-else>
+              Editar
+            </vs-button>
+          </div>
+        </template>
+      </vs-dialog>
   </div>
 </template>
 
 <script>
 import Api from "../apis/Nivel2";
+import store from "../store/store";
+import moment from "moment";
+moment.locale("es");
 
 export default {
   data() {
@@ -187,7 +357,28 @@ export default {
         progress: 0
       },
       cargado:true,
+      user:{rol:0},
+      lista:null,
+      datos_modal:{
+        activo:false,
+        tipo:0,
+        titulo:""
+      },
+      form:{
+        audio:'',
+        preguntas:[
+          {
+            foto:'',
+            tipo:'',
+          }
+        ]
+      }
     };
+  },
+  filters: {
+    fecha(data) {
+        return moment(data).format("LL");
+    },
   },
   methods: {
     llamarpreguntas(){
@@ -375,11 +566,69 @@ export default {
           subnivel3: (data.subnivel3[0].suma * 10) / data.subnivel3[0].total
         }
       });
+    },
+    usuario(){
+      if(localStorage.getItem("token")){
+        store.dispatch('recuperauser').then((value) => {
+          this.user = value;
+        });
+      }
+    },
+    //administrador
+    listar(){
+      Api.listar().then( ({data}) => {
+        console.log(data);
+        this.lista = data;
+      }).catch( error => {
+        console.log(error);
+      });
+    },
+    modal(tipo, data){
+      switch(tipo){
+        case 'agregar': {
+          this.datos_modal = {
+            activo:true,
+            tipo:1,
+            titulo:"Agergar Registro"
+          };
+          
+          break;
+        }
+        case 'editar': {
+          this.datos_modal = {
+            activo:true,
+            tipo:2,
+            titulo:"Editar Registro"
+          };
+          break;
+        }
+      }
+    },
+    agregar_objeto(){
+      this.form.preguntas.push( {foto:'', tipo:''} );
+    },
+    guardar(){
+        let formData = new FormData();
+        formData.append("form", this.form);
+        Api.guardar(formData).then(({data}) => {
+          console.log(data);
+          this.$vs.notification({
+            square: true,
+            progress: 'auto',
+            color:'success',
+            title: 'Guardaro exitosamente',
+            text: 'Registro guardado exitosamente'
+          });
+        }).catch( error => {
+          console.log(error);
+        });
     }
   },
   mounted() {
     this.llamarpreguntas();
     this.llamarresultados();
+    this.usuario();
+    this.listar();
   },
 };
 </script>

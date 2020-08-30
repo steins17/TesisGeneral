@@ -75,13 +75,13 @@
           </template>
           Nivel 2
         </vs-sidebar-item>
-        <vs-sidebar-item id="nivel3" to="nivel3" v-if="nota.nota2>=21">
+        <vs-sidebar-item id="nivel3" to="nivel3" v-if="nota.nota2>=21 && user">
           <template #icon>
             <i class="fas fa-circle-notch"><span class="subnumero">3</span></i>
           </template>
           Nivel 3
         </vs-sidebar-item>
-        <vs-sidebar-item id="nivel4" to="nivel4" v-if="nota.nota3>=21">
+        <vs-sidebar-item id="nivel4" to="nivel4" v-if="nota.nota3>=21 && user">
           <template #icon>
             <i class="fas fa-circle-notch"><span class="subnumero">4</span></i>
           </template>
@@ -234,6 +234,7 @@
   import DropdownMenu from '@innologica/vue-dropdown-menu'
   import User from "../apis/User";
   import Persona from "../apis/Persona";
+  import store from "../store/store";
   const $ = require('jquery')
   window.$ = $
 
@@ -283,36 +284,37 @@
       },
       usuario(){
         if(localStorage.getItem("token")){
-          User.auth().then(response => {
-            this.user = response.data;
+          store.dispatch('recuperauser').then((value) => {
+            this.user = value;
             if(this.user.foto) this.verfoto=true;
             this.loading("close");
           }).catch(error => {
-            if (error.response.status === 401) {
-              localStorage.removeItem("token");
-              console.log("debes iniciar sesión");
-            }else if (error.response.status === 500) {
-              localStorage.removeItem("token");
-              console.log("debes iniciar sesión");
-            }else{
-              localStorage.removeItem("token");
-              console.log("debes iniciar sesión");
-              location.reload();
-            }
-            this.loading("close");
+              if (error.response.status === 401) {
+                  localStorage.removeItem("token");
+                  console.log("debes iniciar sesión");
+              }else if (error.response.status === 500) {
+                  localStorage.removeItem("token");
+                  console.log("debes iniciar sesión");
+              }else{
+                  localStorage.removeItem("token");
+                  console.log("debes iniciar sesión");
+                  location.reload();
+              }
           });
+        }else{
+          setTimeout(() => {
+            this.loading("close");
+          }, 1000);
         }
       },
       logout() {
         this.user = null;
-        this.loading("open");
         User.logout().then(() => {
           localStorage.removeItem("token");
-          this.isLoggedIn = false;
-          this.$router.push({ name: "Inicio" });
-          this.loading("close");
+          location.reload();
         }).catch(() => {
-          this.loading("close");
+          localStorage.removeItem("token");
+          location.reload();
         });
       },
       loading(close) {
@@ -739,5 +741,20 @@
     position: absolute;
     top: 50%;
     left: 50%;
+  }
+  .pointer{
+    cursor: pointer;
+  }
+  .eventsalto:hover{
+    -moz-transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    -o-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+    -webkit-transition: all .1s ease;
+    -moz-transition: all .1s ease;
+    -ms-transition: all .1s ease;
+    -o-transition: all .1s ease;
+    transition: all .1s ease;
   }
 </style>

@@ -30,13 +30,16 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/perfil', 'PerfilController@restablecer');
     Route::post('/imagen', 'PerfilController@imagen');
     Route::post('/password', 'PerfilController@password');
-
+    
     //rutas del nivel 2
     Route::get('/nivel2/llamardatos', 'Nivel2Controller@llamardatos');
     Route::post('/nivel2/letras/respuesta', 'Nivel2Controller@letras_respuesta');
     Route::post('/nivel2/silabas/respuesta', 'Nivel2Controller@silabas_respuesta');
     Route::post('/nivel2/oraciones/respuesta', 'Nivel2Controller@oraciones_respuesta');
     Route::get('/nivel2/llamarresultados', 'Nivel2Controller@llamarresultados');
+
+    Route::get('/nivel2/listar', 'Nivel2Controller@listar');
+    Route::post('/nivel2/guardar', 'Nivel2Controller@guardar');
     
     //rutas del nivel 3
     Route::get('/nivel3/llamardatos', 'Nivel3Controller@llamardatos');
