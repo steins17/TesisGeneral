@@ -5,15 +5,15 @@
       <div class="preloader"></div>
     </div>
   </div>
-  <div v-else>
+  <div v-else-if="!cargado && user.rol!=1">
     <ul class="nav nav-tabs" id="mytab2" role="tablist2">
       <li class="nav-item col-lg-4 text-center">
         <a class="nav-link active" id="level3-tab" data-toggle="tab" href="#a" role="tab" aria-controls="level3" aria-selected="true" style="border-radius: 50px">LETRAS</a>
       </li>
-      <li class="nav-item col-lg-4 text-center" v-if="resultados.subnivel1 >= 7">
+      <li class="nav-item col-lg-4 text-center" >
         <a class="nav-link " id="leve3-tab" data-toggle="tab" href="#b" role="tab" aria-controls="leve3" aria-selected="false" style="border-radius: 50px">SÍLABAS</a>
       </li>
-      <li class="nav-item col-lg-4 text-center" v-if="resultados.subnivel2 >= 7">
+      <li class="nav-item col-lg-4 text-center" >
         <a class="nav-link " id="lev3-tab" data-toggle="tab" href="#c" role="tab" aria-controls="lev3" aria-selected="false" style="border-radius: 50px">PALABRAS</a>
       </li>
     </ul>
@@ -21,7 +21,7 @@
       <!-- letras -->
       <div  class="tab-pane fade show active mt-5" id="a" role="tabpanel" aria-labelledby="level3-tab">
         <vs-row>
-          <vs-alert dark class="mb-3" :progress="alerta.progress" v-model="alerta.active" v-if="resultados.subnivel1 >= 7">
+          <vs-alert dark class="mb-3" :progress="alerta.progress" v-model="alerta.active" >
             <template #title>
               Calificación de la Unidad
             </template>
@@ -64,7 +64,7 @@
       <!-- silabas -->
       <div  class="tab-pane fade show  mt-5" id="b" role="tabpanel" aria-labelledby="leve3-tab">
         <vs-row>
-          <vs-alert dark class="mb-3" :progress="alerta.progress" v-model="alerta.active" v-if="resultados.subnivel2 >= 7">
+          <vs-alert dark class="mb-3" :progress="alerta.progress" v-model="alerta.active" >
             <template #title>
               Calificación de la Unidad
             </template>
@@ -149,10 +149,205 @@
       </div>
     </div>
   </div>
+  <div v-else>
+    <ul class="nav nav-tabs" id="mytab2" role="tablist2">
+      <li class="nav-item col-lg-4 text-center">
+        <a class="nav-link active" id="level3-tab" data-toggle="tab" href="#a" role="tab" aria-controls="level3" aria-selected="true" style="border-radius: 50px">LETRAS</a>
+      </li>
+      <li class="nav-item col-lg-4 text-center" >
+        <a class="nav-link " id="leve3-tab" data-toggle="tab" href="#b" role="tab" aria-controls="leve3" aria-selected="false" style="border-radius: 50px">SÍLABAS</a>
+      </li>
+      <li class="nav-item col-lg-4 text-center" >
+        <a class="nav-link " id="lev3-tab" data-toggle="tab" href="#c" role="tab" aria-controls="lev3" aria-selected="false" style="border-radius: 50px">PALABRAS</a>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent2">
+      <!-- letras -->
+      <div  class="tab-pane fade show active mt-5" id="a" role="tabpanel" aria-labelledby="level3-tab">
+          <div class="col-lg-12 mb-3">
+            <vs-row justify="flex-end">
+              <vs-col w="1">
+                <vs-button class="w-100" @click="modal('agregar')">Agregar</vs-button>
+              </vs-col>
+            </vs-row>
+          </div>
+          <div class="card mb-5">
+            <vs-table>
+              <template #thead>
+                <vs-tr>
+                  <vs-th> Pregunta </vs-th>
+                  <vs-th> Estado </vs-th>
+                  <vs-th> Imagen </vs-th>
+                  <vs-th> Fecha Creado </vs-th>
+                  <vs-th> Opciones </vs-th>
+                </vs-tr>
+              </template>
+              <template #tbody v-if="lista">
+                <vs-tr :key="i" v-for="(tr, i) in lista.letras" :data="tr">
+                  <vs-td> {{ tr.valor_campo }} </vs-td>
+                  <vs-th v-if="tr.estado==1" style="color:green">Activo</vs-th><vs-th v-else style="color:red">Inactivo</vs-th>
+                  <vs-td><img :src="'archivos/imagenes/'+tr.fotosb" style="width: 70px;height: 70px;"/></vs-td>
+                  <vs-td>{{ tr.updated_at | fecha }}</vs-td>
+                  <vs-td>
+                    <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
+                    <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
+                    <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar', tr)"></i>
+                    <i class="fas fa-trash ml-2 pointer eventsalto"></i>
+                  </vs-td>
+                </vs-tr>
+              </template>
+            </vs-table>
+          </div>
+      </div>
+      <!-- silabas -->
+      <div  class="tab-pane fade show  mt-5" id="b" role="tabpanel" aria-labelledby="leve3-tab">
+        <vs-row>
+          <vs-alert dark class="mb-3" :progress="alerta.progress" v-model="alerta.active" >
+            <template #title>
+              Calificación de la Unidad
+            </template>
+              Felicidades, obtuviste una calificación de {{resultados.subnivel2}}/10, ya puedes ingresar al Sílabas de este nivel
+          </vs-alert>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 col-md-6 p-0" v-for="(tr,index) in silabas.preguntas" :key="index">
+            <div class="col-lg-12 mb-4" >
+              <div class="card m-3 " style="border-radius: 50px" >
+                <img :src="'archivos/imagenes/escuchar'+'.png'" class="card-img-top" style="border-radius: 50px"  alt="Card image cap"/>
+                <div class="card-body" >
+                  <vs-row vs-justify="flex-end" style="bottom: 0px">
+                    <vs-button color="dark" type="gradient" style="margin: 15px;border-radius:;width: 90px;height: 90px;" @click.prevent="sonido(tr.audio)">
+                      <vs-tooltip circle>
+                        <i class="fas fa-volume-up fa-2x"></i>
+                        <template #tooltip>
+                            Escuchar
+                        </template>
+                      </vs-tooltip>
+                    </vs-button>
+                    <div v-for="(tr,index_h) in tr.respuestas" :key="index_h">
+                      <vs-input color="#195bff" v-model="tr.respuesta_campo" class="w-100  mb-3 mt-5"  placeholder="Escribir" style="margin-bottom: 20px" @keyup="seleccionar_silabas(index, tr, index_h)"/>
+                    </div>
+                  </vs-row>
+                </div>
+              </div>
+            </div>
+          </vs-col>
+        </vs-row>
+        <div class="content-inputs">
+          <vs-button color="primary"  style="float: right;margin-bottom: 20px;--vs-color: 25, 91, 255;width: 100px;height: 100px;" type="gradient" @click="enviarsilabas()">
+            <vs-tooltip circl>
+              <i class="fas fa-check fa-2x"></i>
+              <template #tooltip>
+                Verificar
+              </template>
+            </vs-tooltip>
+          </vs-button>
+          </div>
+      </div>
+      <!-- palabra -->
+      <div  class="tab-pane fade show  mt-5" id="c" role="tabpanel" aria-labelledby="lev3-tab">
+        <vs-row>
+          <vs-alert dark class="mb-3" :progress="alerta.progress" v-model="alerta.active" v-if="resultados.subnivel3 >= 7">
+            <template #title>
+              Calificación de la Unidad
+            </template>
+              Felicidades, obtuviste una calificación de {{resultados.subnivel3}}/10, ya puedes ingresar al siguiente nivel
+          </vs-alert>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 col-md-6 p-0" v-for="(tr,index) in palabras.preguntas" :key="index">
+            <div class="col-lg-12">
+              <div class="card m-3 " style="border-radius: 50px">
+                <img :src="'archivos/imagenes/escuchar'+'.png'" class="card-img-top" style="border-radius: 50px"  alt="Card image cap"/>
+                <div class="card-body" >
+                  <vs-row vs-justify="flex-end" style="bottom: 0px;">
+                    <vs-button color="dark" type="gradient" style="margin: 15px;border-radius:;width: 90px;height: 90px;" @click.prevent="sonido(tr.audio)">
+                      <vs-tooltip circle>
+                        <i class="fas fa-volume-up fa-2x"></i>
+                        <template #tooltip>
+                            Escuchar
+                        </template>
+                      </vs-tooltip>
+                    </vs-button>
+                    <div v-for="(tr,index_hi) in tr.respuestas" :key="index_hi">
+                      <vs-input color="#195bff" v-model="tr.respuesta_campo" class="w-100  mb-3 mt-5"  placeholder="Escribir" style="margin-bottom: 20px" @keyup="seleccionar_palabras(index, tr, index_hi)"/>
+                    </div> 
+                  </vs-row>  
+                </div>
+              </div>
+            </div>
+          </vs-col>
+        </vs-row>
+        <div >
+          <vs-button color="primary"  style="float: right;margin-bottom: 20px;--vs-color: 25, 91, 255;width: 100px;height: 100px;" type="gradient" @click="enviarpalabras()">
+            <vs-tooltip circl>
+              <i class="fas fa-check fa-2x"></i>
+              <template #tooltip>
+                Verificar
+              </template>
+            </vs-tooltip>
+          </vs-button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <vs-dialog v-model="datos_modal.activo">
+    <template #header>
+      <h4 class="not-margin">
+        {{datos_modal.titulo}}
+      </h4>
+    </template>
+    <div class="con-form">
+      <div class="row mb-4">
+        <div class="col-lg-12">
+            <div class="center content-inputs">
+              <vs-input
+                label="Audio Pregunta"
+                v-model="form.audio"
+                placeholder="Evan You"
+              />
+            </div>
+        </div>
+      </div>
+      <div class="row" v-for="(tr, index) in form.preguntas" :key="index">
+        <div class="col-lg-8">
+            <div class="center content-inputs">
+              <vs-input
+                type="file"
+                label="Audio Pregunta"
+                v-model="tr.foto"
+                placeholder="Evan You"
+              />
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="center content-inputs mt-2">
+              <vs-select label="Tipo" v-model="tr.tipo">
+                <vs-option value="1" label="Correcto">Correcto</vs-option>
+                <vs-option value="0" label="Incorrecto">Incorrecto</vs-option>
+              </vs-select>
+            </div>
+        </div>
+        <div class="col-lg-1 mt-3">
+          <i class="fas fa-plus pointer" @click="agregar_objeto()"></i>
+        </div>
+      </div>
+    </div>
+
+    <template #footer>
+      <div class="footer-dialog">
+        <vs-button block @click="guardar()" v-if="datos_modal.tipo==1">
+          Ageragar
+        </vs-button>
+        <vs-button block @click="editar()" v-else>
+          Editar
+        </vs-button>
+      </div>
+    </template>
+  </vs-dialog>
 </div>
+
 </template>
 <script>
 import Api from "../apis/Nivel3";
+import store from "../store/store";
+import moment from "moment";
 export default {
   data(){
     return{
@@ -177,7 +372,28 @@ export default {
         progress: 0
       },
       cargado:true,
+      user:{rol:0},
+      lista:null,
+      datos_modal:{
+        activo:false,
+        tipo:0,
+        titulo:""
+      },
+      form:{
+        audio:'',
+        preguntas:[
+          {
+            foto:'',
+            tipo:'',
+          }
+        ]
+      }
     }
+  },
+filters: {
+    fecha(data) {
+        return moment(data).format("LL");
+    },
   },
   methods:{
     llamarpreguntas(){
@@ -359,6 +575,62 @@ export default {
           subnivel3: (data.subnivel3[0].suma * 10) / data.subnivel3[0].total
         }
       });
+    },
+    usuario(){
+      if(localStorage.getItem("token")){
+        store.dispatch('recuperauser').then((value) => {
+          this.user = value;
+        });
+      }
+    },
+    //administrador
+    listar(){
+      Api.listar().then( ({data}) => {
+        console.log(data);
+        this.lista = data;
+      }).catch( error => {
+        console.log(error);
+      });
+    },
+    modal(tipo, data){
+      switch(tipo){
+        case 'agregar': {
+          this.datos_modal = {
+            activo:true,
+            tipo:1,
+            titulo:"Agergar Registro"
+          };
+          
+          break;
+        }
+        case 'editar': {
+          this.datos_modal = {
+            activo:true,
+            tipo:2,
+            titulo:"Editar Registro"
+          };
+          break;
+        }
+      }
+    },
+    agregar_objeto(){
+      this.form.preguntas.push( {foto:'', tipo:''} );
+    },
+    guardar(){
+        let formData = new FormData();
+        formData.append("form", this.form);
+        Api.guardar(formData).then(({data}) => {
+          console.log(data);
+          this.$vs.notification({
+            square: true,
+            progress: 'auto',
+            color:'success',
+            title: 'Guardaro exitosamente',
+            text: 'Registro guardado exitosamente'
+          });
+        }).catch( error => {
+          console.log(error);
+        });
     }
   },
   mounted() {

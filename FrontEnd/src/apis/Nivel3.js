@@ -15,5 +15,12 @@ export default {
   },
   llamarresultados() {
     return Api().get("/nivel3/llamarresultados");
+  },
+  //administardor
+  listar() {
+    return Api().get("/nivel2/listar");
+  },
+  guardar(form) {
+    return Api().post("/nivel2/guardar", form);
   }
 };

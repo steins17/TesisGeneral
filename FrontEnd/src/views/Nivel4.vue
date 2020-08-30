@@ -5,7 +5,7 @@
       <div class="preloader"></div>
     </div>
   </div>
-  <div v-else>
+  <div v-else-if="!cargado && user.rol!=1">
     <ul class="nav nav-tabs" id="mytab3" role="tablist3">
       <li class="nav-item col-lg-6 text-center">
         <a class="nav-link active" id="level3-tab" data-toggle="tab" href="#a" role="tab" aria-controls="uno" aria-selected="true" style="border-radius: 50px">ORACIONES</a>
@@ -111,11 +111,119 @@
       </div>
     </div>
   </div>
+  <div v-else>
+    <ul class="nav nav-tabs" id="mytab3" role="tablist3">
+      <li class="nav-item col-lg-6 text-center">
+        <a class="nav-link active" id="level3-tab" data-toggle="tab" href="#a" role="tab" aria-controls="uno" aria-selected="true" style="border-radius: 50px">ORACIONES</a>
+      </li>
+      <li class="nav-item col-lg-6 text-center" v-if="resultados.subnivel1 >= 7">
+        <a class="nav-link " id="leve3-tab" data-toggle="tab" href="#b" role="tab" aria-controls="dos" aria-selected="false" style="border-radius: 50px">FRASES</a>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent2">
+      <!-- oraciones -->
+      <div  class="tab-pane fade show active mt-5" id="a" role="tabpanel" aria-labelledby="level3-tab">
+        <vs-row>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" >
+            <vs-alert dark class="mb-3" :progress="alerta.progress" v-model="alerta.active" v-if="resultados.subnivel1 >= 7">
+              <template #title>
+                Calificación de la Unidad
+              </template>
+                Felicidades, obtuviste una calificación de {{resultados.subnivel1}}/10, ya puedes ingresar a oraciones de este nivel
+            </vs-alert>
+            <div class="card m-3" style="border-radius: 50px" v-for="(tr,index) in oraciones.preguntas" :key="index">
+              <vs-row>
+                <vs-col vs-type="flex" vs-justify="center" vs-align="center" style="margin: 30px">
+                  <div class="card-head text-center" style="margin-bottom: 12px">
+                    <h2><span>{{tr.nombre}}</span></h2>
+                  </div>
+                </vs-col>
+                <vs-col vs-justify="flex"  class="container" w="6">
+                  <div class="center content-inputs" v-for="(tr,index_hijo) in tr.respuestas" :key="index_hijo">
+                    <vs-input color="#195bff"  v-model="tr.respuesta_campo" :class="'w-100 mb-3 mt-5 index'+index" style="margin-bottom: 35px" @click="seleccionar_oraciones(index, tr, index_hijo)"/>
+                  </div>
+                  <div class="container" style=";display: block;">
+                    <vs-button  style="float: right;margin-right: 80px;margin-bottom: 20px;--vs-color: 25, 91, 255;border-radius: 70px;width: 40px;height: 40px;" @click="hablar(index)">
+                      <vs-tooltip circle>
+                        <i class="fas fa-microphone-alt fa-2x"></i>
+                        <template #tooltip>
+                          Hablar
+                        </template>
+                      </vs-tooltip>
+                    </vs-button>
+                  </div>
+                </vs-col>
+              </vs-row>
+            </div>     
+          </vs-col>
+        </vs-row>
+        <div >
+          <vs-button color="primary"  style="float: right;margin-bottom: 20px;--vs-color: 25, 91, 255;width: 100px;height: 100px;" type="gradient" @click="enviaroraciones()">
+            <vs-tooltip circl>
+              <i class="fas fa-check fa-2x"></i>
+              <template #tooltip>
+                Verificar
+              </template>
+            </vs-tooltip>
+          </vs-button>
+        </div>
+      </div>
+      <!-- frases -->
+      <div  class="tab-pane fade show mt-5" id="b" role="tabpanel" aria-labelledby="leve3-tab">
+        <vs-row>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center">
+            <vs-alert dark class="mb-3" :progress="alerta.progress" v-model="alerta.active">
+              <template #title>
+                Calificación de la Unidad
+              </template>
+                Felicidades, obtuviste una calificación de {{resultados.subnivel2}}/10, ya has aprobado el curso
+            </vs-alert>
+            <div class="card m-3" style="border-radius: 50px" v-for="(tr,index) in frases.preguntas" :key="index">
+              <vs-row>
+                <vs-col vs-type="flex" vs-justify="center" vs-align="center" style="margin: 30px">
+                  <div class="card-head text-center" style="margin-bottom: 12px">
+                    <h2><span>{{tr.nombre}}</span></h2>
+                  </div>
+                </vs-col>
+                <vs-col vs-justify="flex" class="container" w="6">
+                  <div class="center content-inputs" v-for="(tr,index_h) in tr.respuestas" :key="index_h">
+                    <vs-input color="#195bff"  v-model="tr.respuesta_campo" :class="'w-100  mb-3 mt-5 index'+index"  placeholder="Escribir" style="margin-bottom: 35px" @click="seleccionar_frases(index, tr, index_h)"/>
+                  </div>
+                  <div class="container" style="bottom: 0px;display: block;">
+                    <vs-button  style="float: right;margin-right: 80px;margin-bottom: 20px;--vs-color: 25, 91, 255;border-radius: 70px;width: 40px;height: 40px;" @click="hablarc(index)">
+                      <vs-tooltip circle>
+                        <i class="fas fa-microphone-alt fa-2x"></i>
+                        <template #tooltip>
+                          Hablar
+                        </template>
+                      </vs-tooltip>
+                    </vs-button>
+                  </div>
+                </vs-col>
+              </vs-row>
+            </div>     
+          </vs-col>
+        </vs-row>
+        <div >
+          <vs-button color="primary"  style="float: right;margin-bottom: 20px;--vs-color: 25, 91, 255;width: 100px;height: 100px;" type="gradient" @click="enviarfrases()">
+            <vs-tooltip circl>
+              <i class="fas fa-check fa-2x"></i>
+              <template #tooltip>
+                Verificar
+              </template>
+            </vs-tooltip>
+          </vs-button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 </template>
 
 <script>
 import Api from "../apis/Nivel4";
+import store from "../store/store";
+import moment from "moment";
 export default {
   data() {
     return {
@@ -136,7 +244,28 @@ export default {
         progress: 0
       },
       cargado:true,
+      user:{rol:0},
+      lista:null,
+      datos_modal:{
+        activo:false,
+        tipo:0,
+        titulo:""
+      },
+      form:{
+        audio:'',
+        preguntas:[
+          {
+            foto:'',
+            tipo:'',
+          }
+        ]
+      }
     }
+  },
+  filters: {
+    fecha(data) {
+        return moment(data).format("LL");
+    },
   },
   methods: {
     llamarpreguntas(){
@@ -304,6 +433,62 @@ export default {
       setTimeout(() => {
         return;
       }, 3000);
+    },
+    usuario(){
+      if(localStorage.getItem("token")){
+        store.dispatch('recuperauser').then((value) => {
+          this.user = value;
+        });
+      }
+    },
+    //administrador
+    listar(){
+      Api.listar().then( ({data}) => {
+        console.log(data);
+        this.lista = data;
+      }).catch( error => {
+        console.log(error);
+      });
+    },
+    modal(tipo, data){
+      switch(tipo){
+        case 'agregar': {
+          this.datos_modal = {
+            activo:true,
+            tipo:1,
+            titulo:"Agergar Registro"
+          };
+          
+          break;
+        }
+        case 'editar': {
+          this.datos_modal = {
+            activo:true,
+            tipo:2,
+            titulo:"Editar Registro"
+          };
+          break;
+        }
+      }
+    },
+    agregar_objeto(){
+      this.form.preguntas.push( {foto:'', tipo:''} );
+    },
+    guardar(){
+        let formData = new FormData();
+        formData.append("form", this.form);
+        Api.guardar(formData).then(({data}) => {
+          console.log(data);
+          this.$vs.notification({
+            square: true,
+            progress: 'auto',
+            color:'success',
+            title: 'Guardaro exitosamente',
+            text: 'Registro guardado exitosamente'
+          });
+        }).catch( error => {
+          console.log(error);
+        });
     }
   },
   mounted() {

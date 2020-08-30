@@ -48,11 +48,17 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/nivel3/palabras/respuesta', 'Nivel3Controller@palabras_respuesta');
     Route::get('/nivel3/llamarresultados', 'Nivel3Controller@llamarresultados');
 
+    Route::get('/nivel3/listar', 'Nivel3Controller@listar');
+    Route::post('/nivel3/guardar', 'Nivel3Controller@guardar');
+
     //rutas del nivel 4
     Route::get('/nivel4/llamardatos', 'Nivel4Controller@llamardatos');
     Route::post('/nivel4/oraciones/respuesta', 'Nivel4Controller@oraciones_respuesta');
     Route::post('/nivel4/frases/respuesta', 'Nivel4Controller@frases_respuesta');
     Route::get('/nivel4/llamarresultados', 'Nivel4Controller@llamarresultados');
+
+    Route::get('/nivel4/listar', 'Nivel4Controller@listar');
+    Route::post('/nivel4/guardar', 'Nivel4Controller@guardar');
 });
 
 Route::get('/lang/{lang}', 'Controller@set_language')->name('set_language');

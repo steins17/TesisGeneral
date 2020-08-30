@@ -161,10 +161,10 @@
         <li class="nav-item col-lg-4 text-center">
           <a class="nav-link active" id="level2-tab" data-toggle="tab" href="#level2" role="tab" aria-controls="level2" aria-selected="true" style="border-radius: 50px">LETRAS</a>
         </li>
-        <li class="nav-item col-lg-4 text-center" v-if="resultados.subnivel1 >= 7">
+        <li class="nav-item col-lg-4 text-center" >
           <a class="nav-link" id="level-tab" data-toggle="tab" href="#level" role="tab" aria-controls="level" aria-selected="false" style="border-radius: 50px">SÍLABAS</a>
         </li>
-        <li class="nav-item col-lg-4 text-center" v-if="resultados.subnivel2 >= 7">
+        <li class="nav-item col-lg-4 text-center" >
           <a class="nav-link " id="p-tab" data-toggle="tab" href="#p" role="tab" aria-controls="p" aria-selected="false" style="border-radius: 50px">ORACIONES</a>
         </li>
       </ul> 
@@ -211,57 +211,79 @@
           </div>
         </div>
         <!-- silabas -->
-        <div class="tab-pane fade show mt-5" id="level" role="tabpanel" aria-labelledby="level-tab" v-if="resultados.subnivel1 >= 7">
+        <div class="tab-pane fade show mt-5" id="level" role="tabpanel" aria-labelledby="level-tab" >
           <div class="col-lg-12 mb-3">
             <vs-row justify="flex-end">
               <vs-col w="1">
-                <vs-button class="w-100">Agregar</vs-button>
+                <vs-button class="w-100" @click="modal('agregar')">Agregar</vs-button>
               </vs-col>
             </vs-row>
           </div>
-          <div class="card">
+          <div class="card mb-5">
             <vs-table>
               <template #thead>
                 <vs-tr>
-                  <vs-th> Name </vs-th>
-                  <vs-th> Email</vs-th>
-                  <vs-th> Id</vs-th>
+                  <vs-th> Pregunta </vs-th>
+                  <vs-th> Tipo </vs-th>
+                  <vs-th> Estado </vs-th>
+                  <vs-th> Respuesta Imagen </vs-th>
+                  <vs-th> Link Imagen </vs-th>
+                  <vs-th> Fecha Creado </vs-th>
+                  <vs-th> Opciones </vs-th>
                 </vs-tr>
               </template>
-              <template #tbody>
-                <!--<vs-tr :key="i" v-for="(tr, i) in users" :data="tr">
-                  <vs-td> {{ tr.name }} </vs-td>
-                  <vs-td> {{ tr.email }} </vs-td>
-                  <vs-td> {{ tr.id }} </vs-td>
-                </vs-tr>-->
+              <template #tbody v-if="lista">
+                <vs-tr :key="i" v-for="(tr, i) in lista.silabas" :data="tr">
+                  <vs-td> {{ tr.audiosb }} </vs-td>
+                  <vs-th v-if="tr.tipo==1">Correcto</vs-th><vs-th v-else>Incorrecto</vs-th>
+                  <vs-th v-if="tr.estado==1" style="color:green">Activo</vs-th><vs-th v-else style="color:red">Inactivo</vs-th>
+                  <vs-td><img :src="'archivos/imagenes/silabas/'+tr.foto" style="width: 70px;height: 70px;"/></vs-td>
+                  <vs-td>{{tr.foto}}</vs-td>
+                  <vs-td>{{ tr.updated_at | fecha }}</vs-td>
+                  <vs-td>
+                    <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
+                    <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
+                    <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar', tr)"></i>
+                    <i class="fas fa-trash ml-2 pointer eventsalto"></i>
+                  </vs-td>
+                </vs-tr>
               </template>
             </vs-table>
           </div>
         </div>
         <!-- oraciones -->
-        <div class="tab-pane fade show  mt-5" id="p" role="tabpanel" aria-labelledby="p-tab" v-if="resultados.subnivel2 >= 7">
+        <div class="tab-pane fade show  mt-5" id="p" role="tabpanel" aria-labelledby="p-tab" >
           <div class="col-lg-12 mb-3">
             <vs-row justify="flex-end">
               <vs-col w="1">
-                <vs-button class="w-100">Agregar</vs-button>
+                <vs-button class="w-100" @click="modal('agregar')">Agregar</vs-button>
               </vs-col>
             </vs-row>
           </div>
-          <div class="card">
+          <div class="card mb-5">
             <vs-table>
               <template #thead>
                 <vs-tr>
-                  <vs-th> Name </vs-th>
-                  <vs-th> Email</vs-th>
-                  <vs-th> Id</vs-th>
+                  <vs-th> Pregunta </vs-th>
+                  <vs-th> Estado </vs-th>
+                  <vs-th> Imagen </vs-th>
+                  <vs-th> Fecha Creado </vs-th>
+                  <vs-th> Opciones </vs-th>
                 </vs-tr>
               </template>
-              <template #tbody>
-                <!--<vs-tr :key="i" v-for="(tr, i) in users" :data="tr">
-                  <vs-td> {{ tr.name }} </vs-td>
-                  <vs-td> {{ tr.email }} </vs-td>
-                  <vs-td> {{ tr.id }} </vs-td>
-                </vs-tr>-->
+              <template #tbody v-if="lista">
+                <vs-tr :key="i" v-for="(tr, i) in lista.oraciones" :data="tr">
+                  <vs-td> {{ tr.valor_campo }} </vs-td>
+                  <vs-th v-if="tr.estado==1" style="color:green">Activo</vs-th><vs-th v-else style="color:red">Inactivo</vs-th>
+                  <vs-td><img :src="'archivos/imagenes/ima_ejer/'+tr.fotosb" style="width: 70px;height: 70px;"/></vs-td>
+                  <vs-td>{{ tr.updated_at | fecha }}</vs-td>
+                  <vs-td>
+                    <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
+                    <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
+                    <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar', tr)"></i>
+                    <i class="fas fa-trash ml-2 pointer eventsalto"></i>
+                  </vs-td>
+                </vs-tr>
               </template>
             </vs-table>
           </div>
