@@ -201,89 +201,77 @@
       </div>
       <!-- silabas -->
       <div  class="tab-pane fade show  mt-5" id="b" role="tabpanel" aria-labelledby="leve3-tab">
-        <vs-row>
-          <vs-alert dark class="mb-3" :progress="alerta.progress" v-model="alerta.active" >
-            <template #title>
-              Calificación de la Unidad
-            </template>
-              Felicidades, obtuviste una calificación de {{resultados.subnivel2}}/10, ya puedes ingresar al Sílabas de este nivel
-          </vs-alert>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 col-md-6 p-0" v-for="(tr,index) in silabas.preguntas" :key="index">
-            <div class="col-lg-12 mb-4" >
-              <div class="card m-3 " style="border-radius: 50px" >
-                <img :src="'archivos/imagenes/escuchar'+'.png'" class="card-img-top" style="border-radius: 50px"  alt="Card image cap"/>
-                <div class="card-body" >
-                  <vs-row vs-justify="flex-end" style="bottom: 0px">
-                    <vs-button color="dark" type="gradient" style="margin: 15px;border-radius:;width: 90px;height: 90px;" @click.prevent="sonido(tr.audio)">
-                      <vs-tooltip circle>
-                        <i class="fas fa-volume-up fa-2x"></i>
-                        <template #tooltip>
-                            Escuchar
-                        </template>
-                      </vs-tooltip>
-                    </vs-button>
-                    <div v-for="(tr,index_h) in tr.respuestas" :key="index_h">
-                      <vs-input color="#195bff" v-model="tr.respuesta_campo" class="w-100  mb-3 mt-5"  placeholder="Escribir" style="margin-bottom: 20px" @keyup="seleccionar_silabas(index, tr, index_h)"/>
-                    </div>
-                  </vs-row>
-                </div>
-              </div>
-            </div>
-          </vs-col>
-        </vs-row>
-        <div class="content-inputs">
-          <vs-button color="primary"  style="float: right;margin-bottom: 20px;--vs-color: 25, 91, 255;width: 100px;height: 100px;" type="gradient" @click="enviarsilabas()">
-            <vs-tooltip circl>
-              <i class="fas fa-check fa-2x"></i>
-              <template #tooltip>
-                Verificar
+       <div class="col-lg-12 mb-3">
+            <vs-row justify="flex-end">
+              <vs-col w="1">
+                <vs-button class="w-100" @click="modal('agregar')">Agregar</vs-button>
+              </vs-col>
+            </vs-row>
+          </div>
+          <div class="card mb-5">
+            <vs-table>
+              <template #thead>
+                <vs-tr>
+                  <vs-th> Pregunta </vs-th>
+                  <vs-th> Estado </vs-th>
+                  <vs-th> Imagen </vs-th>
+                  <vs-th> Fecha Creado </vs-th>
+                  <vs-th> Opciones </vs-th>
+                </vs-tr>
               </template>
-            </vs-tooltip>
-          </vs-button>
+              <template #tbody v-if="lista">
+                <vs-tr :key="i" v-for="(tr, i) in lista.silabas" :data="tr">
+                  <vs-td> {{ tr.valor_campo }} </vs-td>
+                  <vs-th v-if="tr.estado==1" style="color:green">Activo</vs-th><vs-th v-else style="color:red">Inactivo</vs-th>
+                  <vs-td><img :src="'archivos/imagenes/'+tr.fotosb" style="width: 70px;height: 70px;"/></vs-td>
+                  <vs-td>{{ tr.updated_at | fecha }}</vs-td>
+                  <vs-td>
+                    <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
+                    <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
+                    <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar', tr)"></i>
+                    <i class="fas fa-trash ml-2 pointer eventsalto"></i>
+                  </vs-td>
+                </vs-tr>
+              </template>
+            </vs-table>
           </div>
       </div>
       <!-- palabra -->
       <div  class="tab-pane fade show  mt-5" id="c" role="tabpanel" aria-labelledby="lev3-tab">
-        <vs-row>
-          <vs-alert dark class="mb-3" :progress="alerta.progress" v-model="alerta.active" v-if="resultados.subnivel3 >= 7">
-            <template #title>
-              Calificación de la Unidad
-            </template>
-              Felicidades, obtuviste una calificación de {{resultados.subnivel3}}/10, ya puedes ingresar al siguiente nivel
-          </vs-alert>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 col-md-6 p-0" v-for="(tr,index) in palabras.preguntas" :key="index">
-            <div class="col-lg-12">
-              <div class="card m-3 " style="border-radius: 50px">
-                <img :src="'archivos/imagenes/escuchar'+'.png'" class="card-img-top" style="border-radius: 50px"  alt="Card image cap"/>
-                <div class="card-body" >
-                  <vs-row vs-justify="flex-end" style="bottom: 0px;">
-                    <vs-button color="dark" type="gradient" style="margin: 15px;border-radius:;width: 90px;height: 90px;" @click.prevent="sonido(tr.audio)">
-                      <vs-tooltip circle>
-                        <i class="fas fa-volume-up fa-2x"></i>
-                        <template #tooltip>
-                            Escuchar
-                        </template>
-                      </vs-tooltip>
-                    </vs-button>
-                    <div v-for="(tr,index_hi) in tr.respuestas" :key="index_hi">
-                      <vs-input color="#195bff" v-model="tr.respuesta_campo" class="w-100  mb-3 mt-5"  placeholder="Escribir" style="margin-bottom: 20px" @keyup="seleccionar_palabras(index, tr, index_hi)"/>
-                    </div> 
-                  </vs-row>  
-                </div>
-              </div>
-            </div>
-          </vs-col>
-        </vs-row>
-        <div >
-          <vs-button color="primary"  style="float: right;margin-bottom: 20px;--vs-color: 25, 91, 255;width: 100px;height: 100px;" type="gradient" @click="enviarpalabras()">
-            <vs-tooltip circl>
-              <i class="fas fa-check fa-2x"></i>
-              <template #tooltip>
-                Verificar
+        <div class="col-lg-12 mb-3">
+            <vs-row justify="flex-end">
+              <vs-col w="1">
+                <vs-button class="w-100" @click="modal('agregar')">Agregar</vs-button>
+              </vs-col>
+            </vs-row>
+          </div>
+          <div class="card mb-5">
+            <vs-table>
+              <template #thead>
+                <vs-tr>
+                  <vs-th> Pregunta </vs-th>
+                  <vs-th> Estado </vs-th>
+                  <vs-th> Imagen </vs-th>
+                  <vs-th> Fecha Creado </vs-th>
+                  <vs-th> Opciones </vs-th>
+                </vs-tr>
               </template>
-            </vs-tooltip>
-          </vs-button>
-        </div>
+              <template #tbody v-if="lista">
+                <vs-tr :key="i" v-for="(tr, i) in lista.palabras" :data="tr">
+                  <vs-td> {{ tr.valor_campo }} </vs-td>
+                  <vs-th v-if="tr.estado==1" style="color:green">Activo</vs-th><vs-th v-else style="color:red">Inactivo</vs-th>
+                  <vs-td><img :src="'archivos/imagenes/'+tr.fotosb" style="width: 70px;height: 70px;"/></vs-td>
+                  <vs-td>{{ tr.updated_at | fecha }}</vs-td>
+                  <vs-td>
+                    <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
+                    <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
+                    <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar', tr)"></i>
+                    <i class="fas fa-trash ml-2 pointer eventsalto"></i>
+                  </vs-td>
+                </vs-tr>
+              </template>
+            </vs-table>
+          </div>
       </div>
     </div>
   </div>

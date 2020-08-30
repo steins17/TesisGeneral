@@ -18,9 +18,9 @@ export default {
   },
   //administardor
   listar() {
-    return Api().get("/nivel2/listar");
+    return Api().get("/nivel3/listar");
   },
   guardar(form) {
-    return Api().post("/nivel2/guardar", form);
+    return Api().post("/nivel3/guardar", form);
   }
 };
