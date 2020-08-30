@@ -108,6 +108,7 @@ class Nivel3Controller extends Controller
         ];
     }
     function llamarresultados(){
+        $user = Auth::user()->id;
         $subnivel1 = DB::select("SELECT sum(tipo) AS suma, count(*) AS total FROM usuario_pregunta WHERE nivel = 3 AND subnivel = 1");
         $subnivel2 = DB::select("SELECT sum(tipo) AS suma, count(*) AS total FROM usuario_pregunta WHERE nivel = 3 AND subnivel = 2");
         $subnivel3 = DB::select("SELECT sum(tipo) AS suma, count(*) AS total FROM usuario_pregunta WHERE nivel = 3 AND subnivel = 3");
