@@ -115,11 +115,25 @@ class PerfilController extends Controller
         return $user->createToken("browser")->plainTextToken;
     }
     function notastotales(){
-        $res = DB::select("SELECT ((sum(tipo) * 10) / count(*)) AS nota FROM usuario_pregunta GROUP BY nivel, subnivel");
-        $nota = 0;
+        $id = Auth::user()->id;
+        $res = DB::select("SELECT nivel, subnivel, ((sum(tipo) * 10) / count(*)) AS nota FROM usuario_pregunta WHERE id_users = $id GROUP BY nivel, subnivel");
+        $nota2 = 0;
+        $nota3 = 0;
+        $nota4 = 0;
         for($i=0; $i<count($res); $i++){
-            $nota = $nota + $res[$i]->nota;
+            if($res[$i]->nivel==2){
+                $nota2 = $nota2 + $res[$i]->nota;
+            }else if($res[$i]->nivel==3){
+                $nota3 = $nota3 + $res[$i]->nota;
+            }else if($res[$i]->nivel==4){
+                $nota4 = $nota4 + $res[$i]->nota;
+            }
+
         }
-        return $nota;
+        return [
+            'nota2' => $nota2,
+            'nota3' => $nota3,
+            'nota4' => $nota4
+        ];
     }
 }
