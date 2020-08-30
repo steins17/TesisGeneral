@@ -299,12 +299,21 @@
         </template>
         <div class="con-form">
           <div class="row mb-4">
-            <div class="col-lg-12">
+            <div class="col-lg-6">
                 <div class="center content-inputs">
                   <vs-input
                     label="Audio Pregunta"
                     v-model="form.audio"
-                    placeholder="Evan You"
+                    placeholder="Pregunta"
+                  />
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="center content-inputs">
+                  <vs-input
+                    label="Link Pregunta"
+                    v-model="form.audio"
+                    placeholder="archvo.(png,jpg)"
                   />
                 </div>
             </div>
@@ -314,9 +323,8 @@
                 <div class="center content-inputs">
                   <vs-input
                     type="file"
-                    label="Audio Pregunta"
+                    label="Respuesta imagen"
                     v-model="tr.foto"
-                    placeholder="Evan You"
                   />
                 </div>
             </div>
