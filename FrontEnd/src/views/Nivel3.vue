@@ -142,7 +142,6 @@
       </div>
     </div>
   </div>
-  {{variable_seleccionado}}
 </div>
 </template>
 <script>

@@ -55,7 +55,6 @@
           </vs-tooltip>
         </vs-button>
       </div>
-      {{variable_seleccionado}}
     </div>
     <!-- frases -->
     <div  class="tab-pane fade show mt-5" id="b" role="tabpanel" aria-labelledby="leve3-tab">
@@ -103,7 +102,6 @@
           </vs-tooltip>
         </vs-button>
       </div>
-      {{variable_seleccionado}}
     </div>
   </div>
 </div>
