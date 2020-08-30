@@ -344,7 +344,7 @@
             </vs-button>
           </div>
         </template>
-      </vs-dialog>
+    </vs-dialog>
   </div>
 </template>
 
