@@ -1,144 +1,151 @@
 <template>
 <div>
-  <ul class="nav nav-tabs" id="mytab2" role="tablist2">
-    <li class="nav-item col-lg-4 text-center">
-      <a class="nav-link active" id="level3-tab" data-toggle="tab" href="#a" role="tab" aria-controls="level3" aria-selected="true" style="border-radius: 50px">LETRAS</a>
-    </li>
-    <li class="nav-item col-lg-4 text-center" v-if="resultados.subnivel1 >= 7">
-      <a class="nav-link " id="leve3-tab" data-toggle="tab" href="#b" role="tab" aria-controls="leve3" aria-selected="false" style="border-radius: 50px">SÍLABAS</a>
-    </li>
-    <li class="nav-item col-lg-4 text-center" v-if="resultados.subnivel2 >= 7">
-      <a class="nav-link " id="lev3-tab" data-toggle="tab" href="#c" role="tab" aria-controls="lev3" aria-selected="false" style="border-radius: 50px">PALABRAS</a>
-    </li>
-  </ul>
-  <div class="tab-content" id="myTabContent2">
-    <!-- letras -->
-    <div  class="tab-pane fade show active mt-5" id="a" role="tabpanel" aria-labelledby="level3-tab">
-      <vs-row>
-        <vs-alert dark class="mb-3" :progress="alerta.progress" v-model="alerta.active" v-if="resultados.subnivel1 >= 7">
-          <template #title>
-            Calificación de la Unidad
-          </template>
-            Felicidades, obtuviste una calificación de {{resultados.subnivel1}}/10, ya puedes ingresar al Sílabas de este nivel
-        </vs-alert>
-        <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 col-md-6 p-0"  v-for="(tr,index) in letras.preguntas" :key="index">
-          <div class="col-lg-12 mb-4"  >
-            <div class="card m-3" style="border-radius: 50px">
-              <img :src="'archivos/imagenes/'+tr.foto" class="card-img-top" style="border-radius: 50px"  alt="Card image cap"/>
-              <div class="card-body">
-                <vs-row vs-justify="flex-end" style=";bottom: 10px;">
-                  <vs-button color="dark" type="gradient" style="margin: 15px;border-radius:;width: 90px;height: 90px;" @click.prevent="sonido(tr.audio)">
-                    <vs-tooltip circle>
-                      <i class="fas fa-volume-up fa-2x"></i>
-                      <template #tooltip>
-                          Escuchar
-                      </template>
-                    </vs-tooltip>
-                  </vs-button>
-                  <div v-for="(tr,index_hijo) in tr.respuestas" :key="index_hijo">
-                    <vs-input color="#195bff" v-model="tr.respuesta_campo" class="w-100  mb-3 mt-5"  placeholder="Escribir" style="margin-bottom: 20px" @keyup="seleccionar_letras(index, tr, index_hijo)"></vs-input>
-                  </div>
-                </vs-row>
-              </div>
-            </div>
-          </div>
-        </vs-col>
-      </vs-row>
-      <div class="content-inputs " >
-        <vs-button color="primary"  style="float: right;margin-bottom: 20px;width: 100px;height: 100px;" type="gradient" @click="enviarletras()">
-          <vs-tooltip circl>
-            <i class="fas fa-check fa-2x"></i>
-            <template #tooltip>
-              Verificar
-            </template>
-          </vs-tooltip>
-        </vs-button>
-      </div>
+  <div v-if="cargado">
+    <div class="text-center centradv">
+      <div class="preloader"></div>
     </div>
-    <!-- silabas -->
-    <div  class="tab-pane fade show  mt-5" id="b" role="tabpanel" aria-labelledby="leve3-tab">
-      <vs-row>
-        <vs-alert dark class="mb-3" :progress="alerta.progress" v-model="alerta.active" v-if="resultados.subnivel2 >= 7">
-          <template #title>
-            Calificación de la Unidad
-          </template>
-            Felicidades, obtuviste una calificación de {{resultados.subnivel2}}/10, ya puedes ingresar al Sílabas de este nivel
-        </vs-alert>
-        <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 col-md-6 p-0" v-for="(tr,index) in silabas.preguntas" :key="index">
-          <div class="col-lg-12 mb-4" >
-            <div class="card m-3 " style="border-radius: 50px" >
-              <img :src="'archivos/imagenes/escuchar'+'.png'" class="card-img-top" style="border-radius: 50px"  alt="Card image cap"/>
-              <div class="card-body" >
-                <vs-row vs-justify="flex-end" style="bottom: 0px">
-                  <vs-button color="dark" type="gradient" style="margin: 15px;border-radius:;width: 90px;height: 90px;" @click.prevent="sonido(tr.audio)">
-                    <vs-tooltip circle>
-                      <i class="fas fa-volume-up fa-2x"></i>
-                      <template #tooltip>
-                          Escuchar
-                      </template>
-                    </vs-tooltip>
-                  </vs-button>
-                  <div v-for="(tr,index_h) in tr.respuestas" :key="index_h">
-                    <vs-input color="#195bff" v-model="tr.respuesta_campo" class="w-100  mb-3 mt-5"  placeholder="Escribir" style="margin-bottom: 20px" @keyup="seleccionar_silabas(index, tr, index_h)"/>
-                  </div>
-                </vs-row>
+  </div>
+  <div v-else>
+    <ul class="nav nav-tabs" id="mytab2" role="tablist2">
+      <li class="nav-item col-lg-4 text-center">
+        <a class="nav-link active" id="level3-tab" data-toggle="tab" href="#a" role="tab" aria-controls="level3" aria-selected="true" style="border-radius: 50px">LETRAS</a>
+      </li>
+      <li class="nav-item col-lg-4 text-center" v-if="resultados.subnivel1 >= 7">
+        <a class="nav-link " id="leve3-tab" data-toggle="tab" href="#b" role="tab" aria-controls="leve3" aria-selected="false" style="border-radius: 50px">SÍLABAS</a>
+      </li>
+      <li class="nav-item col-lg-4 text-center" v-if="resultados.subnivel2 >= 7">
+        <a class="nav-link " id="lev3-tab" data-toggle="tab" href="#c" role="tab" aria-controls="lev3" aria-selected="false" style="border-radius: 50px">PALABRAS</a>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent2">
+      <!-- letras -->
+      <div  class="tab-pane fade show active mt-5" id="a" role="tabpanel" aria-labelledby="level3-tab">
+        <vs-row>
+          <vs-alert dark class="mb-3" :progress="alerta.progress" v-model="alerta.active" v-if="resultados.subnivel1 >= 7">
+            <template #title>
+              Calificación de la Unidad
+            </template>
+              Felicidades, obtuviste una calificación de {{resultados.subnivel1}}/10, ya puedes ingresar al Sílabas de este nivel
+          </vs-alert>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 col-md-6 p-0"  v-for="(tr,index) in letras.preguntas" :key="index">
+            <div class="col-lg-12 mb-4"  >
+              <div class="card m-3" style="border-radius: 50px">
+                <img :src="'archivos/imagenes/'+tr.foto" class="card-img-top" style="border-radius: 50px"  alt="Card image cap"/>
+                <div class="card-body">
+                  <vs-row vs-justify="flex-end" style=";bottom: 10px;">
+                    <vs-button color="dark" type="gradient" style="margin: 15px;border-radius:;width: 90px;height: 90px;" @click.prevent="sonido(tr.audio)">
+                      <vs-tooltip circle>
+                        <i class="fas fa-volume-up fa-2x"></i>
+                        <template #tooltip>
+                            Escuchar
+                        </template>
+                      </vs-tooltip>
+                    </vs-button>
+                    <div v-for="(tr,index_hijo) in tr.respuestas" :key="index_hijo">
+                      <vs-input color="#195bff" v-model="tr.respuesta_campo" class="w-100  mb-3 mt-5"  placeholder="Escribir" style="margin-bottom: 20px" @keyup="seleccionar_letras(index, tr, index_hijo)"></vs-input>
+                    </div>
+                  </vs-row>
+                </div>
               </div>
             </div>
-          </div>
-        </vs-col>
-      </vs-row>
-      <div class="content-inputs">
-        <vs-button color="primary"  style="float: right;margin-bottom: 20px;--vs-color: 25, 91, 255;width: 100px;height: 100px;" type="gradient" @click="enviarsilabas()">
-          <vs-tooltip circl>
-            <i class="fas fa-check fa-2x"></i>
-            <template #tooltip>
-              Verificar
-            </template>
-          </vs-tooltip>
-        </vs-button>
+          </vs-col>
+        </vs-row>
+        <div class="content-inputs " >
+          <vs-button color="primary"  style="float: right;margin-bottom: 20px;width: 100px;height: 100px;" type="gradient" @click="enviarletras()">
+            <vs-tooltip circl>
+              <i class="fas fa-check fa-2x"></i>
+              <template #tooltip>
+                Verificar
+              </template>
+            </vs-tooltip>
+          </vs-button>
         </div>
-    </div>
-    <!-- palabra -->
-    <div  class="tab-pane fade show  mt-5" id="c" role="tabpanel" aria-labelledby="lev3-tab">
-      <vs-row>
-        <vs-alert dark class="mb-3" :progress="alerta.progress" v-model="alerta.active" v-if="resultados.subnivel3 >= 7">
-          <template #title>
-            Calificación de la Unidad
-          </template>
-            Felicidades, obtuviste una calificación de {{resultados.subnivel3}}/10, ya puedes ingresar al siguiente nivel
-        </vs-alert>
-        <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 col-md-6 p-0" v-for="(tr,index) in palabras.preguntas" :key="index">
-          <div class="col-lg-12">
-            <div class="card m-3 " style="border-radius: 50px">
-              <img :src="'archivos/imagenes/escuchar'+'.png'" class="card-img-top" style="border-radius: 50px"  alt="Card image cap"/>
-              <div class="card-body" >
-                <vs-row vs-justify="flex-end" style="bottom: 0px;">
-                  <vs-button color="dark" type="gradient" style="margin: 15px;border-radius:;width: 90px;height: 90px;" @click.prevent="sonido(tr.audio)">
-                    <vs-tooltip circle>
-                      <i class="fas fa-volume-up fa-2x"></i>
-                      <template #tooltip>
-                          Escuchar
-                      </template>
-                    </vs-tooltip>
-                  </vs-button>
-                  <div v-for="(tr,index_hi) in tr.respuestas" :key="index_hi">
-                    <vs-input color="#195bff" v-model="tr.respuesta_campo" class="w-100  mb-3 mt-5"  placeholder="Escribir" style="margin-bottom: 20px" @keyup="seleccionar_palabras(index, tr, index_hi)"/>
-                  </div> 
-                </vs-row>  
+      </div>
+      <!-- silabas -->
+      <div  class="tab-pane fade show  mt-5" id="b" role="tabpanel" aria-labelledby="leve3-tab">
+        <vs-row>
+          <vs-alert dark class="mb-3" :progress="alerta.progress" v-model="alerta.active" v-if="resultados.subnivel2 >= 7">
+            <template #title>
+              Calificación de la Unidad
+            </template>
+              Felicidades, obtuviste una calificación de {{resultados.subnivel2}}/10, ya puedes ingresar al Sílabas de este nivel
+          </vs-alert>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 col-md-6 p-0" v-for="(tr,index) in silabas.preguntas" :key="index">
+            <div class="col-lg-12 mb-4" >
+              <div class="card m-3 " style="border-radius: 50px" >
+                <img :src="'archivos/imagenes/escuchar'+'.png'" class="card-img-top" style="border-radius: 50px"  alt="Card image cap"/>
+                <div class="card-body" >
+                  <vs-row vs-justify="flex-end" style="bottom: 0px">
+                    <vs-button color="dark" type="gradient" style="margin: 15px;border-radius:;width: 90px;height: 90px;" @click.prevent="sonido(tr.audio)">
+                      <vs-tooltip circle>
+                        <i class="fas fa-volume-up fa-2x"></i>
+                        <template #tooltip>
+                            Escuchar
+                        </template>
+                      </vs-tooltip>
+                    </vs-button>
+                    <div v-for="(tr,index_h) in tr.respuestas" :key="index_h">
+                      <vs-input color="#195bff" v-model="tr.respuesta_campo" class="w-100  mb-3 mt-5"  placeholder="Escribir" style="margin-bottom: 20px" @keyup="seleccionar_silabas(index, tr, index_h)"/>
+                    </div>
+                  </vs-row>
+                </div>
               </div>
             </div>
+          </vs-col>
+        </vs-row>
+        <div class="content-inputs">
+          <vs-button color="primary"  style="float: right;margin-bottom: 20px;--vs-color: 25, 91, 255;width: 100px;height: 100px;" type="gradient" @click="enviarsilabas()">
+            <vs-tooltip circl>
+              <i class="fas fa-check fa-2x"></i>
+              <template #tooltip>
+                Verificar
+              </template>
+            </vs-tooltip>
+          </vs-button>
           </div>
-        </vs-col>
-      </vs-row>
-      <div >
-        <vs-button color="primary"  style="float: right;margin-bottom: 20px;--vs-color: 25, 91, 255;width: 100px;height: 100px;" type="gradient" @click="enviarpalabras()">
-          <vs-tooltip circl>
-            <i class="fas fa-check fa-2x"></i>
-            <template #tooltip>
-              Verificar
+      </div>
+      <!-- palabra -->
+      <div  class="tab-pane fade show  mt-5" id="c" role="tabpanel" aria-labelledby="lev3-tab">
+        <vs-row>
+          <vs-alert dark class="mb-3" :progress="alerta.progress" v-model="alerta.active" v-if="resultados.subnivel3 >= 7">
+            <template #title>
+              Calificación de la Unidad
             </template>
-          </vs-tooltip>
-        </vs-button>
+              Felicidades, obtuviste una calificación de {{resultados.subnivel3}}/10, ya puedes ingresar al siguiente nivel
+          </vs-alert>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 col-md-6 p-0" v-for="(tr,index) in palabras.preguntas" :key="index">
+            <div class="col-lg-12">
+              <div class="card m-3 " style="border-radius: 50px">
+                <img :src="'archivos/imagenes/escuchar'+'.png'" class="card-img-top" style="border-radius: 50px"  alt="Card image cap"/>
+                <div class="card-body" >
+                  <vs-row vs-justify="flex-end" style="bottom: 0px;">
+                    <vs-button color="dark" type="gradient" style="margin: 15px;border-radius:;width: 90px;height: 90px;" @click.prevent="sonido(tr.audio)">
+                      <vs-tooltip circle>
+                        <i class="fas fa-volume-up fa-2x"></i>
+                        <template #tooltip>
+                            Escuchar
+                        </template>
+                      </vs-tooltip>
+                    </vs-button>
+                    <div v-for="(tr,index_hi) in tr.respuestas" :key="index_hi">
+                      <vs-input color="#195bff" v-model="tr.respuesta_campo" class="w-100  mb-3 mt-5"  placeholder="Escribir" style="margin-bottom: 20px" @keyup="seleccionar_palabras(index, tr, index_hi)"/>
+                    </div> 
+                  </vs-row>  
+                </div>
+              </div>
+            </div>
+          </vs-col>
+        </vs-row>
+        <div >
+          <vs-button color="primary"  style="float: right;margin-bottom: 20px;--vs-color: 25, 91, 255;width: 100px;height: 100px;" type="gradient" @click="enviarpalabras()">
+            <vs-tooltip circl>
+              <i class="fas fa-check fa-2x"></i>
+              <template #tooltip>
+                Verificar
+              </template>
+            </vs-tooltip>
+          </vs-button>
+        </div>
       </div>
     </div>
   </div>
@@ -168,7 +175,8 @@ export default {
         active: true,
         time: 6000,
         progress: 0
-      }
+      },
+      cargado:true,
     }
   },
   methods:{
@@ -197,6 +205,7 @@ export default {
             }
           });
         });
+        this.cargado=false;
       });
     },
     sonido(palabra){    

@@ -286,6 +286,7 @@
           User.auth().then(response => {
             this.user = response.data;
             if(this.user.foto) this.verfoto=true;
+            this.loading("close");
           }).catch(error => {
             if (error.response.status === 401) {
               localStorage.removeItem("token");
@@ -298,6 +299,7 @@
               console.log("debes iniciar sesión");
               location.reload();
             }
+            this.loading("close");
           });
         }
       },
@@ -379,9 +381,6 @@
     },
     mounted() {
       this.val_loading = this.$vs.loading({text: 'Cargando...'});
-      setTimeout(() => {
-        this.loading("close");
-      }, 800);
       if(localStorage.getItem("settings")){
         var valor = JSON.parse(localStorage.getItem("settings"));
         this.reduce = valor.reduce;
@@ -714,5 +713,31 @@
   }
   .color-drem{
     color: #6c7885;
+  }
+  .preloader {
+    width: 70px;
+    height: 70px;
+    border: 10px solid #eee;
+    border-top: 10px solid #666;
+    border-radius: 50%;
+    animation-name: girar;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    display: inline-block;
+  }
+  @keyframes girar {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .centradv{
+    height: 75vh;
+    vertical-align: middle;
+    position: absolute;
+    top: 50%;
+    left: 50%;
   }
 </style>
