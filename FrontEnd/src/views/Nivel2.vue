@@ -674,6 +674,22 @@ export default {
           console.log(error);
         });
     },
+    editar(data){
+      let formData = new FormData();
+        formData.append("form", this.form);
+        Api.guardar(formData).then(({data}) => {
+          console.log(data);
+          this.$vs.notification({
+            square: true,
+            progress: 'auto',
+            color:'success',
+            title: 'Guardaro exitosamente',
+            text: 'Registro guardado exitosamente'
+          });
+        }).catch( error => {
+          console.log(error);
+        });
+    },
     eliminar(data){
       this.data.delete();
     }
