@@ -299,7 +299,16 @@
         </template>
         <div class="con-form">
           <div class="row mb-4">
-            <div class="col-lg-6">
+            <div class="col-lg-4">
+                <div class="center content-inputs">
+                  <vs-input
+                    label="Nombre Pregunta"
+                    v-model="form.nombre"
+                    placeholder="Pregunta oraciones"
+                  />
+                </div>
+            </div>
+            <div class="col-lg-4 mt-1">
                 <div class="center content-inputs">
                   <vs-input
                     label="Audio Pregunta"
@@ -308,7 +317,7 @@
                   />
                 </div>
             </div>
-            <div class="col-lg-6 mt-1">
+            <div class="col-lg-4 mt-1">
                 <div class="center content-inputs">
                   <vs-input
                     label="Link Pregunta"
@@ -319,7 +328,7 @@
             </div>
           </div>
           <div class="row" v-for="(tr, index) in form.preguntas" :key="index">
-            <div class="col-lg-8">
+            <div class="col-lg-4">
                 <div class="center content-inputs">
                   <vs-input
                     type="file"
@@ -334,6 +343,15 @@
                     <vs-option value="1" label="Correcto">Correcto</vs-option>
                     <vs-option value="0" label="Incorrecto">Incorrecto</vs-option>
                   </vs-select>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="center content-inputs">
+                  <vs-input
+                    label="Campo Respuesta"
+                    v-model="tr.valor_campo"
+                    placeholder="Respuesta oraciones"
+                  />
                 </div>
             </div>
             <div class="col-lg-1 mt-3">
@@ -395,11 +413,14 @@ export default {
         titulo:""
       },
       form:{
+        nombre:'',
         audio:'',
+        foto:'',
         preguntas:[
           {
             foto:'',
             tipo:'',
+            valor_campo:''
           }
         ]
       }

@@ -369,11 +369,14 @@ export default {
         titulo:""
       },
       form:{
+        nombre:'',
         audio:'',
+        foto:'',
         preguntas:[
           {
             foto:'',
             tipo:'',
+            valor_campo:''
           }
         ]
       }
