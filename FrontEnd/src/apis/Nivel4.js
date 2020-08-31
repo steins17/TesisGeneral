@@ -21,5 +21,15 @@ export default {
   },
   guardar(form) {
     return Api().post("/nivel4/guardar", form);
+  },
+
+  agregar(form){
+    return Api().post("/nivel4/agregar", form)
+  },
+  editar(form){
+    return Api().post("/nivel4/editar", form)
+  },
+  eliminar(form){
+    return Api().delete("/nivel4/eliminar", form)
   }
 };

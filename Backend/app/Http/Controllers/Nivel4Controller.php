@@ -96,4 +96,43 @@ class Nivel4Controller extends Controller
         $frases = DB::select("SELECT ps.*, sb.foto AS fotosb FROM subnivel sb INNER JOIN preguntas_subnivel ps ON sb.id=ps.id_subnivel WHERE sb.nivel = 4 AND sb.subnivel = 2");
         return [ 'oraciones' => $oraciones, 'frases' => $frases];
     }
+
+    function agregar(Request $rq){
+        $user = Auth::user()->id;
+        $datos = new Subnivel();
+        $datos->nombre=$rq->nombre;
+        $datos->foto=$rq->foto;
+        $datos->audio=$rq->audio;
+        $datos->nivel=$rq->nivel;
+        $datos->subnivel=$rq->subnivel;
+
+        $datos = new Preguntas_subnivel();
+        $datos->foto=$rq->foto;
+        $datos->tipo=$rq->tipo;
+        $datos->valor_campo=$rq->valor_campo;
+        $datos->nivel=$rq->nivel;
+        $datos->id_subnivel=$rq->id_subnivel;
+        $datos->save();
+    }
+    function editar(Request $rq){
+        $user = Auth::user()->id;
+        $datos = Subnivel::findOrFail($rq->id);
+        $datos->nombre=$rq->nombre;
+        $datos->foto=$rq->foto;
+        $datos->audio=$rq->audio;
+        $datos->nivel=$rq->nivel;
+        $datos->subnivel=$rq->subnivel;
+
+        $datos = Preguntas_subnivel::findOrFail($rq->id);
+        $datos->foto=$rq->foto;
+        $datos->tipo=$rq->tipo;
+        $datos->valor_campo=$rq->valor_campo;
+        $datos->nivel=$rq->nivel;
+        $datos->id_subnivel=$rq->id_subnivel;
+        $datos->save();
+    }
+    public function eliminar($id){
+        Subnivel::destroy($id);
+        Preguntas_subnivel::destroy($id);
+    }
 }
