@@ -295,6 +295,8 @@
                     label="Audio Pregunta"
                     v-model="tr.foto"
                     placeholder="Evan You"
+                    ref="file" 
+                    multiple="multiple"
                   />
                 </div>
             </div>
@@ -609,8 +611,12 @@ export default {
     },
     guardar(){
         let formData = new FormData();
-        formData.append("form", this.form);
-        Api.guardar(formData).then(({data}) => {
+        formData.append("form", this.form.audio);
+        for( var i = 0; i < this.form.preguntas.length; i++ ){
+          formData.append("foto["+i+"]", this.form.preguntas[i].foto);
+          formData.append("tipo["+i+"]", this.form.preguntas[i].tipo);
+        }
+        Api.guardar(formData, {headers: { 'Content-Type': 'multipart/form-data'},} ).then(({data}) => {
           console.log(data);
           this.$vs.notification({
             square: true,

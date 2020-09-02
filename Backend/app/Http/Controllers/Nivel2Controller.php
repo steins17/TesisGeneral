@@ -105,11 +105,22 @@ class Nivel2Controller extends Controller
         return [ 'letras' => $letras, 'silabas' => $silabas, 'oraciones' => $oraciones ];
     }
     function guardar(Request $rq){
-        return $rq;
-        $letras = DB::select("SELECT ps.*, sb.foto AS fotosb, sb.audio AS audiosb FROM subnivel sb INNER JOIN preguntas_subnivel ps ON sb.id=ps.id_subnivel WHERE sb.nivel = 2 AND sb.subnivel = 1");
-        $silabas = DB::select("SELECT ps.*, sb.foto AS fotosb, sb.audio AS audiosb FROM subnivel sb INNER JOIN preguntas_subnivel ps ON sb.id=ps.id_subnivel WHERE sb.nivel = 2 AND sb.subnivel = 1");
-        $oraciones = DB::select("SELECT ps.*, sb.foto AS fotosb, sb.audio AS audiosb FROM subnivel sb INNER JOIN preguntas_subnivel ps ON sb.id=ps.id_subnivel WHERE sb.nivel = 2 AND sb.subnivel = 1");
-        return [ 'letras' => $letras, 'silabas' => $silabas, 'oraciones' => $oraciones ];
+        /*$file_imagen = $rq->foto[0]->file('imagen');
+        $nombre = $file_imagen->getClientOriginalName();*/
+        $files = $rq->file('foto');
+        $file_count = count($files);
+        $uploadcount = 0;
+        foreach($files as $file) {
+            $rules = array('file' => 'required');
+            //'required|mimes:png,gif,jpeg,txt,pdf,doc'
+            $validator = Validator::make(array('file'=> $file), $rules);
+            if($validator->passes()){
+                $destinationPath = 'uploads';
+                $filename = $file->getClientOriginalName();
+                $upload_success = $file->move($destinationPath, $filename);
+                $uploadcount ++;
+            }
+        }
     }
 }
 
