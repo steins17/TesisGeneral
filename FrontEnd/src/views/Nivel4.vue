@@ -5,7 +5,7 @@
       <div class="preloader"></div>
     </div>
   </div>
-  <div v-else>
+  <div v-else-if="!cargado && user.rol!=1">
     <ul class="nav nav-tabs" id="mytab3" role="tablist3">
       <li class="nav-item col-lg-6 text-center">
         <a class="nav-link active" id="level3-tab" data-toggle="tab" href="#a" role="tab" aria-controls="uno" aria-selected="true" style="border-radius: 50px">ORACIONES</a>
@@ -111,11 +111,95 @@
       </div>
     </div>
   </div>
+  <div v-else>
+    <ul class="nav nav-tabs" id="mytab3" role="tablist3">
+      <li class="nav-item col-lg-6 text-center">
+        <a class="nav-link active" id="level3-tab" data-toggle="tab" href="#a" role="tab" aria-controls="uno" aria-selected="true" style="border-radius: 50px">ORACIONES</a>
+      </li>
+      <li class="nav-item col-lg-6 text-center" v-if="resultados.subnivel1 >= 7">
+        <a class="nav-link " id="leve3-tab" data-toggle="tab" href="#b" role="tab" aria-controls="dos" aria-selected="false" style="border-radius: 50px">FRASES</a>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent2">
+      <!-- oraciones -->
+      <div  class="tab-pane fade show active mt-5" id="a" role="tabpanel" aria-labelledby="level3-tab">
+        <div class="col-lg-12 mb-3">
+            <vs-row justify="flex-end">
+              <vs-col w="1">
+                <vs-button class="w-100" @click="modal('agregar')">Agregar</vs-button>
+              </vs-col>
+            </vs-row>
+          </div>
+          <div class="card mb-5">
+            <vs-table>
+              <template #thead>
+                <vs-tr>
+                  <vs-th> Pregunta </vs-th>
+                  <vs-th> Estado </vs-th>
+                  <vs-th> Fecha Creado </vs-th>
+                  <vs-th> Opciones </vs-th>
+                </vs-tr>
+              </template>
+              <template #tbody v-if="lista">
+                <vs-tr :key="i" v-for="(tr, i) in lista.oraciones" :data="tr">
+                  <vs-td> {{ tr.valor_campo }} </vs-td>
+                  <vs-th v-if="tr.estado==1" style="color:green">Activo</vs-th><vs-th v-else style="color:red">Inactivo</vs-th>
+                  <vs-td>{{ tr.updated_at | fecha }}</vs-td>
+                  <vs-td>
+                    <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
+                    <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
+                    <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar', tr)"></i>
+                    <i class="fas fa-trash ml-2 pointer eventsalto"></i>
+                  </vs-td>
+                </vs-tr>
+              </template>
+            </vs-table>
+          </div>
+      </div>
+      <!-- frases -->
+      <div  class="tab-pane fade show mt-5" id="b" role="tabpanel" aria-labelledby="leve3-tab">
+        <div class="col-lg-12 mb-3">
+            <vs-row justify="flex-end">
+              <vs-col w="1">
+                <vs-button class="w-100" @click="modal('agregar')">Agregar</vs-button>
+              </vs-col>
+            </vs-row>
+          </div>
+          <div class="card mb-5">
+            <vs-table>
+              <template #thead>
+                <vs-tr>
+                  <vs-th> Pregunta </vs-th>
+                  <vs-th> Estado </vs-th>
+                  <vs-th> Fecha Creado </vs-th>
+                  <vs-th> Opciones </vs-th>
+                </vs-tr>
+              </template>
+              <template #tbody v-if="lista">
+                <vs-tr :key="i" v-for="(tr, i) in lista.frases" :data="tr">
+                  <vs-td> {{ tr.valor_campo }} </vs-td>
+                  <vs-th v-if="tr.estado==1" style="color:green">Activo</vs-th><vs-th v-else style="color:red">Inactivo</vs-th>
+                  <vs-td>{{ tr.updated_at | fecha }}</vs-td>
+                  <vs-td>
+                    <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
+                    <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
+                    <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar', tr)"></i>
+                    <i class="fas fa-trash ml-2 pointer eventsalto"></i>
+                  </vs-td>
+                </vs-tr>
+              </template>
+            </vs-table>
+          </div>
+      </div>
+    </div>
+  </div>
 </div>
 </template>
 
 <script>
 import Api from "../apis/Nivel4";
+import store from "../store/store";
+import moment from "moment";
 export default {
   data() {
     return {
@@ -136,7 +220,28 @@ export default {
         progress: 0
       },
       cargado:true,
+      user:{rol:0},
+      lista:null,
+      datos_modal:{
+        activo:false,
+        tipo:0,
+        titulo:""
+      },
+      form:{
+        audio:'',
+        preguntas:[
+          {
+            foto:'',
+            tipo:'',
+          }
+        ]
+      }
     }
+  },
+  filters: {
+    fecha(data) {
+        return moment(data).format("LL");
+    },
   },
   methods: {
     llamarpreguntas(){
@@ -304,11 +409,69 @@ export default {
       setTimeout(() => {
         return;
       }, 3000);
+    },
+    usuario(){
+      if(localStorage.getItem("token")){
+        store.dispatch('recuperauser').then((value) => {
+          this.user = value;
+        });
+      }
+    },
+    //administrador
+    listar(){
+      Api.listar().then( ({data}) => {
+        console.log(data);
+        this.lista = data;
+      }).catch( error => {
+        console.log(error);
+      });
+    },
+    modal(tipo, data){
+      switch(tipo){
+        case 'agregar': {
+          this.datos_modal = {
+            activo:true,
+            tipo:1,
+            titulo:"Agergar Registro"
+          };
+          
+          break;
+        }
+        case 'editar': {
+          this.datos_modal = {
+            activo:true,
+            tipo:2,
+            titulo:"Editar Registro"
+          };
+          break;
+        }
+      }
+    },
+    agregar_objeto(){
+      this.form.preguntas.push( {foto:'', tipo:''} );
+    },
+    guardar(){
+        let formData = new FormData();
+        formData.append("form", this.form);
+        Api.guardar(formData).then(({data}) => {
+          console.log(data);
+          this.$vs.notification({
+            square: true,
+            progress: 'auto',
+            color:'success',
+            title: 'Guardaro exitosamente',
+            text: 'Registro guardado exitosamente'
+          });
+        }).catch( error => {
+          console.log(error);
+        });
     }
   },
   mounted() {
     this.llamarpreguntas();
     this.llamarresultados();
+    this.usuario();
+    this.listar();
   },
   
 }

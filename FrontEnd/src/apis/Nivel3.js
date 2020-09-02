@@ -15,5 +15,22 @@ export default {
   },
   llamarresultados() {
     return Api().get("/nivel3/llamarresultados");
+  },
+  //administardor
+  listar() {
+    return Api().get("/nivel3/listar");
+  },
+  guardar(form) {
+    return Api().post("/nivel3/guardar", form);
+  },
+
+  agregar(form){
+    return Api().post("/nivel3/agregar", form)
+  },
+  editar(form){
+    return Api().post("/nivel3/editar", form)
+  },
+  eliminar(form){
+    return Api().delete("/nivel3/eliminar", form)
   }
 };
