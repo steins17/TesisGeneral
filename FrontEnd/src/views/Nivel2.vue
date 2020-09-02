@@ -334,12 +334,9 @@
                     type="file"
                     label="Respuesta imagen"
                     v-model="tr.foto"
-<<<<<<< HEAD
                     placeholder="Evan You"
                     ref="file" 
                     multiple="multiple"
-=======
->>>>>>> ebd5c7e94025cb824309f925ebb90e40803b57d0
                   />
                 </div>
             </div>
