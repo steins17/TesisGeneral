@@ -86,14 +86,14 @@ class Nivel4Controller extends Controller
         return [ 'subnivel1' => $subnivel1, 'subnivel2' => $subnivel2,];
     }
     function listar(){
-        $oraciones = DB::select("SELECT ps.*, sb.foto AS fotosb FROM subnivel sb INNER JOIN preguntas_subnivel ps ON sb.id=ps.id_subnivel WHERE sb.nivel = 4 AND sb.subnivel = 1");
-        $frases = DB::select("SELECT ps.*, sb.foto AS fotosb FROM subnivel sb INNER JOIN preguntas_subnivel ps ON sb.id=ps.id_subnivel WHERE sb.nivel = 4 AND sb.subnivel = 2");
+        $oraciones = DB::select("SELECT ps.*, sb.nombre AS nombresbs, sb.nombre FROM subnivel sb INNER JOIN preguntas_subnivel ps ON sb.id=ps.id_subnivel WHERE sb.nivel = 4 AND sb.subnivel = 1");
+        $frases = DB::select("SELECT ps.*, sb.nombre AS nombresbs, sb.nombre FROM subnivel sb INNER JOIN preguntas_subnivel ps ON sb.id=ps.id_subnivel WHERE sb.nivel = 4 AND sb.subnivel = 2");
         return [ 'oraciones' => $oraciones, 'frases' => $frases];
     }
     function guardar(Request $rq){
         return $rq;
-        $oraciones = DB::select("SELECT ps.*, sb.foto AS fotosb FROM subnivel sb INNER JOIN preguntas_subnivel ps ON sb.id=ps.id_subnivel WHERE sb.nivel = 4 AND sb.subnivel = 1");
-        $frases = DB::select("SELECT ps.*, sb.foto AS fotosb FROM subnivel sb INNER JOIN preguntas_subnivel ps ON sb.id=ps.id_subnivel WHERE sb.nivel = 4 AND sb.subnivel = 2");
+        $oraciones = DB::select("SELECT ps.*, sb.nombre AS nombresb FROM subnivel sb INNER JOIN preguntas_subnivel ps ON sb.id=ps.id_subnivel WHERE sb.nivel = 4 AND sb.subnivel = 1");
+        $frases = DB::select("SELECT ps.*, sb.nombre AS nombresb FROM subnivel sb INNER JOIN preguntas_subnivel ps ON sb.id=ps.id_subnivel WHERE sb.nivel = 4 AND sb.subnivel = 2");
         return [ 'oraciones' => $oraciones, 'frases' => $frases];
     }
 

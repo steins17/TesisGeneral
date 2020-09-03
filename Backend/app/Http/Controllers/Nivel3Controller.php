@@ -115,9 +115,9 @@ class Nivel3Controller extends Controller
         return [ 'subnivel1' => $subnivel1, 'subnivel2' => $subnivel2, 'subnivel3' => $subnivel3 ];
     }
     function listar(){
-        $letras = DB::select("SELECT ps.*, sb.foto AS fotosb FROM subnivel sb INNER JOIN preguntas_subnivel ps ON sb.id=ps.id_subnivel WHERE sb.nivel = 3 AND sb.subnivel = 1");
-        $silabas = DB::select("SELECT ps.*, sb.foto AS fotosb FROM subnivel sb INNER JOIN preguntas_subnivel ps ON sb.id=ps.id_subnivel WHERE sb.nivel = 3 AND sb.subnivel = 2");
-        $palabras = DB::select("SELECT ps.*, sb.foto AS fotosb FROM subnivel sb INNER JOIN preguntas_subnivel ps ON sb.id=ps.id_subnivel WHERE sb.nivel = 3 AND sb.subnivel = 3");
+        $letras = DB::select("SELECT ps.*, sb.foto AS fotosb, sb.audio FROM subnivel sb INNER JOIN preguntas_subnivel ps ON sb.id=ps.id_subnivel WHERE sb.nivel = 3 AND sb.subnivel = 1");
+        $silabas = DB::select("SELECT ps.*, sb.foto AS fotosb, sb.audio FROM subnivel sb INNER JOIN preguntas_subnivel ps ON sb.id=ps.id_subnivel WHERE sb.nivel = 3 AND sb.subnivel = 2");
+        $palabras = DB::select("SELECT ps.*, sb.foto AS fotosb, sb.audio FROM subnivel sb INNER JOIN preguntas_subnivel ps ON sb.id=ps.id_subnivel WHERE sb.nivel = 3 AND sb.subnivel = 3");
         return [ 'letras' => $letras, 'silabas' => $silabas, 'palabras' => $palabras ];
     }
     function guardar_l(Request $rq){

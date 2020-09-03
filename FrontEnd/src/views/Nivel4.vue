@@ -135,6 +135,7 @@
               <template #thead>
                 <vs-tr>
                   <vs-th> Pregunta </vs-th>
+                  <vs-th> Respuesta </vs-th>
                   <vs-th> Estado </vs-th>
                   <vs-th> Fecha Creado </vs-th>
                   <vs-th> Opciones </vs-th>
@@ -142,6 +143,7 @@
               </template>
               <template #tbody v-if="lista">
                 <vs-tr :key="i" v-for="(tr, i) in lista.oraciones" :data="tr">
+                  <vs-td> {{ tr.nombre }} </vs-td>
                   <vs-td> {{ tr.valor_campo }} </vs-td>
                   <vs-th v-if="tr.estado==1" style="color:green">Activo</vs-th><vs-th v-else style="color:red">Inactivo</vs-th>
                   <vs-td>{{ tr.updated_at | fecha }}</vs-td>
@@ -169,6 +171,7 @@
             <vs-table>
               <template #thead>
                 <vs-tr>
+                  <vs-th> Respuesta </vs-th>
                   <vs-th> Pregunta </vs-th>
                   <vs-th> Estado </vs-th>
                   <vs-th> Fecha Creado </vs-th>
@@ -177,6 +180,7 @@
               </template>
               <template #tbody v-if="lista">
                 <vs-tr :key="i" v-for="(tr, i) in lista.frases" :data="tr">
+                  <vs-td> {{ tr.nombre }} </vs-td>
                   <vs-td> {{ tr.valor_campo }} </vs-td>
                   <vs-th v-if="tr.estado==1" style="color:green">Activo</vs-th><vs-th v-else style="color:red">Inactivo</vs-th>
                   <vs-td>{{ tr.updated_at | fecha }}</vs-td>
@@ -228,13 +232,8 @@ export default {
         titulo:""
       },
       form:{
-        audio:'',
-        preguntas:[
-          {
-            foto:'',
-            tipo:'',
-          }
-        ]
+        pregunta:'',
+        respuesta:'',
       }
     }
   },
@@ -448,7 +447,7 @@ export default {
       }
     },
     agregar_objeto(){
-      this.form.preguntas.push( {foto:'', tipo:''} );
+      this.form.preguntas.push( {valor_campo:'',} );
     },
     guardar(){
         let formData = new FormData();
