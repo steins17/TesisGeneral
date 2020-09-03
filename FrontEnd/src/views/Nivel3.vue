@@ -30,7 +30,7 @@
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 col-md-6 p-0"  v-for="(tr,index) in letras.preguntas" :key="index">
             <div class="col-lg-12 mb-4"  >
               <div class="card m-3" style="border-radius: 50px">
-                <img :src="baseURL+'/archivos/imagenes/'+tr.foto" class="card-img-top" style="border-radius: 50px"  alt="Card image cap"/>
+                <img :src="'/archivos/imagenes/'+tr.foto" class="card-img-top" style="border-radius: 50px"  alt="Card image cap"/>
                 <div class="card-body">
                   <vs-row vs-justify="flex-end" style=";bottom: 10px;">
                     <vs-button color="dark" type="gradient" style="margin: 15px;border-radius:;width: 90px;height: 90px;" @click.prevent="sonido(tr.audio)">
@@ -188,7 +188,7 @@
                 <vs-td> {{ tr.audio }} </vs-td>
                 <vs-td> {{ tr.valor_campo }} </vs-td>
                 <vs-th v-if="tr.estado==1" style="color:green">Activo</vs-th><vs-th v-else style="color:red">Inactivo</vs-th>
-                <vs-td><img :src="baseURL+'/archivos/imagenes/'+tr.fotosb" style="width: 70px;height: 70px;"/></vs-td>
+                <vs-td><img :src="baseURL+'/archivos/imagenes/nivel3_ima/'+tr.fotosb" style="width: 70px;height: 70px;"/></vs-td>
                 <vs-td>{{ tr.updated_at | fecha }}</vs-td>
                 <vs-td>
                   <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
@@ -227,7 +227,7 @@
                   <vs-td> {{ tr.audio }} </vs-td>
                   <vs-td> {{ tr.valor_campo }} </vs-td>
                   <vs-th v-if="tr.estado==1" style="color:green">Activo</vs-th><vs-th v-else style="color:red">Inactivo</vs-th>
-                  <vs-td><img :src="baseURL+'/archivos/imagenes/'+tr.fotosb" style="width: 70px;height: 70px;"/></vs-td>
+                  <vs-td><img :src="baseURL+'/archivos/imagenes/nivel3_ima/'+tr.fotosb" style="width: 70px;height: 70px;"/></vs-td>
                   <vs-td>{{ tr.updated_at | fecha }}</vs-td>
                   <vs-td>
                     <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
@@ -266,7 +266,7 @@
                   <vs-td> {{ tr.audio }} </vs-td>
                   <vs-td> {{ tr.valor_campo }} </vs-td>
                   <vs-th v-if="tr.estado==1" style="color:green">Activo</vs-th><vs-th v-else style="color:red">Inactivo</vs-th>
-                  <vs-td><img :src="baseURL+'/archivos/imagenes/'+tr.fotosb" style="width: 70px;height: 70px;"/></vs-td>
+                  <vs-td><img :src="baseURL+'/archivos/imagenes/nivel3_ima/'+tr.fotosb" style="width: 70px;height: 70px;"/></vs-td>
                   <vs-td>{{ tr.updated_at | fecha }}</vs-td>
                   <vs-td>
                     <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
