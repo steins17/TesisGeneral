@@ -139,7 +139,7 @@ class Nivel3Controller extends Controller
         
         $ps = new Preguntas_subnivel();
         $ps->valor_campo = $rq->respuesta;
-        $ps->nivel = 2;
+        $ps->nivel = 3;
         $ps->estado = 1;
         $ps->id_subnivel = $id;
         $ps->usuario_crea = $user;
@@ -167,7 +167,7 @@ class Nivel3Controller extends Controller
         
         $ps = new Preguntas_subnivel();
         $ps->valor_campo = $rq->respuesta;
-        $ps->nivel = 2;
+        $ps->nivel = 3;
         $ps->estado = 1;
         $ps->id_subnivel = $id;
         $ps->usuario_crea = $user;
@@ -195,7 +195,7 @@ class Nivel3Controller extends Controller
         
         $ps = new Preguntas_subnivel();
         $ps->valor_campo = $rq->respuesta;
-        $ps->nivel = 2;
+        $ps->nivel = 3;
         $ps->estado = 1;
         $ps->id_subnivel = $id;
         $ps->usuario_crea = $user;
