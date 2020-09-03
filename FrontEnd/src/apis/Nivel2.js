@@ -23,13 +23,16 @@ export default {
   guardar(form) {
     return Api().post("/nivel2/guardar", form);
   },
+  guardar_oraciones(form) {
+    return Api().post("/nivel2/guardar_oraciones", form);
+  },
   agregar(form){
-    return Api().post("/nivel2/agregar", form)
+    return Api().post("/nivel2/agregar", form);
   },
   editar(form){
-    return Api().post("/nivel2/editar", form)
+    return Api().post("/nivel2/editar", form);
   },
   eliminar(form){
-    return Api().delete("/nivel2/eliminar", form)
+    return Api().delete("/nivel2/eliminar", form);
   }
 };

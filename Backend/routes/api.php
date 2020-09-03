@@ -44,6 +44,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/nivel2/listar', 'Nivel2Controller@listar');
     Route::post('/nivel2/guardar', 'Nivel2Controller@guardar');
+    Route::post('/nivel2/guardar_oraciones', 'Nivel2Controller@guardar_oraciones');
     
     //rutas del nivel 3
     Route::get('/nivel3/llamardatos', 'Nivel3Controller@llamardatos');
@@ -69,5 +70,22 @@ Route::get('/lang/{lang}', 'Controller@set_language')->name('set_language');
 //visualizar imagenes almacenados en el servidor
 Route::get('/perfil/imagenver/{imagen}', function ($imagen) {
     $filePath = base_path().'/imagenes/'.$imagen;
+    return File::get($filePath);
+});
+
+Route::get('/archivos/imagenes/ima_ejer/{imagen}', function ($imagen) {
+    $filePath = base_path().'/imagenes/ima_ejer/'.$imagen;
+    return File::get($filePath);
+});
+Route::get('/archivos/imagenes/ejercicios/{imagen}', function ($imagen) {
+    $filePath = base_path().'/imagenes/ejercicios/'.$imagen;
+    return File::get($filePath);
+});
+Route::get('/archivos/imagenes/perfiles/{imagen}', function ($imagen) {
+    $filePath = base_path().'/imagenes/perfiles/'.$imagen;
+    return File::get($filePath);
+});
+Route::get('/archivos/imagenes/silabas/{imagen}', function ($imagen) {
+    $filePath = base_path().'/imagenes/silabas/'.$imagen;
     return File::get($filePath);
 });

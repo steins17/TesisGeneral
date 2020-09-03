@@ -174,7 +174,7 @@
           <div class="col-lg-12 mb-3">
             <vs-row justify="flex-end">
               <vs-col w="1">
-                <vs-button class="w-100" @click="modal('agregar')">Agregar</vs-button>
+                <vs-button class="w-100" @click="modal('agregar',null,1)">Agregar</vs-button>
               </vs-col>
             </vs-row>
           </div>
@@ -202,7 +202,7 @@
                   <vs-td>
                     <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
                     <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
-                    <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar', tr)"></i>
+                    <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar',tr,1)"></i>
                     <i class="fas fa-trash ml-2 pointer eventsalto"></i>
                   </vs-td>
                 </vs-tr>
@@ -215,7 +215,7 @@
           <div class="col-lg-12 mb-3">
             <vs-row justify="flex-end">
               <vs-col w="1">
-                <vs-button class="w-100" @click="modal('agregar')">Agregar</vs-button>
+                <vs-button class="w-100" @click="modal('agregar',null,2)">Agregar</vs-button>
               </vs-col>
             </vs-row>
           </div>
@@ -243,7 +243,7 @@
                   <vs-td>
                     <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
                     <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
-                    <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar', tr)"></i>
+                    <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar',tr,2)"></i>
                     <i class="fas fa-trash ml-2 pointer eventsalto"></i>
                   </vs-td>
                 </vs-tr>
@@ -256,7 +256,7 @@
           <div class="col-lg-12 mb-3">
             <vs-row justify="flex-end">
               <vs-col w="1">
-                <vs-button class="w-100" @click="modal('agregar')">Agregar</vs-button>
+                <vs-button class="w-100" @click="modal('agregar',null,3)">Agregar</vs-button>
               </vs-col>
             </vs-row>
           </div>
@@ -275,12 +275,12 @@
                 <vs-tr :key="i" v-for="(tr, i) in lista.oraciones" :data="tr">
                   <vs-td> {{ tr.valor_campo }} </vs-td>
                   <vs-th v-if="tr.estado==1" style="color:green">Activo</vs-th><vs-th v-else style="color:red">Inactivo</vs-th>
-                  <vs-td><img :src="'archivos/imagenes/ima_ejer/'+tr.fotosb" style="width: 70px;height: 70px;"/></vs-td>
+                  <vs-td><img :src="baseURL+'/archivos/imagenes/ima_ejer/'+tr.fotosb" style="width: 70px;height: 70px;"/></vs-td>
                   <vs-td>{{ tr.updated_at | fecha }}</vs-td>
                   <vs-td>
                     <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
                     <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
-                    <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar', tr)"></i>
+                    <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar',tr,3)"></i>
                     <i class="fas fa-trash ml-2 pointer eventsalto"></i>
                   </vs-td>
                 </vs-tr>
@@ -297,50 +297,30 @@
             {{datos_modal.titulo}}
           </h4>
         </template>
-        <div class="con-form">
+        <div class="con-form" v-if="datos_modal.sb!=3">
           <div class="row mb-4">
             <div class="col-lg-4">
                 <div class="center content-inputs">
                   <vs-input
-                    label="Nombre Pregunta"
+                    label="Palabra audio"
                     v-model="form.nombre"
-                    placeholder="Pregunta oraciones"
-                  />
-                </div>
-            </div>
-            <div class="col-lg-4 mt-1">
-                <div class="center content-inputs">
-                  <vs-input
-                    label="Audio Pregunta"
-                    v-model="form.audio"
                     placeholder="Pregunta"
-                  />
-                </div>
-            </div>
-            <div class="col-lg-4 mt-1">
-                <div class="center content-inputs">
-                  <vs-input
-                    label="Link Pregunta"
-                    v-model="form.audio"
-                    placeholder="archvo.(png,jpg)"
                   />
                 </div>
             </div>
           </div>
           <div class="row" v-for="(tr, index) in form.preguntas" :key="index">
-            <div class="col-lg-4">
+            <div class="col-lg-8">
                 <div class="center content-inputs">
                   <vs-input
                     type="file"
                     label="Respuesta imagen"
                     v-model="tr.foto"
-                    placeholder="Evan You"
-                    ref="file" 
-                    multiple="multiple"
+                    ref="file"
                   />
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-4">
                 <div class="center content-inputs mt-2">
                   <vs-select label="Tipo" v-model="tr.tipo">
                     <vs-option value="1" label="Correcto">Correcto</vs-option>
@@ -348,28 +328,66 @@
                   </vs-select>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <!--<div class="col-lg-1 mt-3">
+               <i class="fas fa-plus pointer" @click="agregar_objeto()"></i>
+            </div>-->
+          </div>
+        </div>
+        <div class="con-form" v-else>
+          <div class="row mb-4">
+            <div class="col-lg-12 mb-3">
                 <div class="center content-inputs">
                   <vs-input
-                    label="Campo Respuesta"
-                    v-model="tr.valor_campo"
-                    placeholder="Respuesta oraciones"
+                    label="Palabra Pregunta"
+                    v-model="form_oraciones.pregunta"
+                    placeholder="Pregunta"
                   />
                 </div>
             </div>
-            <div class="col-lg-1 mt-3">
-               <i class="fas fa-plus pointer" @click="agregar_objeto()"></i>
+            <div class="col-lg-12 mb-3">
+                <div class="center content-inputs">
+                  <vs-input
+                    label="Palabra Respuesta"
+                    v-model="form_oraciones.respuesta"
+                    placeholder="Respuesta"
+                  />
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="center content-inputs">
+                  <vs-input
+                    type="file"
+                    @change="recuperarimagenoraciones"
+                    label="Respuesta imagen"
+                    ref="file"
+                  />
+                </div>
             </div>
           </div>
         </div>
-
         <template #footer>
-          <div class="footer-dialog">
-            <vs-button block @click="guardar()" v-if="datos_modal.tipo==1">
+          <div class="footer-dialog" v-if="datos_modal.sb==1">
+            <vs-button block @click="guardar_letras()" v-if="datos_modal.tipo==1">
               Ageragar
             </vs-button>
             <vs-button block @click="editar()" v-else>
               Editar
+            </vs-button>
+          </div>
+          <div class="footer-dialog" v-else-if="datos_modal.sb==2">
+            <vs-button block @click="guardar_letras()" v-if="datos_modal.tipo==1">
+              Ageragar1
+            </vs-button>
+            <vs-button block @click="editar()" v-else>
+              Editar1
+            </vs-button>
+          </div>
+          <div class="footer-dialog" v-else>
+            <vs-button block @click="guardar_oraciones()" v-if="datos_modal.tipo==1">
+              Ageragar2
+            </vs-button>
+            <vs-button block @click="editar()" v-else>
+              Editar2
             </vs-button>
           </div>
         </template>
@@ -386,6 +404,7 @@ moment.locale("es");
 export default {
   data() {
     return {
+      baseURL: "http://localhost:8000/api",
       letras:{
         preguntas:[],
       },
@@ -413,7 +432,8 @@ export default {
       datos_modal:{
         activo:false,
         tipo:0,
-        titulo:""
+        titulo:"",
+        sb:null,
       },
       form:{
         nombre:'',
@@ -422,10 +442,20 @@ export default {
         preguntas:[
           {
             foto:'',
-            tipo:'',
+            tipo:1,
+            valor_campo:''
+          },
+          {
+            foto:'',
+            tipo:1,
             valor_campo:''
           }
         ]
+      },
+      form_oraciones:{
+        pregunta:'',
+        respuesta:'',
+        imagen:'',
       }
     };
   },
@@ -637,13 +667,14 @@ export default {
         console.log(error);
       });
     },
-    modal(tipo, data){
+    modal(tipo, data, sb){
       switch(tipo){
         case 'agregar': {
           this.datos_modal = {
             activo:true,
             tipo:1,
-            titulo:"Agergar Registro"
+            titulo:"Agergar Registro",
+            sb:sb
           };
           
           break;
@@ -652,16 +683,17 @@ export default {
           this.datos_modal = {
             activo:true,
             tipo:2,
-            titulo:"Editar Registro"
+            titulo:"Editar Registro",
+            sb:sb
           };
           break;
         }
       }
     },
     agregar_objeto(){
-      this.form.preguntas.push( {foto:'', tipo:''} );
+      this.form.preguntas.push( {foto:'', tipo:1} );
     },
-    guardar(){
+    guardar_letras(){
         let formData = new FormData();
         formData.append("form", this.form.audio);
         for( var i = 0; i < this.form.preguntas.length; i++ ){
@@ -680,6 +712,28 @@ export default {
         }).catch( error => {
           console.log(error);
         });
+    },
+    guardar_oraciones(){
+        let formData = new FormData();
+        formData.append("pregunta", this.form_oraciones.pregunta);
+        formData.append("respuesta", this.form_oraciones.respuesta);
+        formData.append("imagen", this.form_oraciones.imagen);
+        Api.guardar_oraciones(formData).then(({data}) => {
+          this.$vs.notification({
+            square: true,
+            progress: 'auto',
+            color:'success',
+            title: 'Guardaro exitosamente',
+            text: 'Registro guardado exitosamente'
+          });
+          this.listar();
+          this.datos_modal.activo = false;
+        }).catch( error => {
+          console.log(error);
+        });
+    },
+    recuperarimagenoraciones(event){
+      this.form_oraciones.imagen = event.target.files[0];
     },
     eliminar(data){
       this.data.delete();
