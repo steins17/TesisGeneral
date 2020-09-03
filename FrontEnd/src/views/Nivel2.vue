@@ -196,7 +196,7 @@
                   <vs-td> {{ tr.audiosb }} </vs-td>
                   <vs-th v-if="tr.tipo==1">Correcto</vs-th><vs-th v-else>Incorrecto</vs-th>
                   <vs-th v-if="tr.estado==1" style="color:green">Activo</vs-th><vs-th v-else style="color:red">Inactivo</vs-th>
-                  <vs-td><img :src="'archivos/imagenes/ejercicios/'+tr.foto" style="width: 70px;height: 70px;"/></vs-td>
+                  <vs-td><img :src="baseURL+'/archivos/imagenes/ejercicios/'+tr.foto" style="width: 70px;height: 70px;"/></vs-td>
                   <vs-td>{{tr.foto}}</vs-td>
                   <vs-td>{{ tr.updated_at | fecha }}</vs-td>
                   <vs-td>
@@ -237,7 +237,7 @@
                   <vs-td> {{ tr.audiosb }} </vs-td>
                   <vs-th v-if="tr.tipo==1">Correcto</vs-th><vs-th v-else>Incorrecto</vs-th>
                   <vs-th v-if="tr.estado==1" style="color:green">Activo</vs-th><vs-th v-else style="color:red">Inactivo</vs-th>
-                  <vs-td><img :src="'archivos/imagenes/silabas/'+tr.foto" style="width: 70px;height: 70px;"/></vs-td>
+                  <vs-td><img :src="baseURL+'/archivos/imagenes/silabas/'+tr.foto" style="width: 70px;height: 70px;"/></vs-td>
                   <vs-td>{{tr.foto}}</vs-td>
                   <vs-td>{{ tr.updated_at | fecha }}</vs-td>
                   <vs-td>
@@ -303,7 +303,7 @@
                 <div class="center content-inputs">
                   <vs-input
                     label="Palabra audio"
-                    v-model="form.nombre"
+                    v-model="form.respuesta"
                     placeholder="Pregunta"
                   />
                 </div>
@@ -315,7 +315,7 @@
                   <vs-input
                     type="file"
                     label="Respuesta imagen"
-                    v-model="tr.foto"
+                    @change="recuperarimagenletras"
                     ref="file"
                   />
                 </div>
@@ -375,7 +375,7 @@
             </vs-button>
           </div>
           <div class="footer-dialog" v-else-if="datos_modal.sb==2">
-            <vs-button block @click="guardar_letras()" v-if="datos_modal.tipo==1">
+            <vs-button block @click="guardar_silabas()" v-if="datos_modal.tipo==1">
               Ageragar1
             </vs-button>
             <vs-button block @click="editar()" v-else>
@@ -447,7 +447,7 @@ export default {
           },
           {
             foto:'',
-            tipo:1,
+            tipo:0,
             valor_campo:''
           }
         ]
@@ -709,6 +709,30 @@ export default {
             title: 'Guardaro exitosamente',
             text: 'Registro guardado exitosamente'
           });
+          this.listar();
+          this.datos_modal.activo = false;
+        }).catch( error => {
+          console.log(error);
+        });
+    },
+    guardar_silabas(){
+        let formData = new FormData();
+        formData.append("form", this.form.audio);
+        for( var i = 0; i < this.form.preguntas.length; i++ ){
+          formData.append("foto["+i+"]", this.form.preguntas[i].foto);
+          formData.append("tipo["+i+"]", this.form.preguntas[i].tipo);
+        }
+        Api.guardar_s(formData, {headers: { 'Content-Type': 'multipart/form-data'},} ).then(({data}) => {
+          console.log(data);
+          this.$vs.notification({
+            square: true,
+            progress: 'auto',
+            color:'success',
+            title: 'Guardaro exitosamente',
+            text: 'Registro guardado exitosamente'
+          });
+          this.listar();
+          this.datos_modal.activo = false;
         }).catch( error => {
           console.log(error);
         });
@@ -731,6 +755,9 @@ export default {
         }).catch( error => {
           console.log(error);
         });
+    },
+    recuperarimagenletras(event){
+      this.form.imagen = event.target.files[0];
     },
     recuperarimagenoraciones(event){
       this.form_oraciones.imagen = event.target.files[0];

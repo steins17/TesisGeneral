@@ -120,30 +120,89 @@ class Nivel3Controller extends Controller
         $palabras = DB::select("SELECT ps.*, sb.foto AS fotosb FROM subnivel sb INNER JOIN preguntas_subnivel ps ON sb.id=ps.id_subnivel WHERE sb.nivel = 3 AND sb.subnivel = 3");
         return [ 'letras' => $letras, 'silabas' => $silabas, 'palabras' => $palabras ];
     }
-    function guardar(Request $rq){
-        return $rq;
-        $letras = DB::select("SELECT ps.*, sb.foto AS fotosb FROM subnivel sb INNER JOIN preguntas_subnivel ps ON sb.id=ps.id_subnivel WHERE sb.nivel = 3 AND sb.subnivel = 1");
-        $silabas = DB::select("SELECT ps.*, sb.foto AS fotosb FROM subnivel sb INNER JOIN preguntas_subnivel ps ON sb.id=ps.id_subnivel WHERE sb.nivel = 3 AND sb.subnivel = 2");
-        $palabras = DB::select("SELECT ps.*, sb.foto AS fotosb FROM subnivel sb INNER JOIN preguntas_subnivel ps ON sb.id=ps.id_subnivel WHERE sb.nivel = 3 AND sb.subnivel = 3");
-        return [ 'letras' => $letras, 'silabas' => $silabas, 'palabras' => $palabras ];
-    }
-
-    function agregar(Request $rq){
+    function guardar_l(Request $rq){
         $user = Auth::user()->id;
-        $datos = new Subnivel();
-        $datos->nombre=$rq->nombre;
-        $datos->foto=$rq->foto;
-        $datos->audio=$rq->audio;
-        $datos->nivel=$rq->nivel;
-        $datos->subnivel=$rq->subnivel;
 
-        $datos = new Preguntas_subnivel();
-        $datos->foto=$rq->foto;
-        $datos->tipo=$rq->tipo;
-        $datos->valor_campo=$rq->valor_campo;
-        $datos->nivel=$rq->nivel;
-        $datos->id_subnivel=$rq->id_subnivel;
+        $file_imagen = $rq->file('imagen');
+        $destino = base_path().'/imagenes/nivel3_ima';
+        $nombre_imagen = $file_imagen->getClientOriginalName();
+
+        $datos = new Subnivel();
+        $datos->nombre = $rq->pregunta;
+        $datos->nivel = 3;
+        $datos->subnivel = 1;
+        $datos->usuario_crea = $user;
+        $datos->foto = $nombre_imagen;
         $datos->save();
+
+        $id = $datos->id;
+        
+        $ps = new Preguntas_subnivel();
+        $ps->valor_campo = $rq->respuesta;
+        $ps->nivel = 2;
+        $ps->estado = 1;
+        $ps->id_subnivel = $id;
+        $ps->usuario_crea = $user;
+        $ps->save();
+
+        $rq->file('imagen')->move($destino, $nombre_imagen);
+
+    }
+    function guardar_s(Request $rq){
+        $user = Auth::user()->id;
+
+        $file_imagen = $rq->file('imagen');
+        $destino = base_path().'/imagenes/nivel3_ima';
+        $nombre_imagen = $file_imagen->getClientOriginalName();
+
+        $datos = new Subnivel();
+        $datos->nombre = $rq->pregunta;
+        $datos->nivel = 3;
+        $datos->subnivel = 2;
+        $datos->usuario_crea = $user;
+        $datos->foto = $nombre_imagen;
+        $datos->save();
+
+        $id = $datos->id;
+        
+        $ps = new Preguntas_subnivel();
+        $ps->valor_campo = $rq->respuesta;
+        $ps->nivel = 2;
+        $ps->estado = 1;
+        $ps->id_subnivel = $id;
+        $ps->usuario_crea = $user;
+        $ps->save();
+
+        $rq->file('imagen')->move($destino, $nombre_imagen);
+
+    }
+    function guardar_p(Request $rq){
+        $user = Auth::user()->id;
+
+        $file_imagen = $rq->file('imagen');
+        $destino = base_path().'/imagenes/nivel3_ima';
+        $nombre_imagen = $file_imagen->getClientOriginalName();
+
+        $datos = new Subnivel();
+        $datos->nombre = $rq->pregunta;
+        $datos->nivel = 3;
+        $datos->subnivel = 3;
+        $datos->usuario_crea = $user;
+        $datos->foto = $nombre_imagen;
+        $datos->save();
+
+        $id = $datos->id;
+        
+        $ps = new Preguntas_subnivel();
+        $ps->valor_campo = $rq->respuesta;
+        $ps->nivel = 2;
+        $ps->estado = 1;
+        $ps->id_subnivel = $id;
+        $ps->usuario_crea = $user;
+        $ps->save();
+
+        $rq->file('imagen')->move($destino, $nombre_imagen);
+
     }
     function editar(Request $rq){
         $user = Auth::user()->id;

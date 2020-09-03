@@ -30,7 +30,7 @@
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 col-md-6 p-0"  v-for="(tr,index) in letras.preguntas" :key="index">
             <div class="col-lg-12 mb-4"  >
               <div class="card m-3" style="border-radius: 50px">
-                <img :src="'archivos/imagenes/'+tr.foto" class="card-img-top" style="border-radius: 50px"  alt="Card image cap"/>
+                <img :src="baseURL+'/archivos/imagenes/'+tr.foto" class="card-img-top" style="border-radius: 50px"  alt="Card image cap"/>
                 <div class="card-body">
                   <vs-row vs-justify="flex-end" style=";bottom: 10px;">
                     <vs-button color="dark" type="gradient" style="margin: 15px;border-radius:;width: 90px;height: 90px;" @click.prevent="sonido(tr.audio)">
@@ -167,7 +167,7 @@
         <div class="col-lg-12 mb-3">
           <vs-row justify="flex-end">
             <vs-col w="1">
-              <vs-button class="w-100" @click="modal('agregar')">Agregar</vs-button>
+              <vs-button class="w-100" @click="modal('agregar',null,1)">Agregar</vs-button>
             </vs-col>
           </vs-row>
         </div>
@@ -186,12 +186,12 @@
               <vs-tr :key="i" v-for="(tr, i) in lista.letras" :data="tr">
                 <vs-td> {{ tr.valor_campo }} </vs-td>
                 <vs-th v-if="tr.estado==1" style="color:green">Activo</vs-th><vs-th v-else style="color:red">Inactivo</vs-th>
-                <vs-td><img :src="'archivos/imagenes/'+tr.fotosb" style="width: 70px;height: 70px;"/></vs-td>
+                <vs-td><img :src="baseURL+'/archivos/imagenes/'+tr.fotosb" style="width: 70px;height: 70px;"/></vs-td>
                 <vs-td>{{ tr.updated_at | fecha }}</vs-td>
                 <vs-td>
                   <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
                   <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
-                  <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar', tr)"></i>
+                  <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar',tr,1)"></i>
                   <i class="fas fa-trash ml-2 pointer eventsalto"></i>
                 </vs-td>
               </vs-tr>
@@ -204,7 +204,7 @@
        <div class="col-lg-12 mb-3">
             <vs-row justify="flex-end">
               <vs-col w="1">
-                <vs-button class="w-100" @click="modal('agregar')">Agregar</vs-button>
+                <vs-button class="w-100" @click="modal('agregar',null,2)">Agregar</vs-button>
               </vs-col>
             </vs-row>
           </div>
@@ -223,12 +223,12 @@
                 <vs-tr :key="i" v-for="(tr, i) in lista.silabas" :data="tr">
                   <vs-td> {{ tr.valor_campo }} </vs-td>
                   <vs-th v-if="tr.estado==1" style="color:green">Activo</vs-th><vs-th v-else style="color:red">Inactivo</vs-th>
-                  <vs-td><img :src="'archivos/imagenes/'+tr.fotosb" style="width: 70px;height: 70px;"/></vs-td>
+                  <vs-td><img :src="baseURL+'/archivos/imagenes/'+tr.fotosb" style="width: 70px;height: 70px;"/></vs-td>
                   <vs-td>{{ tr.updated_at | fecha }}</vs-td>
                   <vs-td>
                     <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
                     <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
-                    <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar', tr)"></i>
+                    <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar',tr,2)"></i>
                     <i class="fas fa-trash ml-2 pointer eventsalto"></i>
                   </vs-td>
                 </vs-tr>
@@ -241,7 +241,7 @@
         <div class="col-lg-12 mb-3">
             <vs-row justify="flex-end">
               <vs-col w="1">
-                <vs-button class="w-100" @click="modal('agregar')">Agregar</vs-button>
+                <vs-button class="w-100" @click="modal('agregar',null,3)">Agregar</vs-button>
               </vs-col>
             </vs-row>
           </div>
@@ -260,12 +260,12 @@
                 <vs-tr :key="i" v-for="(tr, i) in lista.palabras" :data="tr">
                   <vs-td> {{ tr.valor_campo }} </vs-td>
                   <vs-th v-if="tr.estado==1" style="color:green">Activo</vs-th><vs-th v-else style="color:red">Inactivo</vs-th>
-                  <vs-td><img :src="'archivos/imagenes/'+tr.fotosb" style="width: 70px;height: 70px;"/></vs-td>
+                  <vs-td><img :src="baseURL+'/archivos/imagenes/'+tr.fotosb" style="width: 70px;height: 70px;"/></vs-td>
                   <vs-td>{{ tr.updated_at | fecha }}</vs-td>
                   <vs-td>
                     <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
                     <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
-                    <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar', tr)"></i>
+                    <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar',tr,3)"></i>
                     <i class="fas fa-trash ml-2 pointer eventsalto"></i>
                   </vs-td>
                 </vs-tr>
@@ -283,51 +283,62 @@
     </template>
     <div class="con-form">
       <div class="row mb-4">
+        <div class="col-lg-12 mb-3">
+            <div class="center content-inputs">
+              <vs-input
+                label="Palabra Pregunta"
+                v-model="form.pregunta"
+                placeholder="Pregunta"
+              />
+            </div>
+        </div>
+        <div class="col-lg-12 mb-3">
+            <div class="center content-inputs">
+              <vs-input
+                label="Palabra Respuesta"
+                v-model="form.respuesta"
+                placeholder="Respuesta"
+              />
+            </div>
+        </div>
         <div class="col-lg-12">
             <div class="center content-inputs">
               <vs-input
-                label="Audio Pregunta"
-                v-model="form.audio"
-                placeholder="Evan You"
-              />
-            </div>
-        </div>
-      </div>
-      <div class="row" v-for="(tr, index) in form.preguntas" :key="index">
-        <div class="col-lg-8">
-            <div class="center content-inputs">
-              <vs-input
                 type="file"
-                label="Audio Pregunta"
-                v-model="tr.foto"
-                placeholder="Evan You"
+                @change="recuperarimagen"
+                label="Respuesta imagen"
+                ref="file"
               />
             </div>
-        </div>
-        <div class="col-lg-3">
-            <div class="center content-inputs mt-2">
-              <vs-select label="Tipo" v-model="tr.tipo">
-                <vs-option value="1" label="Correcto">Correcto</vs-option>
-                <vs-option value="0" label="Incorrecto">Incorrecto</vs-option>
-              </vs-select>
-            </div>
-        </div>
-        <div class="col-lg-1 mt-3">
-          <i class="fas fa-plus pointer" @click="agregar_objeto()"></i>
         </div>
       </div>
     </div>
-
     <template #footer>
-      <div class="footer-dialog">
-        <vs-button block @click="guardar()" v-if="datos_modal.tipo==1">
-          Ageragar
-        </vs-button>
-        <vs-button block @click="editar()" v-else>
-          Editar
-        </vs-button>
-      </div>
-    </template>
+          <div class="footer-dialog" v-if="datos_modal.sb==1">
+            <vs-button block @click="guardar_l()" v-if="datos_modal.tipo==1">
+              Ageragar
+            </vs-button>
+            <vs-button block @click="editar()" v-else>
+              Editar
+            </vs-button>
+          </div>
+          <div class="footer-dialog" v-else-if="datos_modal.sb==2">
+            <vs-button block @click="guardar_s()" v-if="datos_modal.tipo==1">
+              Ageragar1
+            </vs-button>
+            <vs-button block @click="editar()" v-else>
+              Editar1
+            </vs-button>
+          </div>
+          <div class="footer-dialog" v-else>
+            <vs-button block @click="guardar_p()" v-if="datos_modal.tipo==1">
+              Ageragar2
+            </vs-button>
+            <vs-button block @click="editar()" v-else>
+              Editar2
+            </vs-button>
+          </div>
+        </template>
   </vs-dialog>
 </div>
 
@@ -340,6 +351,7 @@ moment.locale("es");
 export default {
   data(){
     return{
+      baseURL: "http://localhost:8000/api",
       letras:{
         preguntas:[],
       },
@@ -366,19 +378,13 @@ export default {
       datos_modal:{
         activo:false,
         tipo:0,
-        titulo:""
+        titulo:"",
+        sb:null,
       },
       form:{
-        nombre:'',
-        audio:'',
-        foto:'',
-        preguntas:[
-          {
-            foto:'',
-            tipo:'',
-            valor_campo:''
-          }
-        ]
+        pregunta:'',
+        respuesta:'',
+        imagen:'',
       }
     }
   },
@@ -584,6 +590,29 @@ filters: {
         console.log(error);
       });
     },
+    modal(tipo, data, sb){
+      switch(tipo){
+        case 'agregar': {
+          this.datos_modal = {
+            activo:true,
+            tipo:1,
+            titulo:"Agergar Registro",
+            sb:sb
+          };
+          
+          break;
+        }
+        case 'editar': {
+          this.datos_modal = {
+            activo:true,
+            tipo:2,
+            titulo:"Editar Registro",
+            sb:sb
+          };
+          break;
+        }
+      }
+    },
     modal(tipo, data){
       switch(tipo){
         case 'agregar': {
@@ -608,11 +637,12 @@ filters: {
     agregar_objeto(){
       this.form.preguntas.push( {foto:'', tipo:''} );
     },
-    guardar(){
+    guardar_l(){
         let formData = new FormData();
-        formData.append("form", this.form);
-        Api.guardar(formData).then(({data}) => {
-          console.log(data);
+        formData.append("pregunta", this.form.pregunta);
+        formData.append("respuesta", this.form.respuesta);
+        formData.append("imagen", this.form.imagen);
+        Api.guardar_l(formData).then(({data}) => {
           this.$vs.notification({
             square: true,
             progress: 'auto',
@@ -620,10 +650,53 @@ filters: {
             title: 'Guardaro exitosamente',
             text: 'Registro guardado exitosamente'
           });
+          this.listar();
+          this.datos_modal.activo = false;
         }).catch( error => {
           console.log(error);
         });
-    }
+    },
+    guardar_s(){
+        let formData = new FormData();
+        formData.append("pregunta", this.form.pregunta);
+        formData.append("respuesta", this.form.respuesta);
+        formData.append("imagen", this.form.imagen);
+        Api.guardar_s(formData).then(({data}) => {
+          this.$vs.notification({
+            square: true,
+            progress: 'auto',
+            color:'success',
+            title: 'Guardaro exitosamente',
+            text: 'Registro guardado exitosamente'
+          });
+          this.listar();
+          this.datos_modal.activo = false;
+        }).catch( error => {
+          console.log(error);
+        });
+    },
+    guardar_p(){
+        let formData = new FormData();
+        formData.append("pregunta", this.form.pregunta);
+        formData.append("respuesta", this.form.respuesta);
+        formData.append("imagen", this.form.imagen);
+        Api.guardar_p(formData).then(({data}) => {
+          this.$vs.notification({
+            square: true,
+            progress: 'auto',
+            color:'success',
+            title: 'Guardaro exitosamente',
+            text: 'Registro guardado exitosamente'
+          });
+          this.listar();
+          this.datos_modal.activo = false;
+        }).catch( error => {
+          console.log(error);
+        });
+    },
+    recuperarimagen(event){
+      this.form.imagen = event.target.files[0];
+    },
   },
   mounted() {
     this.llamarpreguntas();

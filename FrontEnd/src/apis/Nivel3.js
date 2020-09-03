@@ -20,13 +20,17 @@ export default {
   listar() {
     return Api().get("/nivel3/listar");
   },
-  guardar(form) {
-    return Api().post("/nivel3/guardar", form);
+  guardar_l(form) {
+    return Api().post("/nivel3/guardar_l", form);
+  },
+  guardar_s(form) {
+    return Api().post("/nivel3/guardar_s", form);
+  },
+  guardar_p(form) {
+    return Api().post("/nivel3/guardar_p", form);
   },
 
-  agregar(form){
-    return Api().post("/nivel3/agregar", form)
-  },
+
   editar(form){
     return Api().post("/nivel3/editar", form)
   },

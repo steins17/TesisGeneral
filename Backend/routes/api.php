@@ -38,12 +38,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/nivel2/oraciones/respuesta', 'Nivel2Controller@oraciones_respuesta');
     Route::get('/nivel2/llamarresultados', 'Nivel2Controller@llamarresultados');
     
-    Route::post('nivel2/agregar', 'Nivel2Controller@agregar');
     Route::post('nivel2/editar', 'Nivel2Controller@editar');
     Route::delete('nivel2/eliminar', 'Nivel2Controller@eliminar');
 
     Route::get('/nivel2/listar', 'Nivel2Controller@listar');
     Route::post('/nivel2/guardar', 'Nivel2Controller@guardar');
+    Route::post('/nivel2/guardar_s', 'Nivel2Controller@guardar_s');
     Route::post('/nivel2/guardar_oraciones', 'Nivel2Controller@guardar_oraciones');
     
     //rutas del nivel 3
@@ -54,7 +54,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/nivel3/llamarresultados', 'Nivel3Controller@llamarresultados');
 
     Route::get('/nivel3/listar', 'Nivel3Controller@listar');
-    Route::post('/nivel3/guardar', 'Nivel3Controller@guardar');
+    Route::post('/nivel3/guardar_l', 'Nivel3Controller@guardar_l');
+    Route::post('/nivel3/guardar_s', 'Nivel3Controller@guardar_s');
+    Route::post('/nivel3/guardar_p', 'Nivel3Controller@guardar_p');
 
     //rutas del nivel 4
     Route::get('/nivel4/llamardatos', 'Nivel4Controller@llamardatos');

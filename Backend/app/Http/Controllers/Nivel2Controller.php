@@ -133,6 +133,35 @@ class Nivel2Controller extends Controller
             $ps->save();
         }
     }
+    function guardar_s(Request $rq){
+        $user = Auth::user()->id;
+
+        $datos = new Subnivel();
+        $datos->audio = $rq->audio;
+        $datos->nivel = 2;
+        $datos->subnivel = 2;
+        $datos->usuario_crea = $user;
+        $datos->save();
+
+        $id = $datos->id;
+
+        //$files = $rq->file('foto');
+        for($i=0; $i<2; $i++){
+            $nombre = $id.$i;
+            /*$nombre = $files[$i]->getClientOriginalName();
+            $destino = 'uploads';
+            $files[$i]->move($destino, $nombre);*/
+            
+            $ps = new Preguntas_subnivel();
+            $ps->foto = $nombre;
+            $ps->tipo = $rq->tipo[$i];
+            $ps->nivel = 2;
+            $ps->estado = 1;
+            $ps->id_subnivel = $id;
+            $ps->usuario_crea = $user;
+            $ps->save();
+        }
+    }
     function guardar_oraciones(Request $rq){
         $user = Auth::user()->id;
 
@@ -159,23 +188,6 @@ class Nivel2Controller extends Controller
         $ps->save();
 
         $rq->file('imagen')->move($destino, $nombre_imagen);
-    }
-    function agregar(Request $rq){
-        $user = Auth::user()->id;
-        $datos = new Subnivel();
-        $datos->nombre=$rq->nombre;
-        $datos->foto=$rq->foto;
-        $datos->audio=$rq->audio;
-        $datos->nivel=$rq->nivel;
-        $datos->subnivel=$rq->subnivel;
-
-        $datos = new Preguntas_subnivel();
-        $datos->foto=$rq->foto;
-        $datos->tipo=$rq->tipo;
-        $datos->valor_campo=$rq->valor_campo;
-        $datos->nivel=$rq->nivel;
-        $datos->id_subnivel=$rq->id_subnivel;
-        $datos->save();
     }
     function editar(Request $rq){
         $user = Auth::user()->id;
