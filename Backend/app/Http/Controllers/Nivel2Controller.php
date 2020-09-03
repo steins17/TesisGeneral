@@ -101,7 +101,7 @@ class Nivel2Controller extends Controller
     function listar(){
         $letras = DB::select("SELECT ps.*, sb.foto AS fotosb, sb.audio AS audiosb FROM subnivel sb INNER JOIN preguntas_subnivel ps ON sb.id=ps.id_subnivel WHERE sb.nivel = 2 AND sb.subnivel = 1");
         $silabas = DB::select("SELECT ps.*, sb.foto AS fotosb, sb.audio AS audiosb FROM subnivel sb INNER JOIN preguntas_subnivel ps ON sb.id=ps.id_subnivel WHERE sb.nivel = 2 AND sb.subnivel = 2");
-        $oraciones = DB::select("SELECT ps.*, sb.foto AS fotosb FROM subnivel sb INNER JOIN preguntas_subnivel ps ON sb.id=ps.id_subnivel WHERE sb.nivel = 2 AND sb.subnivel = 3");
+        $oraciones = DB::select("SELECT ps.*, sb.foto AS fotosb, sb.nombre FROM subnivel sb INNER JOIN preguntas_subnivel ps ON sb.id=ps.id_subnivel WHERE sb.nivel = 2 AND sb.subnivel = 3");
         return [ 'letras' => $letras, 'silabas' => $silabas, 'oraciones' => $oraciones ];
     }
     function guardar(Request $rq){

@@ -265,6 +265,7 @@
               <template #thead>
                 <vs-tr>
                   <vs-th> Pregunta </vs-th>
+                  <vs-th> Respuesta </vs-th>
                   <vs-th> Estado </vs-th>
                   <vs-th> Imagen </vs-th>
                   <vs-th> Fecha Creado </vs-th>
@@ -273,6 +274,7 @@
               </template>
               <template #tbody v-if="lista">
                 <vs-tr :key="i" v-for="(tr, i) in lista.oraciones" :data="tr">
+                  <vs-td> {{ tr.nombre }} </vs-td>
                   <vs-td> {{ tr.valor_campo }} </vs-td>
                   <vs-th v-if="tr.estado==1" style="color:green">Activo</vs-th><vs-th v-else style="color:red">Inactivo</vs-th>
                   <vs-td><img :src="baseURL+'/archivos/imagenes/ima_ejer/'+tr.fotosb" style="width: 70px;height: 70px;"/></vs-td>
