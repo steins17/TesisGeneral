@@ -75,18 +75,20 @@
           </template>
           Nivel 2
         </vs-sidebar-item>
-        <vs-sidebar-item id="nivel3" to="nivel3" v-if="nota.nota2>=21 && user">
-          <template #icon>
-            <i class="fas fa-circle-notch"><span class="subnumero">3</span></i>
-          </template>
-          Nivel 3
-        </vs-sidebar-item>
-        <vs-sidebar-item id="nivel4" to="nivel4" v-if="nota.nota3>=21 && user">
-          <template #icon>
-            <i class="fas fa-circle-notch"><span class="subnumero">4</span></i>
-          </template>
-          Nivel 4
-        </vs-sidebar-item>
+        <template v-if="user">
+          <vs-sidebar-item id="nivel3" to="nivel3" v-if="(nota.nota2>=21 && user) || user.rol==1">
+            <template #icon>
+              <i class="fas fa-circle-notch"><span class="subnumero">3</span></i>
+            </template>
+            Nivel 3
+          </vs-sidebar-item>
+          <vs-sidebar-item id="nivel4" to="nivel4" v-if="(nota.nota3>=21 && user) || user.rol==1">
+            <template #icon>
+              <i class="fas fa-circle-notch"><span class="subnumero">4</span></i>
+            </template>
+            Nivel 4
+          </vs-sidebar-item>
+        </template>
         <h4 v-if="user">
           <span class="small-cap">Configuración</span>
         </h4>
