@@ -128,7 +128,7 @@ class Nivel3Controller extends Controller
         $nombre_imagen = $file_imagen->getClientOriginalName();
 
         $datos = new Subnivel();
-        $datos->nombre = $rq->pregunta;
+        $datos->audio = $rq->pregunta;
         $datos->nivel = 3;
         $datos->subnivel = 1;
         $datos->usuario_crea = $user;
