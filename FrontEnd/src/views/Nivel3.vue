@@ -619,27 +619,6 @@ filters: {
         }
       }
     },
-    modal(tipo, data){
-      switch(tipo){
-        case 'agregar': {
-          this.datos_modal = {
-            activo:true,
-            tipo:1,
-            titulo:"Agergar Registro"
-          };
-          
-          break;
-        }
-        case 'editar': {
-          this.datos_modal = {
-            activo:true,
-            tipo:2,
-            titulo:"Editar Registro"
-          };
-          break;
-        }
-      }
-    },
     agregar_objeto(){
       this.form.preguntas.push( {foto:'', tipo:''} );
     },

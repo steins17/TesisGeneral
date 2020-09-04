@@ -203,7 +203,7 @@
                     <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
                     <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
                     <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar',tr,1)"></i>
-                    <i class="fas fa-trash ml-2 pointer eventsalto"></i>
+                    <i class="fas fa-trash ml-2 pointer eventsalto" @click="eliminar()"></i>
                   </vs-td>
                 </vs-tr>
               </template>
@@ -283,7 +283,7 @@
                     <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
                     <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
                     <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar',tr,3)"></i>
-                    <i class="fas fa-trash ml-2 pointer eventsalto"></i>
+                    <i class="fas fa-trash ml-2 pointer eventsalto" @click="eliminar()"></i>
                   </vs-td>
                 </vs-tr>
               </template>
@@ -305,7 +305,7 @@
                 <div class="center content-inputs">
                   <vs-input
                     label="Palabra audio"
-                    v-model="form.respuesta"
+                    v-model="form.audio"
                     placeholder="Pregunta"
                   />
                 </div>
@@ -765,7 +765,9 @@ export default {
       this.form_oraciones.imagen = event.target.files[0];
     },
     eliminar(data){
-      this.data.delete();
+      Api.delete().then(({data}) => {
+        
+      })
     }
   },
   mounted() {

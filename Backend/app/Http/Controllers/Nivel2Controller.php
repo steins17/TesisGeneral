@@ -106,7 +106,7 @@ class Nivel2Controller extends Controller
     }
     function guardar(Request $rq){
         $user = Auth::user()->id;
-
+        return $rq;
         $datos = new Subnivel();
         $datos->audio = $rq->audio;
         $datos->nivel = 2;
@@ -208,7 +208,7 @@ class Nivel2Controller extends Controller
     }
     public function eliminar($id){
         Subnivel::destroy($id);
-        Preguntas_subnivel::destroy($id);
+        Preguntas_subnivel::delete()->where('id_subnivel');
     }
 }
 
