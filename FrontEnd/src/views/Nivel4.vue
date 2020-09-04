@@ -472,7 +472,6 @@ export default {
     this.usuario();
     this.listar();
   },
-  
 }
 </script>
 

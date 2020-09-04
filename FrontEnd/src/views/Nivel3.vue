@@ -322,7 +322,7 @@
     <template #footer>
           <div class="footer-dialog" v-if="datos_modal.sb==1">
             <vs-button block @click="guardar_l()" v-if="datos_modal.tipo==1">
-              Ageragar
+              Agregar
             </vs-button>
             <vs-button block @click="editar()" v-else>
               Editar
@@ -330,7 +330,7 @@
           </div>
           <div class="footer-dialog" v-else-if="datos_modal.sb==2">
             <vs-button block @click="guardar_s()" v-if="datos_modal.tipo==1">
-              Ageragar1
+              Agregar1
             </vs-button>
             <vs-button block @click="editar()" v-else>
               Editar1
@@ -338,7 +338,7 @@
           </div>
           <div class="footer-dialog" v-else>
             <vs-button block @click="guardar_p()" v-if="datos_modal.tipo==1">
-              Ageragar2
+              Agregar2
             </vs-button>
             <vs-button block @click="editar()" v-else>
               Editar2
@@ -614,27 +614,6 @@ filters: {
             tipo:2,
             titulo:"Editar Registro",
             sb:sb
-          };
-          break;
-        }
-      }
-    },
-    modal(tipo, data){
-      switch(tipo){
-        case 'agregar': {
-          this.datos_modal = {
-            activo:true,
-            tipo:1,
-            titulo:"Agergar Registro"
-          };
-          
-          break;
-        }
-        case 'editar': {
-          this.datos_modal = {
-            activo:true,
-            tipo:2,
-            titulo:"Editar Registro"
           };
           break;
         }
