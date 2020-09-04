@@ -68,16 +68,11 @@ function isLoggedIn() {
 }
 
 router.beforeEach((to, from, next) => {
-  store.dispatch('recuperanota').then((value) => {
-    if (to.matched.some(record => record.meta.nivel3)) {
-      if(value.nota2<21){
-        next({
-          path: "/nivel2",
-          query: { redirect: to.fullPath }
-        });
-      }else{
-        store.dispatch('recuperauser').then((value) => {
-          if(value.rol==1){
+  store.dispatch('recuperauser').then((value) => {
+    if(value.rol!=1){
+      store.dispatch('recuperanota').then((value) => {
+        if (to.matched.some(record => record.meta.nivel3)) {
+          if(value.nota2<21){
             next({
               path: "/nivel2",
               query: { redirect: to.fullPath }
@@ -85,29 +80,21 @@ router.beforeEach((to, from, next) => {
           }else{
             next();
           }
-        });
-      }
-    }
-    if (to.matched.some(record => record.meta.nivel4)) {
-      if(value.nota3<21){
-        next({
-          path: "/nivel3",
-          query: { redirect: to.fullPath }
-        });
-      }else{
-        store.dispatch('recuperauser').then((value) => {
-          if(value.rol==1){
+        }
+        if (to.matched.some(record => record.meta.nivel4)) {
+          if(value.nota3<21){
             next({
               path: "/nivel3",
-              query: { redirect: to.fullPath } 
+              query: { redirect: to.fullPath }
             });
           }else{
             next();
           }
-        });
-      }
+        }
+      });
     }
   });
+  
   if (to.matched.some(record => record.meta.authOnly)) {
     if (!isLoggedIn()) {
       next({

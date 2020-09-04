@@ -488,7 +488,6 @@ export default {
   methods: {
     llamarpreguntas(){
       Api.llamarpreguntas().then(({data}) => {
-        console.log(data);
         var valores = [ {letras:0,valor:0}, {silabas:0,valor:0}, {oraciones:0,valor:0} ];
         data.subnivel.forEach((el,index) => {
           if(this.letras.length>=1){
@@ -695,7 +694,6 @@ export default {
     //administrador
     listar(){
       Api.listar().then( ({data}) => {
-        console.log(data);
         this.lista = data;
       }).catch( error => {
         console.log(error);
