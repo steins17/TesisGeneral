@@ -74,24 +74,3 @@ Route::get('/perfil/imagenver/{imagen}', function ($imagen) {
     $filePath = base_path().'/imagenes/'.$imagen;
     return File::get($filePath);
 });
-
-Route::get('/archivos/imagenes/nivel3_ima/{imagen}', function ($imagen) {
-    $filePath = base_path().'/imagenes/nivel3_ima/'.$imagen;
-    return File::get($filePath);
-});
-Route::get('/archivos/imagenes/ima_ejer/{imagen}', function ($imagen) {
-    $filePath = base_path().'/imagenes/ima_ejer/'.$imagen;
-    return File::get($filePath);
-});
-Route::get('/archivos/imagenes/ejercicios/{imagen}', function ($imagen) {
-    $filePath = base_path().'/imagenes/ejercicios/'.$imagen;
-    return File::get($filePath);
-});
-Route::get('/archivos/imagenes/silabas/{imagen}', function ($imagen) {
-    $filePath = base_path().'/imagenes/silabas/'.$imagen;
-    return File::get($filePath);
-});
-Route::get('/archivos/imagenes/perfiles/{imagen}', function ($imagen) {
-    $filePath = base_path().'/imagenes/perfiles/'.$imagen;
-    return File::get($filePath);
-});

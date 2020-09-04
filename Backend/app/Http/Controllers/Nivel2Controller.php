@@ -106,7 +106,6 @@ class Nivel2Controller extends Controller
     }
     function guardar(Request $rq){
         $user = Auth::user()->id;
-        return $rq;
         $datos = new Subnivel();
         $datos->audio = $rq->audio;
         $datos->nivel = 2;
@@ -116,22 +115,36 @@ class Nivel2Controller extends Controller
 
         $id = $datos->id;
 
-        //$files = $rq->file('foto');
-        for($i=0; $i<2; $i++){
-            $nombre = $id.$i;
-            /*$nombre = $files[$i]->getClientOriginalName();
-            $destino = 'uploads';
-            $files[$i]->move($destino, $nombre);*/
-            
-            $ps = new Preguntas_subnivel();
-            $ps->foto = $nombre;
-            $ps->tipo = $rq->tipo[$i];
-            $ps->nivel = 2;
-            $ps->estado = 1;
-            $ps->id_subnivel = $id;
-            $ps->usuario_crea = $user;
-            $ps->save();
-        }
+        $file_imagen = $rq->file('foto1');
+        $destino = base_path().'/../FrontEnd/public/archivos/imagenes/nivel2/letras';
+        $nombre_imagen = $file_imagen->getClientOriginalName();
+
+        $ps = new Preguntas_subnivel();
+        $ps->foto = $nombre_imagen;
+        $ps->tipo = $rq->tipo1;
+        $ps->nivel = 2;
+        $ps->estado = 1;
+        $ps->id_subnivel = $id;
+        $ps->usuario_crea = $user;
+        $ps->save();
+
+        $rq->file('foto1')->move($destino, $nombre_imagen);
+
+
+        $file_imagen = $rq->file('foto2');
+        $destino = base_path().'/../FrontEnd/public/archivos/imagenes/nivel2/letras';
+        $nombre_imagen = $file_imagen->getClientOriginalName();
+
+        $ps = new Preguntas_subnivel();
+        $ps->foto = $nombre_imagen;
+        $ps->tipo = $rq->tipo2;
+        $ps->nivel = 2;
+        $ps->estado = 1;
+        $ps->id_subnivel = $id;
+        $ps->usuario_crea = $user;
+        $ps->save();
+
+        $rq->file('foto2')->move($destino, $nombre_imagen);
     }
     function guardar_s(Request $rq){
         $user = Auth::user()->id;
@@ -145,22 +158,36 @@ class Nivel2Controller extends Controller
 
         $id = $datos->id;
 
-        //$files = $rq->file('foto');
-        for($i=0; $i<2; $i++){
-            $nombre = $id.$i;
-            /*$nombre = $files[$i]->getClientOriginalName();
-            $destino = 'uploads';
-            $files[$i]->move($destino, $nombre);*/
-            
-            $ps = new Preguntas_subnivel();
-            $ps->foto = $nombre;
-            $ps->tipo = $rq->tipo[$i];
-            $ps->nivel = 2;
-            $ps->estado = 1;
-            $ps->id_subnivel = $id;
-            $ps->usuario_crea = $user;
-            $ps->save();
-        }
+        $file_imagen = $rq->file('foto1');
+        $destino = base_path().'/../FrontEnd/public/archivos/imagenes/nivel2/silabas';
+        $nombre_imagen = $file_imagen->getClientOriginalName();
+
+        $ps = new Preguntas_subnivel();
+        $ps->foto = $nombre_imagen;
+        $ps->tipo = $rq->tipo1;
+        $ps->nivel = 2;
+        $ps->estado = 1;
+        $ps->id_subnivel = $id;
+        $ps->usuario_crea = $user;
+        $ps->save();
+
+        $rq->file('foto1')->move($destino, $nombre_imagen);
+
+
+        $file_imagen = $rq->file('foto2');
+        $destino = base_path().'/../FrontEnd/public/archivos/imagenes/nivel2/silabas';
+        $nombre_imagen = $file_imagen->getClientOriginalName();
+
+        $ps = new Preguntas_subnivel();
+        $ps->foto = $nombre_imagen;
+        $ps->tipo = $rq->tipo2;
+        $ps->nivel = 2;
+        $ps->estado = 1;
+        $ps->id_subnivel = $id;
+        $ps->usuario_crea = $user;
+        $ps->save();
+
+        $rq->file('foto2')->move($destino, $nombre_imagen);
     }
     function guardar_oraciones(Request $rq){
         $user = Auth::user()->id;

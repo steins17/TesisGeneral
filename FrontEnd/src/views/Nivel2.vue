@@ -196,7 +196,7 @@
                   <vs-td> {{ tr.audiosb }} </vs-td>
                   <vs-th v-if="tr.tipo==1">Correcto</vs-th><vs-th v-else>Incorrecto</vs-th>
                   <vs-th v-if="tr.estado==1" style="color:green">Activo</vs-th><vs-th v-else style="color:red">Inactivo</vs-th>
-                  <vs-td><img :src="baseURL+'/archivos/imagenes/ejercicios/'+tr.foto" style="width: 70px;height: 70px;"/></vs-td>
+                  <vs-td><img :src="'/archivos/imagenes/nivel2/silabas/'+tr.foto" style="width: 70px;height: 70px;"/></vs-td>
                   <vs-td>{{tr.foto}}</vs-td>
                   <vs-td>{{ tr.updated_at | fecha }}</vs-td>
                   <vs-td>
@@ -311,28 +311,46 @@
                 </div>
             </div>
           </div>
-          <div class="row" v-for="(tr, index) in form.preguntas" :key="index">
+          <div class="row">
             <div class="col-lg-8">
                 <div class="center content-inputs">
                   <vs-input
                     type="file"
                     label="Respuesta imagen"
-                    @change="recuperarimagenletras"
+                    @change="recuperarimagenletras1"
                     ref="file"
                   />
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="center content-inputs mt-2">
-                  <vs-select label="Tipo" v-model="tr.tipo">
+                  <vs-select label="Tipo" v-model="form.preguntas[0].tipo">
                     <vs-option value="1" label="Correcto">Correcto</vs-option>
                     <vs-option value="0" label="Incorrecto">Incorrecto</vs-option>
                   </vs-select>
                 </div>
             </div>
-            <!--<div class="col-lg-1 mt-3">
-               <i class="fas fa-plus pointer" @click="agregar_objeto()"></i>
-            </div>-->
+          </div>
+          <div class="row">
+            <div class="col-lg-8">
+                <div class="center content-inputs">
+                  <vs-input
+                    type="file"
+                    label="Respuesta imagen"
+                    @click="index=index"
+                    @change="recuperarimagenletras2"
+                    ref="file"
+                  />
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="center content-inputs mt-2">
+                  <vs-select label="Tipo" v-model="form.preguntas[1].tipo">
+                    <vs-option value="1" label="Correcto">Correcto</vs-option>
+                    <vs-option value="0" label="Incorrecto">Incorrecto</vs-option>
+                  </vs-select>
+                </div>
+            </div>
           </div>
         </div>
         <div class="con-form" v-else>
@@ -458,7 +476,8 @@ export default {
         pregunta:'',
         respuesta:'',
         imagen:'',
-      }
+      },
+      index:0,
     };
   },
   filters: {
@@ -698,12 +717,12 @@ export default {
     guardar_letras(){
         let formData = new FormData();
         formData.append("form", this.form.audio);
-        for( var i = 0; i < this.form.preguntas.length; i++ ){
-          formData.append("foto["+i+"]", this.form.preguntas[i].foto);
-          formData.append("tipo["+i+"]", this.form.preguntas[i].tipo);
-        }
+        formData.append("foto1", this.form.preguntas[0].foto);
+        formData.append("tipo1", this.form.preguntas[0].tipo);
+        formData.append("foto2", this.form.preguntas[1].foto);
+        formData.append("tipo2", this.form.preguntas[1].tipo);
+        console.log(this.form);
         Api.guardar(formData, {headers: { 'Content-Type': 'multipart/form-data'},} ).then(({data}) => {
-          console.log(data);
           this.$vs.notification({
             square: true,
             progress: 'auto',
@@ -720,10 +739,10 @@ export default {
     guardar_silabas(){
         let formData = new FormData();
         formData.append("form", this.form.audio);
-        for( var i = 0; i < this.form.preguntas.length; i++ ){
-          formData.append("foto["+i+"]", this.form.preguntas[i].foto);
-          formData.append("tipo["+i+"]", this.form.preguntas[i].tipo);
-        }
+        formData.append("foto1", this.form.preguntas[0].foto);
+        formData.append("tipo1", this.form.preguntas[0].tipo);
+        formData.append("foto2", this.form.preguntas[1].foto);
+        formData.append("tipo2", this.form.preguntas[1].tipo);
         Api.guardar_s(formData, {headers: { 'Content-Type': 'multipart/form-data'},} ).then(({data}) => {
           console.log(data);
           this.$vs.notification({
@@ -758,8 +777,17 @@ export default {
           console.log(error);
         });
     },
-    recuperarimagenletras(event){
-      this.form.imagen = event.target.files[0];
+    recuperarimagenletras1(event){
+      this.form.preguntas[0].foto = event.target.files[0];
+    },
+    recuperarimagenletras2(event){
+      this.form.preguntas[1].foto = event.target.files[0];
+    },
+    recuperarimagensilabas1(event){
+      this.form.preguntas[1].foto = event.target.files[0];
+    },
+    recuperarimagensilabas2(event){
+      this.form.preguntas[1].foto = event.target.files[0];
     },
     recuperarimagenoraciones(event){
       this.form_oraciones.imagen = event.target.files[0];
