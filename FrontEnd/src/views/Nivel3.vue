@@ -73,7 +73,7 @@
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 col-md-6 p-0" v-for="(tr,index) in silabas.preguntas" :key="index">
             <div class="col-lg-12 mb-4" >
               <div class="card m-3 " style="border-radius: 50px" >
-                <img :src="'/archivos/imagenes/nivel3/'" class="card-img-top" style="border-radius: 50px"  alt="Card image cap"/>
+                <img :src="'/archivos/imagenes/nivel3/'+tr.foto" class="card-img-top" style="border-radius: 50px"  alt="Card image cap"/>
                 <div class="card-body" >
                   <vs-row vs-justify="flex-end" style="bottom: 0px">
                     <vs-button color="dark" type="gradient" style="margin: 15px;border-radius:;width: 90px;height: 90px;" @click.prevent="sonido(tr.audio)">
@@ -116,7 +116,7 @@
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 col-md-6 p-0" v-for="(tr,index) in palabras.preguntas" :key="index">
             <div class="col-lg-12">
               <div class="card m-3 " style="border-radius: 50px">
-                <img :src="'/archivos/imagenes/nivel3/'" class="card-img-top" style="border-radius: 50px"  alt="Card image cap"/>
+                <img :src="'/archivos/imagenes/nivel3/'+tr.foto" class="card-img-top" style="border-radius: 50px"  alt="Card image cap"/>
                 <div class="card-body" >
                   <vs-row vs-justify="flex-end" style="bottom: 0px;">
                     <vs-button color="dark" type="gradient" style="margin: 15px;border-radius:;width: 90px;height: 90px;" @click.prevent="sonido(tr.audio)">
