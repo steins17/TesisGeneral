@@ -196,14 +196,14 @@
                   <vs-td> {{ tr.audiosb }} </vs-td>
                   <vs-th v-if="tr.tipo==1">Correcto</vs-th><vs-th v-else>Incorrecto</vs-th>
                   <vs-th v-if="tr.estado==1" style="color:green">Activo</vs-th><vs-th v-else style="color:red">Inactivo</vs-th>
-                  <vs-td><img :src="'/archivos/imagenes/nivel2/silabas/'+tr.foto" style="width: 70px;height: 70px;"/></vs-td>
+                  <vs-td><img :src="'/archivos/imagenes/nivel2/letras/'+tr.foto" style="width: 70px;height: 70px;"/></vs-td>
                   <vs-td>{{tr.foto}}</vs-td>
                   <vs-td>{{ tr.updated_at | fecha }}</vs-td>
                   <vs-td>
                     <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
                     <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
                     <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar',tr,1)"></i>
-                    <i class="fas fa-trash ml-2 pointer eventsalto" @click="eliminar()"></i>
+                    <i class="fas fa-trash ml-2 pointer eventsalto" @click="eliminar_letras(tr.id_subnivel)"></i>
                   </vs-td>
                 </vs-tr>
               </template>
@@ -237,7 +237,7 @@
                   <vs-td> {{ tr.audiosb }} </vs-td>
                   <vs-th v-if="tr.tipo==1">Correcto</vs-th><vs-th v-else>Incorrecto</vs-th>
                   <vs-th v-if="tr.estado==1" style="color:green">Activo</vs-th><vs-th v-else style="color:red">Inactivo</vs-th>
-                  <vs-td><img :src="baseURL+'/archivos/imagenes/silabas/'+tr.foto" style="width: 70px;height: 70px;"/></vs-td>
+                  <vs-td><img :src="'/archivos/imagenes/nivel2/silabas/'+tr.foto" style="width: 70px;height: 70px;"/></vs-td>
                   <vs-td>{{tr.foto}}</vs-td>
                   <vs-td>{{ tr.updated_at | fecha }}</vs-td>
                   <vs-td>
@@ -277,7 +277,7 @@
                   <vs-td> {{ tr.nombre }} </vs-td>
                   <vs-td> {{ tr.valor_campo }} </vs-td>
                   <vs-th v-if="tr.estado==1" style="color:green">Activo</vs-th><vs-th v-else style="color:red">Inactivo</vs-th>
-                  <vs-td><img :src="baseURL+'/archivos/imagenes/ima_ejer/'+tr.fotosb" style="width: 70px;height: 70px;"/></vs-td>
+                  <vs-td><img :src="'/archivos/imagenes/nivel2/oraciones/'+tr.foto" style="width: 70px;height: 70px;"/></vs-td>
                   <vs-td>{{ tr.updated_at | fecha }}</vs-td>
                   <vs-td>
                     <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
@@ -387,26 +387,26 @@
         </div>
         <template #footer>
           <div class="footer-dialog" v-if="datos_modal.sb==1">
-            <vs-button block @click="guardar_letras()" v-if="datos_modal.tipo==1">
+            <vs-button block @click.prevent="guardar_letras()" v-if="datos_modal.tipo==1">
               Agregar
             </vs-button>
-            <vs-button block @click="editar()" v-else>
+            <vs-button block @click.prevent="editar()" v-else>
               Editar
             </vs-button>
           </div>
           <div class="footer-dialog" v-else-if="datos_modal.sb==2">
-            <vs-button block @click="guardar_silabas()" v-if="datos_modal.tipo==1">
+            <vs-button block @click.prevent="guardar_silabas()" v-if="datos_modal.tipo==1">
               Agregar1
             </vs-button>
-            <vs-button block @click="editar()" v-else>
+            <vs-button block @click.prevent="editar()" v-else>
               Editar1
             </vs-button>
           </div>
           <div class="footer-dialog" v-else>
-            <vs-button block @click="guardar_oraciones()" v-if="datos_modal.tipo==1">
+            <vs-button block @click.prevent="guardar_oraciones()" v-if="datos_modal.tipo==1">
               Agregar2
             </vs-button>
-            <vs-button block @click="editar()" v-else>
+            <vs-button block @click.prevent="editar()" v-else>
               Editar2
             </vs-button>
           </div>
@@ -488,26 +488,39 @@ export default {
   methods: {
     llamarpreguntas(){
       Api.llamarpreguntas().then(({data}) => {
+        console.log(data);
         var valores = [ {letras:0,valor:0}, {silabas:0,valor:0}, {oraciones:0,valor:0} ];
         data.subnivel.forEach((el,index) => {
-          if(el.subnivel==1) this.letras.preguntas.push({audio:el.audio, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
-          if(el.subnivel==2) this.silabas.preguntas.push({audio:el.audio, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
-          if(el.subnivel==3) this.oraciones.preguntas.push({nombre:el.nombre,foto:el.foto, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
+          if(this.letras.length>=1){
+            if(el.subnivel==1) this.letras.preguntas.push({audio:el.audio, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
+          }
+          if(this.silabas.length>=1){
+            if(el.subnivel==2) this.silabas.preguntas.push({audio:el.audio, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
+          }
+          if(this.oraciones.length>=1){
+            if(el.subnivel==3) this.oraciones.preguntas.push({nombre:el.nombre,foto:el.foto, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
+          }
           data.preguntas.forEach((pr,index1) => {
-            if(el.id==pr.id_subnivel && el.subnivel==1){
-              if(index!=valores[0].letras) valores[0].letras = index, valores[0].valor++;
-              if(!this.letras.preguntas[valores[0].valor].respuestas) this.letras.preguntas[valores[0].valor].respuestas = [];
-              this.letras.preguntas[valores[0].valor].respuestas.push(pr);
-            };
-            if(el.id==pr.id_subnivel && el.subnivel==2){  
-              if(index!=valores[1].silabas) valores[1].silabas = index, valores[1].valor++;
-              if(!this.silabas.preguntas[valores[1].valor-1].respuestas) this.silabas.preguntas[valores[1].valor-1].respuestas = [];
-              this.silabas.preguntas[valores[1].valor-1].respuestas.push(pr); 
+            if(this.letras.length>=1){
+              if(el.id==pr.id_subnivel && el.subnivel==1){
+                if(index!=valores[0].letras) valores[0].letras = index, valores[0].valor++;
+                if(!this.letras.preguntas[valores[0].valor].respuestas) this.letras.preguntas[valores[0].valor].respuestas = [];
+                this.letras.preguntas[valores[0].valor].respuestas.push(pr);
+              };
             }
-            if(el.id==pr.id_subnivel && el.subnivel==3){  
-              if(index!=valores[2].oraciones) valores[2].oraciones = index, valores[2].valor++;
-              if(!this.oraciones.preguntas[valores[2].valor-1].respuestas) this.oraciones.preguntas[valores[2].valor-1].respuestas = [];
-              this.oraciones.preguntas[valores[2].valor-1].respuestas.push(pr); 
+            if(this.silabas.length>=1){
+              if(el.id==pr.id_subnivel && el.subnivel==2){  
+                if(index!=valores[1].silabas) valores[1].silabas = index, valores[1].valor++;
+                if(!this.silabas.preguntas[valores[1].valor-1].respuestas) this.silabas.preguntas[valores[1].valor-1].respuestas = [];
+                this.silabas.preguntas[valores[1].valor-1].respuestas.push(pr); 
+              }
+            }
+            if(this.oraciones.length>=1){
+              if(el.id==pr.id_subnivel && el.subnivel==3){  
+                if(index!=valores[2].oraciones) valores[2].oraciones = index, valores[2].valor++;
+                if(!this.oraciones.preguntas[valores[2].valor-1].respuestas) this.oraciones.preguntas[valores[2].valor-1].respuestas = [];
+                this.oraciones.preguntas[valores[2].valor-1].respuestas.push(pr); 
+              }
             }
           });
         });
@@ -716,7 +729,7 @@ export default {
     },
     guardar_letras(){
         let formData = new FormData();
-        formData.append("form", this.form.audio);
+        formData.append("audio", this.form.audio);
         formData.append("foto1", this.form.preguntas[0].foto);
         formData.append("tipo1", this.form.preguntas[0].tipo);
         formData.append("foto2", this.form.preguntas[1].foto);
@@ -738,7 +751,7 @@ export default {
     },
     guardar_silabas(){
         let formData = new FormData();
-        formData.append("form", this.form.audio);
+        formData.append("audio", this.form.audio);
         formData.append("foto1", this.form.preguntas[0].foto);
         formData.append("tipo1", this.form.preguntas[0].tipo);
         formData.append("foto2", this.form.preguntas[1].foto);
@@ -792,9 +805,16 @@ export default {
     recuperarimagenoraciones(event){
       this.form_oraciones.imagen = event.target.files[0];
     },
-    eliminar(data){
-      Api.delete().then(({data}) => {
-        
+    eliminar_letras(id){
+      Api.eliminar_letras(id).then(({data}) => {
+        this.$vs.notification({
+          square: true,
+          progress: 'auto',
+          color:'success',
+          title: 'Dato Borrado',
+          text: 'Dato borrado exitosamente'
+        });
+        this.listar();
       })
     }
   },

@@ -32,7 +32,7 @@ export default {
   editar(form){
     return Api().post("/nivel2/editar", form);
   },
-  eliminar(form){
-    return Api().delete("/nivel2/eliminar", form);
+  eliminar_letras(id){
+    return Api().delete("/nivel2/eliminar_letras/"+id);
   }
 };

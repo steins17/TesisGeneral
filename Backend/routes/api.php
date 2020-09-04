@@ -45,6 +45,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/nivel2/guardar', 'Nivel2Controller@guardar');
     Route::post('/nivel2/guardar_s', 'Nivel2Controller@guardar_s');
     Route::post('/nivel2/guardar_oraciones', 'Nivel2Controller@guardar_oraciones');
+    Route::delete('/nivel2/eliminar_letras/{id}', 'Nivel2Controller@eliminar_letras');
     
     //rutas del nivel 3
     Route::get('/nivel3/llamardatos', 'Nivel3Controller@llamardatos');
@@ -69,6 +70,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 });
 
 Route::get('/lang/{lang}', 'Controller@set_language')->name('set_language');
+
 //visualizar imagenes almacenados en el servidor
 Route::get('/perfil/imagenver/{imagen}', function ($imagen) {
     $filePath = base_path().'/imagenes/'.$imagen;

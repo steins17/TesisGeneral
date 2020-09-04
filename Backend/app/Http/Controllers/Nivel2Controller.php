@@ -193,7 +193,7 @@ class Nivel2Controller extends Controller
         $user = Auth::user()->id;
 
         $file_imagen = $rq->file('imagen');
-        $destino = base_path().'/imagenes/ima_ejer';
+        $destino = base_path().'/../FrontEnd/public/archivos/imagenes/nivel2/oraciones';
         $nombre_imagen = $file_imagen->getClientOriginalName();
 
         $datos = new Subnivel();
@@ -212,6 +212,7 @@ class Nivel2Controller extends Controller
         $ps->estado = 1;
         $ps->id_subnivel = $id;
         $ps->usuario_crea = $user;
+        $ps->foto = $nombre_imagen;
         $ps->save();
 
         $rq->file('imagen')->move($destino, $nombre_imagen);
@@ -233,9 +234,9 @@ class Nivel2Controller extends Controller
         $datos->id_subnivel=$rq->id_subnivel;
         $datos->save();
     }
-    public function eliminar($id){
-        Subnivel::destroy($id);
-        Preguntas_subnivel::delete()->where('id_subnivel');
+    public function eliminar_letras($id){
+        Subnivel::where('id',$id)->delete();
+        Preguntas_subnivel::where('id_subnivel',$id)->delete();
     }
 }
 
