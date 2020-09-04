@@ -76,7 +76,16 @@ router.beforeEach((to, from, next) => {
           query: { redirect: to.fullPath }
         });
       }else{
-        next();
+        store.dispatch('recuperauser').then((value) => {
+          if(value.rol==1){
+            next({
+              path: "/nivel2",
+              query: { redirect: to.fullPath }
+            });
+          }else{
+            next();
+          }
+        });
       }
     }
     if (to.matched.some(record => record.meta.nivel4)) {
@@ -86,7 +95,16 @@ router.beforeEach((to, from, next) => {
           query: { redirect: to.fullPath }
         });
       }else{
-        next();
+        store.dispatch('recuperauser').then((value) => {
+          if(value.rol==1){
+            next({
+              path: "/nivel3",
+              query: { redirect: to.fullPath }
+            });
+          }else{
+            next();
+          }
+        });
       }
     }
   });
