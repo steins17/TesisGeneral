@@ -124,7 +124,7 @@ class Nivel3Controller extends Controller
         $user = Auth::user()->id;
 
         $file_imagen = $rq->file('imagen');
-        $destino = base_path().'/imagenes/nivel3_ima';
+        $destino = base_path().'/../FrontEnd/public/archivos/imagenes/nivel3/';
         $nombre_imagen = $file_imagen->getClientOriginalName();
 
         $datos = new Subnivel();
@@ -152,7 +152,7 @@ class Nivel3Controller extends Controller
         $user = Auth::user()->id;
 
         $file_imagen = $rq->file('imagen');
-        $destino = base_path().'/imagenes/nivel3_ima';
+        $destino = base_path().'/../FrontEnd/public/archivos/imagenes/nivel3/';
         $nombre_imagen = $file_imagen->getClientOriginalName();
 
         $datos = new Subnivel();
@@ -180,7 +180,7 @@ class Nivel3Controller extends Controller
         $user = Auth::user()->id;
 
         $file_imagen = $rq->file('imagen');
-        $destino = base_path().'/imagenes/nivel3_ima';
+        $destino = base_path().'/../FrontEnd/public/archivos/imagenes/nivel3/';
         $nombre_imagen = $file_imagen->getClientOriginalName();
 
         $datos = new Subnivel();
