@@ -99,7 +99,7 @@ router.beforeEach((to, from, next) => {
           if(value.rol==1){
             next({
               path: "/nivel3",
-              query: { redirect: to.fullPath }
+              query: { redirect: to.fullPath } 
             });
           }else{
             next();
