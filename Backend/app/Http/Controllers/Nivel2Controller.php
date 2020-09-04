@@ -106,7 +106,7 @@ class Nivel2Controller extends Controller
     }
     function guardar(Request $rq){
         $user = Auth::user()->id;
-        return $rq;
+
         $datos = new Subnivel();
         $datos->audio = $rq->audio;
         $datos->nivel = 2;
