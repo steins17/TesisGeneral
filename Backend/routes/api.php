@@ -38,11 +38,16 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/nivel2/oraciones/respuesta', 'Nivel2Controller@oraciones_respuesta');
     Route::get('/nivel2/llamarresultados', 'Nivel2Controller@llamarresultados');
     
-
     Route::get('/nivel2/listar', 'Nivel2Controller@listar');
+
     Route::post('/nivel2/guardar', 'Nivel2Controller@guardar');
     Route::post('/nivel2/guardar_s', 'Nivel2Controller@guardar_s');
     Route::post('/nivel2/guardar_oraciones', 'Nivel2Controller@guardar_oraciones');
+    
+    Route::post('/nivel2/editar_l', 'Nivel2Controller@editar_l');
+    Route::post('/nivel2/editar_s', 'Nivel2Controller@editar_s');
+    Route::post('/nivel2/editar_o', 'Nivel2Controller@editar_o');
+    
     Route::delete('/nivel2/eliminar_letras/{id}', 'Nivel2Controller@eliminar_letras');
     Route::delete('/nivel2/eliminar_silabas/{id}', 'Nivel2Controller@eliminar_silabas');
     Route::delete('/nivel2/eliminar_oraciones/{id}', 'Nivel2Controller@eliminar_oraciones');

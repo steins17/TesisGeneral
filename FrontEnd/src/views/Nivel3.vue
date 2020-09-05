@@ -693,7 +693,8 @@ filters: {
         });
         this.listar();
       })
-    },eliminar_silabas(id){
+    },
+    eliminar_silabas(id){
       Api.eliminar_silabas(id).then(({data}) => {
         this.$vs.notification({
           square: true,
@@ -704,7 +705,8 @@ filters: {
         });
         this.listar();
       })
-    },eliminar_palabras(id){
+    },
+    eliminar_palabras(id){
       Api.eliminar_letras(id).then(({data}) => {
         this.$vs.notification({
           square: true,

@@ -390,7 +390,7 @@
             <vs-button block @click.prevent="guardar_letras()" v-if="datos_modal.tipo==1">
               Agregar
             </vs-button>
-            <vs-button block @click.prevent="editar()" v-else>
+            <vs-button block @click.prevent="editar_letras()" v-else>
               Editar
             </vs-button>
           </div>
@@ -398,7 +398,7 @@
             <vs-button block @click.prevent="guardar_silabas()" v-if="datos_modal.tipo==1">
               Agregar1
             </vs-button>
-            <vs-button block @click.prevent="editar()" v-else>
+            <vs-button block @click.prevent="editar_silabas()" v-else>
               Editar1
             </vs-button>
           </div>
@@ -406,7 +406,7 @@
             <vs-button block @click.prevent="guardar_oraciones()" v-if="datos_modal.tipo==1">
               Agregar2
             </vs-button>
-            <vs-button block @click.prevent="editar()" v-else>
+            <vs-button block @click.prevent="editar_oraciones()" v-else>
               Editar2
             </vs-button>
           </div>
@@ -805,6 +805,72 @@ export default {
     },
     recuperarimagenoraciones(event){
       this.form_oraciones.imagen = event.target.files[0];
+    },
+    editar_letras(){
+        let formData = new FormData();
+        formData.append("audio", this.form.audio);
+        formData.append("foto1", this.form.preguntas[0].foto);
+        formData.append("tipo1", this.form.preguntas[0].tipo);
+        formData.append("foto2", this.form.preguntas[1].foto);
+        formData.append("tipo2", this.form.preguntas[1].tipo);
+        console.log(this.form);
+        Api.editar_l(formData, {headers: { 'Content-Type': 'multipart/form-data'},} ).then(({data}) => {
+          this.$vs.notification({
+            square: true,
+            progress: 'auto',
+            color:'success',
+            title: 'Editado exitosamente',
+            text: 'Registro editado exitosamente'
+          });
+          this.listar();
+          this.datos_modal.activo = false;
+          this.form();
+        }).catch( error => {
+          console.log(error);
+        });
+    },
+    editar_silabas(){
+        let formData = new FormData();
+        formData.append("audio", this.form.audio);
+        formData.append("foto1", this.form.preguntas[0].foto);
+        formData.append("tipo1", this.form.preguntas[0].tipo);
+        formData.append("foto2", this.form.preguntas[1].foto);
+        formData.append("tipo2", this.form.preguntas[1].tipo);
+        console.log(this.form);
+        Api.editar_s(formData, {headers: { 'Content-Type': 'multipart/form-data'},} ).then(({data}) => {
+          this.$vs.notification({
+            square: true,
+            progress: 'auto',
+            color:'success',
+            title: 'Editado exitosamente',
+            text: 'Registro editado exitosamente'
+          });
+          this.listar();
+          this.datos_modal.activo = false;
+          this.form();
+        }).catch( error => {
+          console.log(error);
+        });
+    },
+    editar_oraciones(){
+        let formData = new FormData();
+        formData.append("pregunta", this.form_oraciones.pregunta);
+        formData.append("respuesta", this.form_oraciones.respuesta);
+        formData.append("imagen", this.form_oraciones.imagen);
+        Api.editar_o(formData).then(({data}) => {
+          this.$vs.notification({
+            square: true,
+            progress: 'auto',
+            color:'success',
+            title: 'Guardaro exitosamente',
+            text: 'Registro guardado exitosamente'
+          });
+          this.listar();
+          this.form_oraciones();
+          this.datos_modal.activo = false;
+        }).catch( error => {
+          console.log(error);
+        });
     },
     eliminar_letras(id){
       Api.eliminar_letras(id).then(({data}) => {
