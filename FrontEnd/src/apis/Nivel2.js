@@ -34,5 +34,11 @@ export default {
   },
   eliminar_letras(id){
     return Api().delete("/nivel2/eliminar_letras/"+id);
+  },
+  eliminar_silabas(id){
+    return Api().delete("/nivel2/eliminar_silabas/"+id);
+  },
+  eliminar_oraciones(id){
+    return Api().delete("/nivel2/eliminar_oraciones/"+id);
   }
 };

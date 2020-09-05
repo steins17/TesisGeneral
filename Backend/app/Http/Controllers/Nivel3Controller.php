@@ -221,8 +221,16 @@ class Nivel3Controller extends Controller
         $datos->id_subnivel=$rq->id_subnivel;
         $datos->save();
     }
-    public function eliminar($id){
-        Subnivel::destroy($id);
-        Preguntas_subnivel::destroy($id);
+    public function eliminar_letras($id){
+        Subnivel::where('id',$id)->delete();
+        Preguntas_subnivel::where('id_subnivel',$id)->delete();
+    }
+    public function eliminar_silabas($id){
+        Subnivel::where('id',$id)->delete();
+        Preguntas_subnivel::where('id_subnivel',$id)->delete();
+    }
+    public function eliminar_oraciones($id){
+        Subnivel::where('id',$id)->delete();
+        Preguntas_subnivel::where('id_subnivel',$id)->delete();
     }
 }

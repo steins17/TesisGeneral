@@ -34,7 +34,13 @@ export default {
   editar(form){
     return Api().post("/nivel3/editar", form)
   },
-  eliminar(form){
-    return Api().delete("/nivel3/eliminar", form)
+  eliminar_letras(id){
+    return Api().delete("/nivel3/eliminar_letras/"+id);
+  },
+  eliminar_silabas(id){
+    return Api().delete("/nivel3/eliminar_silabas/"+id);
+  },
+  eliminar_palabras(id){
+    return Api().delete("/nivel3/eliminar_palabras/"+id);
   }
 };

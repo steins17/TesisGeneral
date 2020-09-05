@@ -46,6 +46,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/nivel2/guardar_s', 'Nivel2Controller@guardar_s');
     Route::post('/nivel2/guardar_oraciones', 'Nivel2Controller@guardar_oraciones');
     Route::delete('/nivel2/eliminar_letras/{id}', 'Nivel2Controller@eliminar_letras');
+    Route::delete('/nivel2/eliminar_silabas/{id}', 'Nivel2Controller@eliminar_silabas');
+    Route::delete('/nivel2/eliminar_oraciones/{id}', 'Nivel2Controller@eliminar_oraciones');
     
     //rutas del nivel 3
     Route::get('/nivel3/llamardatos', 'Nivel3Controller@llamardatos');
@@ -58,6 +60,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/nivel3/guardar_l', 'Nivel3Controller@guardar_l');
     Route::post('/nivel3/guardar_s', 'Nivel3Controller@guardar_s');
     Route::post('/nivel3/guardar_p', 'Nivel3Controller@guardar_p');
+    Route::delete('/nivel3/eliminar_letras/{id}', 'Nivel3Controller@eliminar_letras');
+    Route::delete('/nivel3/eliminar_silabas/{id}', 'Nivel3Controller@eliminar_silabas');
+    Route::delete('/nivel3/eliminar_palabras/{id}', 'Nivel3Controller@eliminar_palabras');
 
     //rutas del nivel 4
     Route::get('/nivel4/llamardatos', 'Nivel4Controller@llamardatos');
