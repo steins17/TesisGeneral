@@ -34,7 +34,7 @@
                 </vs-col>
                 <vs-col vs-justify="flex"  class="container" w="6">
                   <div class="center content-inputs" v-for="(tr,index_hijo) in tr.respuestas" :key="index_hijo">
-                    <vs-input color="#195bff"  v-model="tr.respuesta_campo" :class="'w-100 mb-3 mt-5 index'+index" style="margin-bottom: 35px" @click="seleccionar_oraciones(index, tr, index_hijo)"/>
+                    <vs-input color="#195bff"  v-model="tr.respuesta_campo" :class="'w-100 mb-3 mt-5 index'+index" style="margin-bottom: 35px" @click="seleccionar(index, tr, index_hijo)"/>
                   </div>
                   <div class="container" style=";display: block;">
                     <vs-button  style="float: right;margin-right: 80px;margin-bottom: 20px;--vs-color: 25, 91, 255;border-radius: 70px;width: 40px;height: 40px;" @click="hablar(index)">
@@ -126,7 +126,7 @@
         <div class="col-lg-12 mb-3">
             <vs-row justify="flex-end">
               <vs-col w="1">
-                <vs-button class="w-100" @click="modal('agregar')">Agregar</vs-button>
+                <vs-button class="w-100" @click="modal('agregar',null,1)">Agregar</vs-button>
               </vs-col>
             </vs-row>
           </div>
@@ -151,7 +151,7 @@
                     <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
                     <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
                     <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar', tr)"></i>
-                    <i class="fas fa-trash ml-2 pointer eventsalto"></i>
+                    <i class="fas fa-trash ml-2 pointer eventsalto" @click="eliminar_oraciones(tr.id_subnivel)"></i>
                   </vs-td>
                 </vs-tr>
               </template>
@@ -163,7 +163,7 @@
         <div class="col-lg-12 mb-3">
             <vs-row justify="flex-end">
               <vs-col w="1">
-                <vs-button class="w-100" @click="modal('agregar')">Agregar</vs-button>
+                <vs-button class="w-100" @click="modal('agregar', null,2)">Agregar</vs-button>
               </vs-col>
             </vs-row>
           </div>
@@ -188,7 +188,7 @@
                     <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
                     <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
                     <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar', tr)"></i>
-                    <i class="fas fa-trash ml-2 pointer eventsalto"></i>
+                    <i class="fas fa-trash ml-2 pointer eventsalto" @click="eliminar_frases(tr.id_subnivel)"></i>
                   </vs-td>
                 </vs-tr>
               </template>
@@ -197,6 +197,53 @@
       </div>
     </div>
   </div>
+  <vs-dialog v-model="datos_modal.activo">
+        <template #header>
+          <h4 class="not-margin">
+            {{datos_modal.titulo}}
+          </h4>
+        </template>
+        <div class="con-form">
+          <div class="row mb-4">
+            <div class="col-lg-12 mb-3">
+                <div class="center content-inputs">
+                  <vs-input
+                    label="Palabra Pregunta"
+                    v-model="form.pregunta"
+                    placeholder="Pregunta"
+                  />
+                </div>
+            </div>
+            <div class="col-lg-12 mb-3">
+                <div class="center content-inputs">
+                  <vs-input
+                    label="Palabra Respuesta"
+                    v-model="form.respuesta"
+                    placeholder="Respuesta"
+                  />
+                </div>
+            </div>
+          </div>
+        </div>
+        <template #footer>
+          <div class="footer-dialog" v-if="datos_modal.sb==1">
+            <vs-button block @click.prevent="guardar_oraciones()" v-if="datos_modal.tipo==1">
+              Agregar
+            </vs-button>
+            <vs-button block @click.prevent="editar()" v-else>
+              Editar
+            </vs-button>
+          </div>
+          <div class="footer-dialog" v-else-if="datos_modal.sb==2">
+            <vs-button block @click.prevent="guardar_frases()" v-if="datos_modal.tipo==1">
+              Agregar1
+            </vs-button>
+            <vs-button block @click.prevent="editar()" v-else>
+              Editar1
+            </vs-button>
+          </div>
+        </template>
+    </vs-dialog>
 </div>
 </template>
 
@@ -229,7 +276,8 @@ export default {
       datos_modal:{
         activo:false,
         tipo:0,
-        titulo:""
+        titulo:"",
+        sb:null,
       },
       form:{
         pregunta:'',
@@ -425,13 +473,14 @@ export default {
         console.log(error);
       });
     },
-    modal(tipo, data){
+    modal(tipo, data, sb){
       switch(tipo){
         case 'agregar': {
           this.datos_modal = {
             activo:true,
             tipo:1,
-            titulo:"Agergar Registro"
+            titulo:"Agregar Registro",
+            sb:sb
           };
           
           break;
@@ -440,7 +489,8 @@ export default {
           this.datos_modal = {
             activo:true,
             tipo:2,
-            titulo:"Editar Registro"
+            titulo:"Editar Registro",
+            sb:sb
           };
           break;
         }
@@ -449,11 +499,11 @@ export default {
     agregar_objeto(){
       this.form.preguntas.push( {valor_campo:'',} );
     },
-    guardar(){
+    guardar_oraciones(){
         let formData = new FormData();
-        formData.append("form", this.form);
-        Api.guardar(formData).then(({data}) => {
-          console.log(data);
+        formData.append("pregunta", this.form.pregunta);
+        formData.append("respuesta", this.form.respuesta);
+        Api.guardar_oraciones(formData).then(({data}) => {
           this.$vs.notification({
             square: true,
             progress: 'auto',
@@ -461,10 +511,56 @@ export default {
             title: 'Guardaro exitosamente',
             text: 'Registro guardado exitosamente'
           });
+          this.listar();
+          this.form();
+          this.datos_modal.activo = false;
         }).catch( error => {
           console.log(error);
         });
-    }
+    },
+    guardar_frases(){
+        let formData = new FormData();
+        formData.append("pregunta", this.form.pregunta);
+        formData.append("respuesta", this.form.respuesta);
+        Api.guardar_frases(formData).then(({data}) => {
+          this.$vs.notification({
+            square: true,
+            progress: 'auto',
+            color:'success',
+            title: 'Guardaro exitosamente',
+            text: 'Registro guardado exitosamente'
+          });
+          this.listar();
+          this.form();
+          this.datos_modal.activo = false;
+        }).catch( error => {
+          console.log(error);
+        });
+    },
+    eliminar_oraciones(id){
+      Api.eliminar_oraciones(id).then(({data}) => {
+        this.$vs.notification({
+          square: true,
+          progress: 'auto',
+          color:'success',
+          title: 'Dato Borrado',
+          text: 'Dato borrado exitosamente'
+        });
+        this.listar();
+      })
+    },
+    eliminar_frases(id){
+      Api.eliminar_frases(id).then(({data}) => {
+        this.$vs.notification({
+          square: true,
+          progress: 'auto',
+          color:'success',
+          title: 'Dato Borrado',
+          text: 'Dato borrado exitosamente'
+        });
+        this.listar();
+      })
+    },
   },
   mounted() {
     this.llamarpreguntas();

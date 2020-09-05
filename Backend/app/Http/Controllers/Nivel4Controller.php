@@ -90,30 +90,53 @@ class Nivel4Controller extends Controller
         $frases = DB::select("SELECT ps.*, sb.nombre AS nombresbs, sb.nombre FROM subnivel sb INNER JOIN preguntas_subnivel ps ON sb.id=ps.id_subnivel WHERE sb.nivel = 4 AND sb.subnivel = 2");
         return [ 'oraciones' => $oraciones, 'frases' => $frases];
     }
-    function guardar(Request $rq){
-        return $rq;
-        $oraciones = DB::select("SELECT ps.*, sb.nombre AS nombresb FROM subnivel sb INNER JOIN preguntas_subnivel ps ON sb.id=ps.id_subnivel WHERE sb.nivel = 4 AND sb.subnivel = 1");
-        $frases = DB::select("SELECT ps.*, sb.nombre AS nombresb FROM subnivel sb INNER JOIN preguntas_subnivel ps ON sb.id=ps.id_subnivel WHERE sb.nivel = 4 AND sb.subnivel = 2");
-        return [ 'oraciones' => $oraciones, 'frases' => $frases];
-    }
-
-    function agregar(Request $rq){
+    function guardar_oraciones(Request $rq){
         $user = Auth::user()->id;
-        $datos = new Subnivel();
-        $datos->nombre=$rq->nombre;
-        $datos->foto=$rq->foto;
-        $datos->audio=$rq->audio;
-        $datos->nivel=$rq->nivel;
-        $datos->subnivel=$rq->subnivel;
 
-        $datos = new Preguntas_subnivel();
-        $datos->foto=$rq->foto;
-        $datos->tipo=$rq->tipo;
-        $datos->valor_campo=$rq->valor_campo;
-        $datos->nivel=$rq->nivel;
-        $datos->id_subnivel=$rq->id_subnivel;
+        
+
+        $datos = new Subnivel();
+        $datos->nombre = $rq->pregunta;
+        $datos->nivel = 4;
+        $datos->subnivel = 1;
+        $datos->usuario_crea = $user;
         $datos->save();
+
+        $id = $datos->id;
+        
+        $ps = new Preguntas_subnivel();
+        $ps->valor_campo = $rq->respuesta;
+        $ps->nivel = 4;
+        $ps->estado = 1;
+        $ps->id_subnivel = $id;
+        $ps->usuario_crea = $user;
+        $ps->save();
     }
+    function guardar_frases(Request $rq){
+        $user = Auth::user()->id;
+
+        
+
+        $datos = new Subnivel();
+        $datos->nombre = $rq->pregunta;
+        $datos->nivel = 4;
+        $datos->subnivel = 2;
+        $datos->usuario_crea = $user;
+        $datos->save();
+
+        $id = $datos->id;
+        
+        $ps = new Preguntas_subnivel();
+        $ps->valor_campo = $rq->respuesta;
+        $ps->nivel = 4;
+        $ps->estado = 1;
+        $ps->id_subnivel = $id;
+        $ps->usuario_crea = $user;
+        $ps->save();
+    }
+
+
+   
     function editar(Request $rq){
         $user = Auth::user()->id;
         $datos = Subnivel::findOrFail($rq->id);
@@ -131,8 +154,12 @@ class Nivel4Controller extends Controller
         $datos->id_subnivel=$rq->id_subnivel;
         $datos->save();
     }
-    public function eliminar($id){
-        Subnivel::destroy($id);
-        Preguntas_subnivel::destroy($id);
+    public function eliminar_oraciones($id){
+        Subnivel::where('id',$id)->delete();
+        Preguntas_subnivel::where('id_subnivel',$id)->delete();
+    }
+    public function eliminar_frases($id){
+        Subnivel::where('id',$id)->delete();
+        Preguntas_subnivel::where('id_subnivel',$id)->delete();
     }
 }

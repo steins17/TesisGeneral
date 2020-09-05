@@ -38,8 +38,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/nivel2/oraciones/respuesta', 'Nivel2Controller@oraciones_respuesta');
     Route::get('/nivel2/llamarresultados', 'Nivel2Controller@llamarresultados');
     
-    Route::post('nivel2/editar', 'Nivel2Controller@editar');
-    Route::delete('nivel2/eliminar', 'Nivel2Controller@eliminar');
 
     Route::get('/nivel2/listar', 'Nivel2Controller@listar');
     Route::post('/nivel2/guardar', 'Nivel2Controller@guardar');
@@ -71,7 +69,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/nivel4/llamarresultados', 'Nivel4Controller@llamarresultados');
 
     Route::get('/nivel4/listar', 'Nivel4Controller@listar');
-    Route::post('/nivel4/guardar', 'Nivel4Controller@guardar');
+    Route::post('/nivel4/guardar_oraciones', 'Nivel4Controller@guardar_oraciones');
+    Route::post('/nivel4/guardar_frases', 'Nivel4Controller@guardar_frases');
+    Route::delete('/nivel4/eliminar_oraciones/{id}', 'Nivel4Controller@eliminar_oraciones');
+    Route::delete('/nivel4/eliminar_frases/{id}', 'Nivel4Controller@eliminar_frases');
 });
 
 Route::get('/lang/{lang}', 'Controller@set_language')->name('set_language');
