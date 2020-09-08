@@ -19,8 +19,11 @@ export default {
   listar() {
     return Api().get("/nivel4/listar");
   },
-  guardar(form) {
-    return Api().post("/nivel4/guardar", form);
+  guardar_oraciones(form) {
+    return Api().post("/nivel4/guardar_oraciones", form);
+  },
+  guardar_frases(form) {
+    return Api().post("/nivel4/guardar_frases", form);
   },
 
   agregar(form){
@@ -29,7 +32,10 @@ export default {
   editar(form){
     return Api().post("/nivel4/editar", form)
   },
-  eliminar(form){
-    return Api().delete("/nivel4/eliminar", form)
-  }
+  eliminar_oraciones(id){
+    return Api().delete("/nivel4/eliminar_oraciones/"+id);
+  },
+  eliminar_frases(id){
+    return Api().delete("/nivel4/eliminar_frases/"+id);
+  },
 };

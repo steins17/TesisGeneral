@@ -95,7 +95,7 @@
                           Mayúscula - Minúscula
                         </div>
                       <div class="card estilodecard estilocard mb-3 p-3" :class="{'seleccionado':tr.status}" @click="seleccionar_silabas(index, tr, index_h)">
-                        <img :src="'archivos/imagenes/silabas/'+tr.foto" class="w-100 " style="border-radius: 50px"/>
+                        <img :src="'/archivos/imagenes/nivel2/silabas/'+tr.foto" class="w-100 " style="border-radius: 50px"/>
                       </div><br>
                     </vs-col>
                   </vs-row>
@@ -125,7 +125,7 @@
             <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-6 col-md-6 p-3" v-for="(tr,index) in oraciones.preguntas " :key="index">
               <div class="col-lg-12 mb-4 p-0">
                 <div class="card card-ajuste mb-3 p-3" style="border-radius: 50px">
-                  <img :src="'archivos/imagenes/ima_ejer/'+tr.foto" class="card-img-top" style="border-radius: 50px"  alt="Card image cap"/>
+                  <img :src="'/archivos/imagenes/nivel2/oraciones/'+tr.foto" class="card-img-top" style="border-radius: 50px"  alt="Card image cap"/>
                   <div class="card-body">
                     <vs-row>
                       <vs-col vs-type="flex" vs-justify="center" vs-align="center" style="margin: 15px">
@@ -244,7 +244,7 @@
                     <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
                     <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
                     <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar',tr,2)"></i>
-                    <i class="fas fa-trash ml-2 pointer eventsalto"></i>
+                    <i class="fas fa-trash ml-2 pointer eventsalto" @click="eliminar_silabas(tr.id_subnivel)"></i>
                   </vs-td>
                 </vs-tr>
               </template>
@@ -283,7 +283,7 @@
                     <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
                     <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
                     <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar',tr,3)"></i>
-                    <i class="fas fa-trash ml-2 pointer eventsalto" @click="eliminar()"></i>
+                    <i class="fas fa-trash ml-2 pointer eventsalto" @click="eliminar_oraciones(tr.id_subnivel)"></i>
                   </vs-td>
                 </vs-tr>
               </template>
@@ -390,7 +390,7 @@
             <vs-button block @click.prevent="guardar_letras()" v-if="datos_modal.tipo==1">
               Agregar
             </vs-button>
-            <vs-button block @click.prevent="editar()" v-else>
+            <vs-button block @click.prevent="editar_letras()" v-else>
               Editar
             </vs-button>
           </div>
@@ -398,7 +398,7 @@
             <vs-button block @click.prevent="guardar_silabas()" v-if="datos_modal.tipo==1">
               Agregar1
             </vs-button>
-            <vs-button block @click.prevent="editar()" v-else>
+            <vs-button block @click.prevent="editar_silabas()" v-else>
               Editar1
             </vs-button>
           </div>
@@ -406,7 +406,7 @@
             <vs-button block @click.stop="guardar_oraciones()" v-if="datos_modal.tipo==1">
               Agregar2
             </vs-button>
-            <vs-button block @click.prevent="editar()" v-else>
+            <vs-button block @click.prevent="editar_oraciones()" v-else>
               Editar2
             </vs-button>
           </div>
@@ -456,6 +456,7 @@ export default {
         sb:null,
       },
       form:{
+        id:null,
         nombre:'',
         audio:'',
         foto:'',
@@ -699,7 +700,6 @@ export default {
             titulo:"Agergar Registro",
             sb:sb
           };
-          
           break;
         }
         case 'editar': {
@@ -709,6 +709,8 @@ export default {
             titulo:"Editar Registro",
             sb:sb
           };
+          this.form.audio = data.audiosb;
+          this.form.id = data.id;
           break;
         }
       }
@@ -734,6 +736,7 @@ export default {
           });
           this.listar();
           this.datos_modal.activo = false;
+          this.form();
         }).catch( error => {
           console.log(error);
         });
@@ -755,6 +758,7 @@ export default {
             text: 'Registro guardado exitosamente'
           });
           this.listar();
+          this.form();
           this.datos_modal.activo = false;
         }).catch( error => {
           console.log(error);
@@ -774,6 +778,7 @@ export default {
             text: 'Registro guardado exitosamente'
           });
           this.listar();
+          this.form_oraciones();
           this.datos_modal.activo = false;
         }).catch( error => {
           console.log(error);
@@ -793,6 +798,93 @@ export default {
     },
     recuperarimagenoraciones(event){
       this.form_oraciones.imagen = event.target.files[0];
+    },
+    form(){
+      this.form = {
+        id:null,
+        nombre:'',
+        audio:'',
+        foto:'',
+        preguntas:[
+          {
+            foto:'',
+            tipo:1,
+            valor_campo:''
+          },
+          {
+            foto:'',
+            tipo:0,
+            valor_campo:''
+          }
+        ]
+      };
+    },
+    editar_letras(){
+        let formData = new FormData();
+        formData.append("audio", this.form.audio);
+        formData.append("id", this.form.id);
+        formData.append("foto1", this.form.preguntas[0].foto);
+        formData.append("tipo1", this.form.preguntas[0].tipo);
+        formData.append("foto2", this.form.preguntas[1].foto);
+        formData.append("tipo2", this.form.preguntas[1].tipo);
+        console.log(this.form);
+        Api.editar_l(formData, {headers: { 'Content-Type': 'multipart/form-data'},} ).then(({data}) => {
+          this.$vs.notification({
+            square: true,
+            progress: 'auto',
+            color:'success',
+            title: 'Editado exitosamente',
+            text: 'Registro editado exitosamente'
+          });
+          this.listar();
+          this.datos_modal.activo = false;
+          this.form();
+        }).catch( error => {
+          console.log(error);
+        });
+    },
+    editar_silabas(){
+        let formData = new FormData();
+        formData.append("audio", this.form.audio);
+        formData.append("foto1", this.form.preguntas[0].foto);
+        formData.append("tipo1", this.form.preguntas[0].tipo);
+        formData.append("foto2", this.form.preguntas[1].foto);
+        formData.append("tipo2", this.form.preguntas[1].tipo);
+        console.log(this.form);
+        Api.editar_s(formData, {headers: { 'Content-Type': 'multipart/form-data'},} ).then(({data}) => {
+          this.$vs.notification({
+            square: true,
+            progress: 'auto',
+            color:'success',
+            title: 'Editado exitosamente',
+            text: 'Registro editado exitosamente'
+          });
+          this.listar();
+          this.datos_modal.activo = false;
+          this.form();
+        }).catch( error => {
+          console.log(error);
+        });
+    },
+    editar_oraciones(){
+        let formData = new FormData();
+        formData.append("pregunta", this.form_oraciones.pregunta);
+        formData.append("respuesta", this.form_oraciones.respuesta);
+        formData.append("imagen", this.form_oraciones.imagen);
+        Api.editar_o(formData).then(({data}) => {
+          this.$vs.notification({
+            square: true,
+            progress: 'auto',
+            color:'success',
+            title: 'Guardaro exitosamente',
+            text: 'Registro guardado exitosamente'
+          });
+          this.listar();
+          this.form_oraciones();
+          this.datos_modal.activo = false;
+        }).catch( error => {
+          console.log(error);
+        });
     },
     eliminar_letras(id){
       Api.eliminar_letras(id).then(({data}) => {

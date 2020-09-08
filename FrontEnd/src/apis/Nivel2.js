@@ -29,11 +29,23 @@ export default {
   guardar_oraciones(form) {
     return Api().post("/nivel2/guardar_oraciones", form);
   },
-  editar(form){
-    return Api().post("/nivel2/editar", form);
+  editar_l(form){
+    return Api().post("/nivel2/editar_l", form);
+  },
+  editar_s(form){
+    return Api().post("/nivel2/editar_s", form);
+  },
+  editar_o(form){
+    return Api().post("/nivel2/editar_o", form);
   },
   eliminar_letras(id){
     return Api().delete("/nivel2/eliminar_letras/"+id);
+  },
+  eliminar_silabas(id){
+    return Api().delete("/nivel2/eliminar_silabas/"+id);
+  },
+  eliminar_oraciones(id){
+    return Api().delete("/nivel2/eliminar_oraciones/"+id);
   },
   cambiar_estado(form){
     return Api().post("/nivel2/cambiar_estado", form);

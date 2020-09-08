@@ -194,7 +194,7 @@
                   <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
                   <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
                   <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar',tr,1)"></i>
-                  <i class="fas fa-trash ml-2 pointer eventsalto"></i>
+                  <i class="fas fa-trash ml-2 pointer eventsalto" @click="eliminar_letras(tr.id_subnivel)"></i>
                 </vs-td>
               </vs-tr>
             </template>
@@ -233,7 +233,7 @@
                     <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
                     <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
                     <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar',tr,2)"></i>
-                    <i class="fas fa-trash ml-2 pointer eventsalto"></i>
+                    <i class="fas fa-trash ml-2 pointer eventsalto" @click="eliminar_silabas(tr.id_subnivel)"></i>
                   </vs-td>
                 </vs-tr>
               </template>
@@ -272,7 +272,7 @@
                     <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
                     <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
                     <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar',tr,3)"></i>
-                    <i class="fas fa-trash ml-2 pointer eventsalto"></i>
+                    <i class="fas fa-trash ml-2 pointer eventsalto" @click="eliminar_palabras(tr.id_subnivel)"></i>
                   </vs-td>
                 </vs-tr>
               </template>
@@ -681,6 +681,42 @@ filters: {
     },
     recuperarimagen(event){
       this.form.imagen = event.target.files[0];
+    },
+    eliminar_letras(id){
+      Api.eliminar_letras(id).then(({data}) => {
+        this.$vs.notification({
+          square: true,
+          progress: 'auto',
+          color:'success',
+          title: 'Dato Borrado',
+          text: 'Dato borrado exitosamente'
+        });
+        this.listar();
+      })
+    },
+    eliminar_silabas(id){
+      Api.eliminar_silabas(id).then(({data}) => {
+        this.$vs.notification({
+          square: true,
+          progress: 'auto',
+          color:'success',
+          title: 'Dato Borrado',
+          text: 'Dato borrado exitosamente'
+        });
+        this.listar();
+      })
+    },
+    eliminar_palabras(id){
+      Api.eliminar_letras(id).then(({data}) => {
+        this.$vs.notification({
+          square: true,
+          progress: 'auto',
+          color:'success',
+          title: 'Dato Borrado',
+          text: 'Dato borrado exitosamente'
+        });
+        this.listar();
+      })
     },
   },
   mounted() {

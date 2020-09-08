@@ -130,7 +130,7 @@ class Nivel2Controller extends Controller
 
         $rq->file('foto1')->move($destino, $nombre_imagen);
 
-
+        // foto2
         $file_imagen = $rq->file('foto2');
         $destino = base_path().'/../FrontEnd/public/archivos/imagenes/nivel2/letras';
         $nombre_imagen = $file_imagen->getClientOriginalName();
@@ -217,24 +217,137 @@ class Nivel2Controller extends Controller
 
         $rq->file('imagen')->move($destino, $nombre_imagen);
     }
-    function editar(Request $rq){
+    function editar_l(Request $rq){
+        return $rq;
+        $user = Auth::user()->id;
+
+        $datos = Subnivel::findOrFail($rq->id);
+        $datos->audio = $rq->audio;
+        $datos->nivel = 2;
+        $datos->subnivel = 1;
+        $datos->usuario_crea = $user;
+        $datos->usuario_modifica = $user;
+        $datos->save();
+
+        $id = $datos->id;
+
+        Preguntas_subnivel::where('id_subnivel',$id)->delete();
+
+        $file_imagen = $rq->file('foto1');
+        $destino = base_path().'/../FrontEnd/public/archivos/imagenes/nivel2/letras';
+        $nombre_imagen = $file_imagen->getClientOriginalName();
+
+        $ps = new Preguntas_subnivel();
+        $ps->foto = $nombre_imagen;
+        $ps->tipo = $rq->tipo2;
+        $ps->nivel = 2;
+        $ps->estado = 1;
+        $ps->id_subnivel = $id;
+        $ps->usuario_crea = $user;
+        $ps->usuario_modifica = $user;
+        $ps->save();
+
+        $rq->file('foto1')->move($destino, $nombre_imagen);
+
+        // foto2
+        $file_imagen = $rq->file('foto2');
+        $destino = base_path().'/../FrontEnd/public/archivos/imagenes/nivel2/letras';
+        $nombre_imagen = $file_imagen->getClientOriginalName();
+
+        $ps = new Preguntas_subnivel();
+        $ps->foto = $nombre_imagen;
+        $ps->tipo = $rq->tipo2;
+        $ps->nivel = 2;
+        $ps->estado = 1;
+        $ps->id_subnivel = $id;
+        $ps->usuario_crea = $user;
+        $ps->save();
+
+        $rq->file('foto2')->move($destino, $nombre_imagen);
+    }
+    function editar_s(Request $rq){
         $user = Auth::user()->id;
         $datos = Subnivel::findOrFail($rq->id);
-        $datos->nombre=$rq->nombre;
-        $datos->foto=$rq->foto;
-        $datos->audio=$rq->audio;
-        $datos->nivel=$rq->nivel;
-        $datos->subnivel=$rq->subnivel;
+        $datos->audio = $rq->audio;
+        $datos->nivel = 2;
+        $datos->subnivel = 2;
+        $datos->usuario_crea = $user;
+        $datos->usuario_modifica = $user;
+        $datos->save();
+
+        $id = $datos->id;
+
+        $file_imagen = $rq->file('foto2');
+        $destino = base_path().'/../FrontEnd/public/archivos/imagenes/nivel2/silabas';
+        $nombre_imagen = $file_imagen->getClientOriginalName();
+
+        $ps = Preguntas_subnivel::findOrFail($rq->id);
+        $ps->foto = $nombre_imagen;
+        $ps->tipo = $rq->tipo2;
+        $ps->nivel = 2;
+        $ps->estado = 1;
+        $ps->id_subnivel = $id;
+        $ps->usuario_crea = $user;
+        $ps->usuario_modifica = $user;
+        $ps->save();
+
+        $rq->file('foto1')->move($destino, $nombre_imagen);
+
+        // foto2
+        $file_imagen = $rq->file('foto2');
+        $destino = base_path().'/../FrontEnd/public/archivos/imagenes/nivel2/silabas';
+        $nombre_imagen = $file_imagen->getClientOriginalName();
 
         $datos = Preguntas_subnivel::findOrFail($rq->id);
-        $datos->foto=$rq->foto;
-        $datos->tipo=$rq->tipo;
-        $datos->valor_campo=$rq->valor_campo;
-        $datos->nivel=$rq->nivel;
-        $datos->id_subnivel=$rq->id_subnivel;
+        $ps->foto = $nombre_imagen;
+        $ps->tipo = $rq->tipo2;
+        $ps->nivel = 2;
+        $ps->estado = 1;
+        $ps->id_subnivel = $id;
+        $ps->usuario_crea = $user;
+        $ps->save();
+
+        $rq->file('foto2')->move($destino, $nombre_imagen);
+    }
+    function editar_o(Request $rq){
+        $user = Auth::user()->id;
+
+        $file_imagen = $rq->file('imagen');
+        $destino = base_path().'/../FrontEnd/public/archivos/imagenes/nivel2/oraciones';
+        $nombre_imagen = $file_imagen->getClientOriginalName();
+
+        $datos = Subnivel::findOrFail($rq->id);
+        $datos->nombre = $rq->pregunta;
+        $datos->nivel = 2;
+        $datos->subnivel = 3;
+        $datos->usuario_crea = $user;
+        $datos->usuario_modifica = $user;
+        $datos->foto = $nombre_imagen;
         $datos->save();
+
+        $id = $datos->id;
+        
+        $ps = Preguntas_subnivel::findOrFail($rq->id);
+        $ps->valor_campo = $rq->respuesta;
+        $ps->nivel = 2;
+        $ps->estado = 1;
+        $ps->id_subnivel = $id;
+        $ps->usuario_crea = $user;
+        $ps->usuario_modifica = $user;
+        $ps->foto = $nombre_imagen;
+        $ps->save();
+
+        $rq->file('imagen')->move($destino, $nombre_imagen);
     }
     public function eliminar_letras($id){
+        Subnivel::where('id',$id)->delete();
+        Preguntas_subnivel::where('id_subnivel',$id)->delete();
+    }
+    public function eliminar_silabas($id){
+        Subnivel::where('id',$id)->delete();
+        Preguntas_subnivel::where('id_subnivel',$id)->delete();
+    }
+    public function eliminar_oraciones($id){
         Subnivel::where('id',$id)->delete();
         Preguntas_subnivel::where('id_subnivel',$id)->delete();
     }
