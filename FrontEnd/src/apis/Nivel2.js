@@ -34,5 +34,8 @@ export default {
   },
   eliminar_letras(id){
     return Api().delete("/nivel2/eliminar_letras/"+id);
+  },
+  cambiar_estado(form){
+    return Api().post("/nivel2/cambiar_estado", form);
   }
 };

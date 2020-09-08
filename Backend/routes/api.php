@@ -40,6 +40,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     
     Route::post('nivel2/editar', 'Nivel2Controller@editar');
     Route::delete('nivel2/eliminar', 'Nivel2Controller@eliminar');
+    Route::post('/nivel2/cambiar_estado', 'Nivel2Controller@cambiar_estado');
 
     Route::get('/nivel2/listar', 'Nivel2Controller@listar');
     Route::post('/nivel2/guardar', 'Nivel2Controller@guardar');

@@ -47,7 +47,7 @@
                           Mayúscula - Minúscula
                         </div>
                       <div class="card estilodecard mb-3 p-3" :class="{'seleccionado':tr.status}" @click="seleccionar_letras(index, tr, index_hijo)">
-                        <img :src="'archivos/imagenes/ejercicios/'+tr.foto" class="w-100" style="border-radius: 50px"/>
+                        <img :src="'archivos/imagenes/nivel2/letras/'+tr.foto" class="w-100" style="border-radius: 50px"/>
                       </div><br>
                     </vs-col>
                   </vs-row>
@@ -200,8 +200,8 @@
                   <vs-td>{{tr.foto}}</vs-td>
                   <vs-td>{{ tr.updated_at | fecha }}</vs-td>
                   <vs-td>
-                    <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
-                    <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
+                    <i class="fas fa-toggle-on pointer eventsalto" style="color:green" @click="cambiar_estado(tr.id, 0)" v-if="tr.estado==1"></i>
+                    <i class="fas fa-toggle-off pointer eventsalto" style="color:red" @click="cambiar_estado(tr.id, 1)" v-else></i>
                     <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar',tr,1)"></i>
                     <i class="fas fa-trash ml-2 pointer eventsalto" @click="eliminar_letras(tr.id_subnivel)"></i>
                   </vs-td>
@@ -403,7 +403,7 @@
             </vs-button>
           </div>
           <div class="footer-dialog" v-else>
-            <vs-button block @click.prevent="guardar_oraciones()" v-if="datos_modal.tipo==1">
+            <vs-button block @click.stop="guardar_oraciones()" v-if="datos_modal.tipo==1">
               Agregar2
             </vs-button>
             <vs-button block @click.prevent="editar()" v-else>
@@ -490,36 +490,27 @@ export default {
       Api.llamarpreguntas().then(({data}) => {
         var valores = [ {letras:0,valor:0}, {silabas:0,valor:0}, {oraciones:0,valor:0} ];
         data.subnivel.forEach((el,index) => {
-          if(this.letras.length>=1){
-            if(el.subnivel==1) this.letras.preguntas.push({audio:el.audio, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
-          }
-          if(this.silabas.length>=1){
-            if(el.subnivel==2) this.silabas.preguntas.push({audio:el.audio, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
-          }
-          if(this.oraciones.length>=1){
-            if(el.subnivel==3) this.oraciones.preguntas.push({nombre:el.nombre,foto:el.foto, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
-          }
+          if(el.subnivel==1) this.letras.preguntas.push({audio:el.audio, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
+          if(el.subnivel==2) this.silabas.preguntas.push({audio:el.audio, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
+          if(el.subnivel==3) this.oraciones.preguntas.push({nombre:el.nombre,foto:el.foto, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
           data.preguntas.forEach((pr,index1) => {
-            if(this.letras.length>=1){
-              if(el.id==pr.id_subnivel && el.subnivel==1){
-                if(index!=valores[0].letras) valores[0].letras = index, valores[0].valor++;
-                if(!this.letras.preguntas[valores[0].valor].respuestas) this.letras.preguntas[valores[0].valor].respuestas = [];
-                this.letras.preguntas[valores[0].valor].respuestas.push(pr);
-              };
+            if(el.id==pr.id_subnivel && el.subnivel==1){
+              if(index!=valores[0].letras) valores[0].letras = index;
+              if(!this.letras.preguntas[valores[0].valor].respuestas) this.letras.preguntas[valores[0].valor].respuestas = [];
+              this.letras.preguntas[valores[0].valor].respuestas.push(pr);
+              if(index!=valores[0].letras) valores[0].valor++;
+            };
+            if(el.id==pr.id_subnivel && el.subnivel==2){  
+              if(index!=valores[1].silabas) valores[1].silabas = index;
+              if(!this.silabas.preguntas[valores[1].valor].respuestas) this.silabas.preguntas[valores[1].valor].respuestas = [];
+              this.silabas.preguntas[valores[1].valor].respuestas.push(pr); 
+              if(index!=valores[1].silabas) valores[1].valor++;
             }
-            if(this.silabas.length>=1){
-              if(el.id==pr.id_subnivel && el.subnivel==2){  
-                if(index!=valores[1].silabas) valores[1].silabas = index, valores[1].valor++;
-                if(!this.silabas.preguntas[valores[1].valor-1].respuestas) this.silabas.preguntas[valores[1].valor-1].respuestas = [];
-                this.silabas.preguntas[valores[1].valor-1].respuestas.push(pr); 
-              }
-            }
-            if(this.oraciones.length>=1){
-              if(el.id==pr.id_subnivel && el.subnivel==3){  
-                if(index!=valores[2].oraciones) valores[2].oraciones = index, valores[2].valor++;
-                if(!this.oraciones.preguntas[valores[2].valor-1].respuestas) this.oraciones.preguntas[valores[2].valor-1].respuestas = [];
-                this.oraciones.preguntas[valores[2].valor-1].respuestas.push(pr); 
-              }
+            if(el.id==pr.id_subnivel && el.subnivel==3){  
+              if(index!=valores[2].oraciones) valores[2].oraciones = index;
+              if(!this.oraciones.preguntas[valores[2].valor].respuestas) this.oraciones.preguntas[valores[2].valor].respuestas = [];
+              this.oraciones.preguntas[valores[2].valor].respuestas.push(pr); 
+              if(index!=valores[2].oraciones) valores[2].valor++;
             }
           });
         });
@@ -811,6 +802,19 @@ export default {
           color:'success',
           title: 'Dato Borrado',
           text: 'Dato borrado exitosamente'
+        });
+        this.listar();
+      })
+    },
+    cambiar_estado(id, estado){
+      var form = {id:id, estado:estado}
+      Api.cambiar_estado(form).then(({data}) => {
+        this.$vs.notification({
+          square: true,
+          progress: 'auto',
+          color:'success',
+          title: 'Estado Actualizado',
+          text: 'Estado Actualizado exitosamente'
         });
         this.listar();
       })

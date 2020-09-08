@@ -238,5 +238,12 @@ class Nivel2Controller extends Controller
         Subnivel::where('id',$id)->delete();
         Preguntas_subnivel::where('id_subnivel',$id)->delete();
     }
+    public function cambiar_estado(Request $rq){
+        $estado = $rq->estado;
+        $id = $rq->id;
+        $ps = Preguntas_subnivel::findOrFail($id);
+        $ps->estado = $estado;
+        $ps->save();
+    }
 }
 
