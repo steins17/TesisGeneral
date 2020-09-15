@@ -489,6 +489,7 @@ export default {
   methods: {
     llamarpreguntas(){
       Api.llamarpreguntas().then(({data}) => {
+        console.log(data);
         var valores = [ {letras:0,valor:0}, {silabas:0,valor:0}, {oraciones:0,valor:0} ];
         data.subnivel.forEach((el,index) => {
           if(el.subnivel==1) this.letras.preguntas.push({audio:el.audio, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
@@ -496,22 +497,19 @@ export default {
           if(el.subnivel==3) this.oraciones.preguntas.push({nombre:el.nombre,foto:el.foto, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
           data.preguntas.forEach((pr,index1) => {
             if(el.id==pr.id_subnivel && el.subnivel==1){
-              if(index!=valores[0].letras) valores[0].letras = index;
+              if(index!=valores[0].letras) valores[0].letras = index, valores[0].valor++;;
               if(!this.letras.preguntas[valores[0].valor].respuestas) this.letras.preguntas[valores[0].valor].respuestas = [];
               this.letras.preguntas[valores[0].valor].respuestas.push(pr);
-              if(index!=valores[0].letras) valores[0].valor++;
             };
             if(el.id==pr.id_subnivel && el.subnivel==2){  
-              if(index!=valores[1].silabas) valores[1].silabas = index;
-              if(!this.silabas.preguntas[valores[1].valor].respuestas) this.silabas.preguntas[valores[1].valor].respuestas = [];
-              this.silabas.preguntas[valores[1].valor].respuestas.push(pr); 
-              if(index!=valores[1].silabas) valores[1].valor++;
+              if(index!=valores[1].silabas) valores[1].silabas = index, valores[1].valor++;
+              if(!this.silabas.preguntas[valores[1].valor-1].respuestas) this.silabas.preguntas[valores[1].valor-1].respuestas = [];
+              this.silabas.preguntas[valores[1].valor-1].respuestas.push(pr); 
             }
             if(el.id==pr.id_subnivel && el.subnivel==3){  
-              if(index!=valores[2].oraciones) valores[2].oraciones = index;
-              if(!this.oraciones.preguntas[valores[2].valor].respuestas) this.oraciones.preguntas[valores[2].valor].respuestas = [];
-              this.oraciones.preguntas[valores[2].valor].respuestas.push(pr); 
-              if(index!=valores[2].oraciones) valores[2].valor++;
+              if(index!=valores[2].oraciones) valores[2].oraciones = index, valores[2].valor++;
+              if(!this.oraciones.preguntas[valores[2].valor-1].respuestas) this.oraciones.preguntas[valores[2].valor-1].respuestas = [];
+              this.oraciones.preguntas[valores[2].valor-1].respuestas.push(pr); 
             }
           });
         });
