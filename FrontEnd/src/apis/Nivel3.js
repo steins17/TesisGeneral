@@ -29,10 +29,14 @@ export default {
   guardar_p(form) {
     return Api().post("/nivel3/guardar_p", form);
   },
-
-
-  editar(form){
-    return Api().post("/nivel3/editar", form)
+  editar_s(form){
+    return Api().post("/nivel3/editar_s", form)
+  },
+  editar_l(form){
+    return Api().post("/nivel3/editar_l", form)
+  },
+  editar_p(form){
+    return Api().post("/nivel3/editar_p", form)
   },
   eliminar_letras(id){
     return Api().delete("/nivel3/eliminar_letras/"+id);
@@ -42,5 +46,8 @@ export default {
   },
   eliminar_palabras(id){
     return Api().delete("/nivel3/eliminar_palabras/"+id);
+  },
+  cambiar_estado(form){
+    return Api().post("/nivel3/cambiar_estado", form);
   }
 };

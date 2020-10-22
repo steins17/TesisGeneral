@@ -25,12 +25,11 @@ export default {
   guardar_frases(form) {
     return Api().post("/nivel4/guardar_frases", form);
   },
-
-  agregar(form){
-    return Api().post("/nivel4/agregar", form)
+  editar_oraciones(form){
+    return Api().post("/nivel4/editar_oraciones", form);
   },
-  editar(form){
-    return Api().post("/nivel4/editar", form)
+  editar_frases(form){
+    return Api().post("/nivel4/editar_frases", form);
   },
   eliminar_oraciones(id){
     return Api().delete("/nivel4/eliminar_oraciones/"+id);

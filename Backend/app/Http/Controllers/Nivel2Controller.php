@@ -83,7 +83,7 @@ class Nivel2Controller extends Controller
         return DB::select("SELECT sum(tipo) AS suma, count(*) AS total FROM usuario_pregunta WHERE nivel = 2 AND subnivel = 3");
     }
     function llamardatos(){
-        $subnivel = Subnivel::select('*')->where("nivel", "=", 2)->get();
+        $subnivel = DB::select("SELECT *, (SELECT estado FROM preguntas_subnivel WHERE id_subnivel = subnivel.id LIMIT 1) AS estado FROM subnivel WHERE nivel=2 ");
 
         $preguntas = Preguntas_subnivel::select('id', 'foto','valor_campo', 'nivel', 'id_subnivel')->where("nivel", "=", 2)->where("estado", "=", 1)->get();
         return [
@@ -267,6 +267,7 @@ class Nivel2Controller extends Controller
     }
     function editar_s(Request $rq){
         $user = Auth::user()->id;
+
         $datos = Subnivel::findOrFail($rq->id);
         $datos->audio = $rq->audio;
         $datos->nivel = 2;
@@ -277,11 +278,13 @@ class Nivel2Controller extends Controller
 
         $id = $datos->id;
 
-        $file_imagen = $rq->file('foto2');
+        Preguntas_subnivel::where('id_subnivel',$id)->delete();
+
+        $file_imagen = $rq->file('foto1');
         $destino = base_path().'/../FrontEnd/public/archivos/imagenes/nivel2/silabas';
         $nombre_imagen = $file_imagen->getClientOriginalName();
 
-        $ps = Preguntas_subnivel::findOrFail($rq->id);
+        $ps = new Preguntas_subnivel();
         $ps->foto = $nombre_imagen;
         $ps->tipo = $rq->tipo2;
         $ps->nivel = 2;
@@ -298,7 +301,7 @@ class Nivel2Controller extends Controller
         $destino = base_path().'/../FrontEnd/public/archivos/imagenes/nivel2/silabas';
         $nombre_imagen = $file_imagen->getClientOriginalName();
 
-        $datos = Preguntas_subnivel::findOrFail($rq->id);
+        $ps = new Preguntas_subnivel();
         $ps->foto = $nombre_imagen;
         $ps->tipo = $rq->tipo2;
         $ps->nivel = 2;

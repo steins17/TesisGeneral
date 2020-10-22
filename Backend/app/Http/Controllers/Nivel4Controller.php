@@ -112,12 +112,34 @@ class Nivel4Controller extends Controller
         $ps->usuario_crea = $user;
         $ps->save();
     }
-    function guardar_frases(Request $rq){
+    function editar_oraciones(Request $rq){
         $user = Auth::user()->id;
 
         
 
-        $datos = new Subnivel();
+        $datos = Subnivel::findOrFail($rq->id);
+        $datos->nombre = $rq->pregunta;
+        $datos->nivel = 4;
+        $datos->subnivel = 1;
+        $datos->usuario_crea = $user;
+        $datos->save();
+
+        $id = $datos->id;
+        
+        $ps = Preguntas_subnivel::findOrFail($rq->id);
+        $ps->valor_campo = $rq->respuesta;
+        $ps->nivel = 4;
+        $ps->estado = 1;
+        $ps->id_subnivel = $id;
+        $ps->usuario_crea = $user;
+        $ps->save();
+    }
+    function editar_frases(Request $rq){
+        $user = Auth::user()->id;
+
+        
+
+        $datos = Subnivel::findOrFail($rq->id);
         $datos->nombre = $rq->pregunta;
         $datos->nivel = 4;
         $datos->subnivel = 2;
@@ -126,33 +148,13 @@ class Nivel4Controller extends Controller
 
         $id = $datos->id;
         
-        $ps = new Preguntas_subnivel();
+        $ps = Preguntas_subnivel::findOrFail($rq->id);
         $ps->valor_campo = $rq->respuesta;
         $ps->nivel = 4;
         $ps->estado = 1;
         $ps->id_subnivel = $id;
         $ps->usuario_crea = $user;
         $ps->save();
-    }
-
-
-   
-    function editar(Request $rq){
-        $user = Auth::user()->id;
-        $datos = Subnivel::findOrFail($rq->id);
-        $datos->nombre=$rq->nombre;
-        $datos->foto=$rq->foto;
-        $datos->audio=$rq->audio;
-        $datos->nivel=$rq->nivel;
-        $datos->subnivel=$rq->subnivel;
-
-        $datos = Preguntas_subnivel::findOrFail($rq->id);
-        $datos->foto=$rq->foto;
-        $datos->tipo=$rq->tipo;
-        $datos->valor_campo=$rq->valor_campo;
-        $datos->nivel=$rq->nivel;
-        $datos->id_subnivel=$rq->id_subnivel;
-        $datos->save();
     }
     public function eliminar_oraciones($id){
         Subnivel::where('id',$id)->delete();

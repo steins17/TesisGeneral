@@ -324,7 +324,7 @@
             <vs-button block @click="guardar_l()" v-if="datos_modal.tipo==1">
               Agregar
             </vs-button>
-            <vs-button block @click="editar()" v-else>
+            <vs-button block @click="editar_l()" v-else>
               Editar
             </vs-button>
           </div>
@@ -332,7 +332,7 @@
             <vs-button block @click="guardar_s()" v-if="datos_modal.tipo==1">
               Agregar1
             </vs-button>
-            <vs-button block @click="editar()" v-else>
+            <vs-button block @click="editar_s()" v-else>
               Editar1
             </vs-button>
           </div>
@@ -340,7 +340,7 @@
             <vs-button block @click="guardar_p()" v-if="datos_modal.tipo==1">
               Agregar2
             </vs-button>
-            <vs-button block @click="editar()" v-else>
+            <vs-button block @click="editar_p()" v-else>
               Editar2
             </vs-button>
           </div>
@@ -679,6 +679,81 @@ filters: {
           console.log(error);
         });
     },
+    forms(){
+      this.form = {
+        id:null,
+        nombre:'',
+        audio:'',
+        foto:'',
+        pregunta:[
+          {
+            foto:'',
+            tipo:1,
+            valor_campo:''
+          }
+        ]
+      };
+    },
+    editar_l(){
+        let formData = new FormData();
+        formData.append("pregunta", this.form.pregunta);
+        formData.append("respuesta", this.form.respuesta);
+        formData.append("imagen", this.form.pregunta[0].imagen);
+        Api.guardar_l(formData).then(({data}) => {
+          this.$vs.notification({
+            square: true,
+            progress: 'auto',
+            color:'success',
+            title: 'Guardaro exitosamente',
+            text: 'Registro guardado exitosamente'
+          });
+          this.listar();
+          this.datos_modal.activo = false;
+          this.forms();
+        }).catch( error => {
+          console.log(error);
+        });
+    },
+    editar_s(){
+        let formData = new FormData();
+        formData.append("pregunta", this.form.pregunta);
+        formData.append("respuesta", this.form.respuesta);
+        formData.append("imagen", this.form.pregunta[0].imagen);
+        Api.guardar_s(formData).then(({data}) => {
+          this.$vs.notification({
+            square: true,
+            progress: 'auto',
+            color:'success',
+            title: 'Guardaro exitosamente',
+            text: 'Registro guardado exitosamente'
+          });
+          this.listar();
+          this.datos_modal.activo = false;
+          this.forms();
+        }).catch( error => {
+          console.log(error);
+        });
+    },
+    editar_p(){
+        let formData = new FormData();
+        formData.append("pregunta", this.form.pregunta);
+        formData.append("respuesta", this.form.respuesta);
+        formData.append("imagen", this.form.pregunta[0].imagen);
+        Api.guardar_p(formData).then(({data}) => {
+          this.$vs.notification({
+            square: true,
+            progress: 'auto',
+            color:'success',
+            title: 'Guardaro exitosamente',
+            text: 'Registro guardado exitosamente'
+          });
+          this.listar();
+          this.datos_modal.activo = false;
+          this.forms();
+        }).catch( error => {
+          console.log(error);
+        });
+    },
     recuperarimagen(event){
       this.form.imagen = event.target.files[0];
     },
@@ -714,6 +789,19 @@ filters: {
           color:'success',
           title: 'Dato Borrado',
           text: 'Dato borrado exitosamente'
+        });
+        this.listar();
+      })
+    },
+    cambiar_estado(id, estado){
+      var form = {id:id, estado:estado}
+      Api.cambiar_estado(form).then(({data}) => {
+        this.$vs.notification({
+          square: true,
+          progress: 'auto',
+          color:'success',
+          title: 'Estado Actualizado',
+          text: 'Estado Actualizado exitosamente'
         });
         this.listar();
       })

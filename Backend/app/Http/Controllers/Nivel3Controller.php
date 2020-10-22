@@ -99,7 +99,7 @@ class Nivel3Controller extends Controller
     }
 
     function llamardatos(){
-        $subnivel = Subnivel::select('*')->where("nivel", "=", 3)->get();
+        $subnivel = DB::select("SELECT *, (SELECT estado FROM preguntas_subnivel WHERE id_subnivel = subnivel.id LIMIT 1) AS estado FROM subnivel WHERE nivel=3 ");
 
         $preguntas = Preguntas_subnivel::select('id','valor_campo',  'nivel', 'id_subnivel')->where("nivel", "=", 3)->get();
         return [
@@ -204,22 +204,89 @@ class Nivel3Controller extends Controller
         $rq->file('imagen')->move($destino, $nombre_imagen);
 
     }
-    function editar(Request $rq){
+    function editar_l(Request $rq){
         $user = Auth::user()->id;
-        $datos = Subnivel::findOrFail($rq->id);
-        $datos->nombre=$rq->nombre;
-        $datos->foto=$rq->foto;
-        $datos->audio=$rq->audio;
-        $datos->nivel=$rq->nivel;
-        $datos->subnivel=$rq->subnivel;
 
-        $datos = Preguntas_subnivel::findOrFail($rq->id);
-        $datos->foto=$rq->foto;
-        $datos->tipo=$rq->tipo;
-        $datos->valor_campo=$rq->valor_campo;
-        $datos->nivel=$rq->nivel;
-        $datos->id_subnivel=$rq->id_subnivel;
+        $file_imagen = $rq->file('imagen');
+        $destino = base_path().'/../FrontEnd/public/archivos/imagenes/nivel3/';
+        $nombre_imagen = $file_imagen->getClientOriginalName();
+
+        $datos =Subnivel::findOrFail($rq->id);
+        $datos->audio = $rq->pregunta;
+        $datos->nivel = 3;
+        $datos->subnivel = 1;
+        $datos->usuario_crea = $user;
+        $datos->foto = $nombre_imagen;
         $datos->save();
+
+        $id = $datos->id;
+        
+        $ps = new Preguntas_subnivel();
+        $ps->valor_campo = $rq->respuesta;
+        $ps->nivel = 3;
+        $ps->estado = 1;
+        $ps->id_subnivel = $id;
+        $ps->usuario_crea = $user;
+        $ps->save();
+
+        $rq->file('imagen')->move($destino, $nombre_imagen);
+
+    }
+    function editar_s(Request $rq){
+        $user = Auth::user()->id;
+
+        $file_imagen = $rq->file('imagen');
+        $destino = base_path().'/../FrontEnd/public/archivos/imagenes/nivel3/';
+        $nombre_imagen = $file_imagen->getClientOriginalName();
+
+        $datos =Subnivel::findOrFail($rq->id);
+        $datos->audio = $rq->pregunta;
+        $datos->nivel = 3;
+        $datos->subnivel = 2;
+        $datos->usuario_crea = $user;
+        $datos->foto = $nombre_imagen;
+        $datos->save();
+
+        $id = $datos->id;
+        
+        $ps = new Preguntas_subnivel();
+        $ps->valor_campo = $rq->respuesta;
+        $ps->nivel = 3;
+        $ps->estado = 1;
+        $ps->id_subnivel = $id;
+        $ps->usuario_crea = $user;
+        $ps->save();
+
+        $rq->file('imagen')->move($destino, $nombre_imagen);
+
+    }
+    function editar_p(Request $rq){
+        $user = Auth::user()->id;
+
+        $file_imagen = $rq->file('imagen');
+        $destino = base_path().'/../FrontEnd/public/archivos/imagenes/nivel3/';
+        $nombre_imagen = $file_imagen->getClientOriginalName();
+
+        $datos =Subnivel::findOrFail($rq->id);
+        $datos->audio = $rq->pregunta;
+        $datos->nivel = 3;
+        $datos->subnivel = 3;
+        $datos->usuario_crea = $user;
+        $datos->foto = $nombre_imagen;
+        $datos->save();
+
+        $id = $datos->id;
+        
+        $ps = new Preguntas_subnivel();
+        $ps->valor_campo = $rq->respuesta;
+        $ps->nivel = 3;
+        $ps->estado = 1;
+        $ps->id_subnivel = $id;
+        $ps->usuario_crea = $user;
+        $ps->save();
+
+        $rq->file('imagen')->move($destino, $nombre_imagen);
+
     }
     public function eliminar_letras($id){
         Subnivel::where('id',$id)->delete();
@@ -232,5 +299,12 @@ class Nivel3Controller extends Controller
     public function eliminar_oraciones($id){
         Subnivel::where('id',$id)->delete();
         Preguntas_subnivel::where('id_subnivel',$id)->delete();
+    }
+    public function cambiar_estado(Request $rq){
+        $estado = $rq->estado;
+        $id = $rq->id;
+        $ps = Preguntas_subnivel::findOrFail($id);
+        $ps->estado = $estado;
+        $ps->save();
     }
 }

@@ -241,8 +241,8 @@
                   <vs-td>{{tr.foto}}</vs-td>
                   <vs-td>{{ tr.updated_at | fecha }}</vs-td>
                   <vs-td>
-                    <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
-                    <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
+                    <i class="fas fa-toggle-on pointer eventsalto" style="color:green" @click="cambiar_estado(tr.id, 0)" v-if="tr.estado==1"></i>
+                    <i class="fas fa-toggle-off pointer eventsalto" style="color:red" @click="cambiar_estado(tr.id, 1)" v-else></i>
                     <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar',tr,2)"></i>
                     <i class="fas fa-trash ml-2 pointer eventsalto" @click="eliminar_silabas(tr.id_subnivel)"></i>
                   </vs-td>
@@ -280,8 +280,8 @@
                   <vs-td><img :src="'/archivos/imagenes/nivel2/oraciones/'+tr.foto" style="width: 70px;height: 70px;"/></vs-td>
                   <vs-td>{{ tr.updated_at | fecha }}</vs-td>
                   <vs-td>
-                    <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
-                    <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
+                    <i class="fas fa-toggle-on pointer eventsalto" style="color:green" @click="cambiar_estado(tr.id, 0)" v-if="tr.estado==1"></i>
+                    <i class="fas fa-toggle-off pointer eventsalto" style="color:red" @click="cambiar_estado(tr.id, 1)" v-else></i>
                     <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar',tr,3)"></i>
                     <i class="fas fa-trash ml-2 pointer eventsalto" @click="eliminar_oraciones(tr.id_subnivel)"></i>
                   </vs-td>
@@ -492,9 +492,9 @@ export default {
         console.log(data);
         var valores = [ {letras:0,valor:0}, {silabas:0,valor:0}, {oraciones:0,valor:0} ];
         data.subnivel.forEach((el,index) => {
-          if(el.subnivel==1) this.letras.preguntas.push({audio:el.audio, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
-          if(el.subnivel==2) this.silabas.preguntas.push({audio:el.audio, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
-          if(el.subnivel==3) this.oraciones.preguntas.push({nombre:el.nombre,foto:el.foto, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
+          if(el.subnivel==1 && el.estado==1) this.letras.preguntas.push({audio:el.audio, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
+          if(el.subnivel==2 && el.estado==1) this.silabas.preguntas.push({audio:el.audio, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
+          if(el.subnivel==3 && el.estado==1) this.oraciones.preguntas.push({nombre:el.nombre,foto:el.foto, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
           data.preguntas.forEach((pr,index1) => {
             if(el.id==pr.id_subnivel && el.subnivel==1){
               if(index!=valores[0].letras) valores[0].letras = index, valores[0].valor++;;
@@ -797,7 +797,7 @@ export default {
     recuperarimagenoraciones(event){
       this.form_oraciones.imagen = event.target.files[0];
     },
-    form(){
+    forms(){
       this.form = {
         id:null,
         nombre:'',
@@ -836,7 +836,7 @@ export default {
           });
           this.listar();
           this.datos_modal.activo = false;
-          this.form();
+          this.forms();
         }).catch( error => {
           console.log(error);
         });
@@ -859,7 +859,7 @@ export default {
           });
           this.listar();
           this.datos_modal.activo = false;
-          this.form();
+          this.forms();
         }).catch( error => {
           console.log(error);
         });
@@ -878,8 +878,8 @@ export default {
             text: 'Registro guardado exitosamente'
           });
           this.listar();
-          this.form_oraciones();
           this.datos_modal.activo = false;
+          this.forms();
         }).catch( error => {
           console.log(error);
         });

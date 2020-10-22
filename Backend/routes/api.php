@@ -37,11 +37,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/nivel2/silabas/respuesta', 'Nivel2Controller@silabas_respuesta');
     Route::post('/nivel2/oraciones/respuesta', 'Nivel2Controller@oraciones_respuesta');
     Route::get('/nivel2/llamarresultados', 'Nivel2Controller@llamarresultados');
-    
-    Route::post('nivel2/editar', 'Nivel2Controller@editar');
-    Route::delete('nivel2/eliminar', 'Nivel2Controller@eliminar');
-    Route::post('/nivel2/cambiar_estado', 'Nivel2Controller@cambiar_estado');
 
+    Route::post('/nivel2/cambiar_estado', 'Nivel2Controller@cambiar_estado');
     Route::get('/nivel2/listar', 'Nivel2Controller@listar');
 
     Route::post('/nivel2/guardar', 'Nivel2Controller@guardar');
@@ -64,9 +61,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/nivel3/llamarresultados', 'Nivel3Controller@llamarresultados');
 
     Route::get('/nivel3/listar', 'Nivel3Controller@listar');
+    Route::post('/nivel3/cambiar_estado', 'Nivel3Controller@cambiar_estado');
     Route::post('/nivel3/guardar_l', 'Nivel3Controller@guardar_l');
     Route::post('/nivel3/guardar_s', 'Nivel3Controller@guardar_s');
     Route::post('/nivel3/guardar_p', 'Nivel3Controller@guardar_p');
+    Route::post('/nivel3/editar_l', 'Nivel3Controller@editar_l');
+    Route::post('/nivel3/editar_s', 'Nive3Controller@editar_s');
+    Route::post('/nivel3/editar_p', 'Nivel3Controller@editar_p');
     Route::delete('/nivel3/eliminar_letras/{id}', 'Nivel3Controller@eliminar_letras');
     Route::delete('/nivel3/eliminar_silabas/{id}', 'Nivel3Controller@eliminar_silabas');
     Route::delete('/nivel3/eliminar_palabras/{id}', 'Nivel3Controller@eliminar_palabras');
@@ -80,6 +81,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/nivel4/listar', 'Nivel4Controller@listar');
     Route::post('/nivel4/guardar_oraciones', 'Nivel4Controller@guardar_oraciones');
     Route::post('/nivel4/guardar_frases', 'Nivel4Controller@guardar_frases');
+    Route::post('/nivel4/editar_oraciones', 'Nivel4Controller@editar_oraciones');
+    Route::post('/nivel4/editar_frases', 'Nivel4Controller@editar_frases');
     Route::delete('/nivel4/eliminar_oraciones/{id}', 'Nivel4Controller@eliminar_oraciones');
     Route::delete('/nivel4/eliminar_frases/{id}', 'Nivel4Controller@eliminar_frases');
 });

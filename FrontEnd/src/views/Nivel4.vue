@@ -230,7 +230,7 @@
             <vs-button block @click.prevent="guardar_oraciones()" v-if="datos_modal.tipo==1">
               Agregar
             </vs-button>
-            <vs-button block @click.prevent="editar()" v-else>
+            <vs-button block @click.prevent="editar_oraciones()" v-else>
               Editar
             </vs-button>
           </div>
@@ -238,7 +238,7 @@
             <vs-button block @click.prevent="guardar_frases()" v-if="datos_modal.tipo==1">
               Agregar1
             </vs-button>
-            <vs-button block @click.prevent="editar()" v-else>
+            <vs-button block @click.prevent="editar_frases()" v-else>
               Editar1
             </vs-button>
           </div>
@@ -523,6 +523,44 @@ export default {
         formData.append("pregunta", this.form.pregunta);
         formData.append("respuesta", this.form.respuesta);
         Api.guardar_frases(formData).then(({data}) => {
+          this.$vs.notification({
+            square: true,
+            progress: 'auto',
+            color:'success',
+            title: 'Guardaro exitosamente',
+            text: 'Registro guardado exitosamente'
+          });
+          this.listar();
+          this.form();
+          this.datos_modal.activo = false;
+        }).catch( error => {
+          console.log(error);
+        });
+    },
+    editar_oraciones(){
+      let formData = new FormData();
+        formData.append("pregunta", this.form.pregunta);
+        formData.append("respuesta", this.form.respuesta);
+        Api.editar_oraciones(formData).then(({data}) => {
+          this.$vs.notification({
+            square: true,
+            progress: 'auto',
+            color:'success',
+            title: 'Guardaro exitosamente',
+            text: 'Registro guardado exitosamente'
+          });
+          this.listar();
+          this.form();
+          this.datos_modal.activo = false;
+        }).catch( error => {
+          console.log(error);
+        });
+    },
+    editar_frases(){
+      let formData = new FormData();
+        formData.append("pregunta", this.form.pregunta);
+        formData.append("respuesta", this.form.respuesta);
+        Api.editar_frases(formData).then(({data}) => {
           this.$vs.notification({
             square: true,
             progress: 'auto',
