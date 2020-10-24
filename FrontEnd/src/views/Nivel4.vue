@@ -185,8 +185,8 @@
                   <vs-th v-if="tr.estado==1" style="color:green">Activo</vs-th><vs-th v-else style="color:red">Inactivo</vs-th>
                   <vs-td>{{ tr.updated_at | fecha }}</vs-td>
                   <vs-td>
-                    <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
-                    <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
+                    <i class="fas fa-toggle-on pointer eventsalto" style="color:green" @click="cambiar_estado(tr.id, 0)" v-if="tr.estado==1"></i>
+                    <i class="fas fa-toggle-off pointer eventsalto" style="color:red" @click="cambiar_estado(tr.id, 1)" v-else></i>
                     <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar', tr)"></i>
                     <i class="fas fa-trash ml-2 pointer eventsalto" @click="eliminar_frases(tr.id_subnivel)"></i>
                   </vs-td>
@@ -595,6 +595,19 @@ export default {
           color:'success',
           title: 'Dato Borrado',
           text: 'Dato borrado exitosamente'
+        });
+        this.listar();
+      })
+    },
+    cambiar_estado(id, estado){
+      var form = {id:id, estado:estado}
+      Api.cambiar_estado(form).then(({data}) => {
+        this.$vs.notification({
+          square: true,
+          progress: 'auto',
+          color:'success',
+          title: 'Estado Actualizado',
+          text: 'Estado Actualizado exitosamente'
         });
         this.listar();
       })

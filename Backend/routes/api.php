@@ -77,6 +77,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/nivel4/oraciones/respuesta', 'Nivel4Controller@oraciones_respuesta');
     Route::post('/nivel4/frases/respuesta', 'Nivel4Controller@frases_respuesta');
     Route::get('/nivel4/llamarresultados', 'Nivel4Controller@llamarresultados');
+    Route::post('/nivel4/cambiar_estado', 'Nivel4Controller@cambiar_estado');
 
     Route::get('/nivel4/listar', 'Nivel4Controller@listar');
     Route::post('/nivel4/guardar_oraciones', 'Nivel4Controller@guardar_oraciones');

@@ -37,4 +37,7 @@ export default {
   eliminar_frases(id){
     return Api().delete("/nivel4/eliminar_frases/"+id);
   },
+  cambiar_estado(form){
+    return Api().post("/nivel4/cambiar_estado", form);
+  }
 };

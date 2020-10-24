@@ -71,9 +71,9 @@ class Nivel4Controller extends Controller
     }
 
     function llamardatos(){
-        $subnivel = Subnivel::select('*')->where("nivel", "=", 4)->get();
+        $subnivel = DB::select("SELECT *, (SELECT estado FROM preguntas_subnivel WHERE id_subnivel = subnivel.id LIMIT 1) AS estado FROM subnivel WHERE nivel=4 ");
 
-        $preguntas = Preguntas_subnivel::select('id','valor_campo',  'nivel', 'id_subnivel')->where("nivel", "=", 4)->get();
+        $preguntas = Preguntas_subnivel::select('id','valor_campo',  'nivel', 'id_subnivel')->where("nivel", "=", 4)->where("estado", "=", 1)->get();
         return [
             'subnivel' => $subnivel,
             'preguntas' => $preguntas,
@@ -163,5 +163,12 @@ class Nivel4Controller extends Controller
     public function eliminar_frases($id){
         Subnivel::where('id',$id)->delete();
         Preguntas_subnivel::where('id_subnivel',$id)->delete();
+    }
+    public function cambiar_estado(Request $rq){
+        $estado = $rq->estado;
+        $id = $rq->id;
+        $ps = Preguntas_subnivel::findOrFail($id);
+        $ps->estado = $estado;
+        $ps->save();
     }
 }
