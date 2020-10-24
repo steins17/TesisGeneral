@@ -230,8 +230,8 @@
                   <vs-td><img :src="'/archivos/imagenes/nivel3/'+tr.fotosb" style="width: 70px;height: 70px;"/></vs-td>
                   <vs-td>{{ tr.updated_at | fecha }}</vs-td>
                   <vs-td>
-                    <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
-                    <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
+                    <i class="fas fa-toggle-on pointer eventsalto" style="color:green" @click="cambiar_estado(tr.id, 0)" v-if="tr.estado==1"></i>
+                    <i class="fas fa-toggle-off pointer eventsalto" style="color:red" @click="cambiar_estado(tr.id, 1)" v-else></i>
                     <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar',tr,2)"></i>
                     <i class="fas fa-trash ml-2 pointer eventsalto" @click="eliminar_silabas(tr.id_subnivel)"></i>
                   </vs-td>
@@ -269,8 +269,8 @@
                   <vs-td><img :src="'/archivos/imagenes/nivel3/'+tr.fotosb" style="width: 70px;height: 70px;"/></vs-td>
                   <vs-td>{{ tr.updated_at | fecha }}</vs-td>
                   <vs-td>
-                    <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
-                    <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
+                    <i class="fas fa-toggle-on pointer eventsalto" style="color:green" @click="cambiar_estado(tr.id, 0)" v-if="tr.estado==1"></i>
+                    <i class="fas fa-toggle-off pointer eventsalto" style="color:red" @click="cambiar_estado(tr.id, 1)" v-else></i>
                     <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar',tr,3)"></i>
                     <i class="fas fa-trash ml-2 pointer eventsalto" @click="eliminar_palabras(tr.id_subnivel)"></i>
                   </vs-td>
@@ -615,6 +615,8 @@ filters: {
             titulo:"Editar Registro",
             sb:sb
           };
+          this.form.audio = data.audio;
+          this.form.id = data.id_subnivel;
           break;
         }
       }
@@ -696,30 +698,39 @@ filters: {
     },
     editar_l(){
         let formData = new FormData();
+        formData.append("id", this.form.id);
         formData.append("pregunta", this.form.pregunta);
         formData.append("respuesta", this.form.respuesta);
-        formData.append("imagen", this.form.pregunta[0].imagen);
-        Api.guardar_l(formData).then(({data}) => {
+        formData.append("imagen", this.form.imagen);
+        Api.editar_l(formData).then(({data}) => {
           this.$vs.notification({
             square: true,
             progress: 'auto',
             color:'success',
-            title: 'Guardaro exitosamente',
-            text: 'Registro guardado exitosamente'
+            title: 'Editado exitosamente',
+            text: 'Registro editado exitosamente'
           });
           this.listar();
           this.datos_modal.activo = false;
           this.forms();
         }).catch( error => {
           console.log(error);
+          this.$vs.notification({
+            square: true,
+            progress: 'auto',
+            color:'danger',
+            title: 'Error al actualizar',
+            text: 'Registro no editado'
+          });
         });
     },
     editar_s(){
         let formData = new FormData();
+        formData.append("id", this.form.id);
         formData.append("pregunta", this.form.pregunta);
         formData.append("respuesta", this.form.respuesta);
-        formData.append("imagen", this.form.pregunta[0].imagen);
-        Api.guardar_s(formData).then(({data}) => {
+        formData.append("imagen", this.form.imagen);
+        Api.editar_s(formData).then(({data}) => {
           this.$vs.notification({
             square: true,
             progress: 'auto',
@@ -732,14 +743,22 @@ filters: {
           this.forms();
         }).catch( error => {
           console.log(error);
+          this.$vs.notification({
+            square: true,
+            progress: 'auto',
+            color:'danger',
+            title: 'Error al actualizar',
+            text: 'Registro no editado'
+          });
         });
     },
     editar_p(){
         let formData = new FormData();
+        formData.append("id", this.form.id);
         formData.append("pregunta", this.form.pregunta);
         formData.append("respuesta", this.form.respuesta);
-        formData.append("imagen", this.form.pregunta[0].imagen);
-        Api.guardar_p(formData).then(({data}) => {
+        formData.append("imagen", this.form.imagen);
+        Api.editar_p(formData).then(({data}) => {
           this.$vs.notification({
             square: true,
             progress: 'auto',
@@ -752,6 +771,13 @@ filters: {
           this.forms();
         }).catch( error => {
           console.log(error);
+          this.$vs.notification({
+            square: true,
+            progress: 'auto',
+            color:'danger',
+            title: 'Error al actualizar',
+            text: 'Registro no editado'
+          });
         });
     },
     recuperarimagen(event){

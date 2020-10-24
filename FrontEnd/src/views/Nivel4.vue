@@ -148,9 +148,9 @@
                   <vs-th v-if="tr.estado==1" style="color:green">Activo</vs-th><vs-th v-else style="color:red">Inactivo</vs-th>
                   <vs-td>{{ tr.updated_at | fecha }}</vs-td>
                   <vs-td>
-                    <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
-                    <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
-                    <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar', tr,2)"></i>
+                    <i class="fas fa-toggle-on pointer eventsalto" style="color:green" @click="cambiar_estado(tr.id, 0)" v-if="tr.estado==1"></i>
+                    <i class="fas fa-toggle-off pointer eventsalto" style="color:red" @click="cambiar_estado(tr.id, 1)" v-else></i>
+                    <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar', tr,1)"></i>
                     <i class="fas fa-trash ml-2 pointer eventsalto" @click="eliminar_oraciones(tr.id_subnivel)"></i>
                   </vs-td>
                 </vs-tr>
@@ -492,6 +492,7 @@ export default {
             titulo:"Editar Registro",
             sb:sb
           };
+          this.form.id = data.id_subnivel;
           break;
         }
       }
@@ -539,6 +540,7 @@ export default {
     },
     editar_oraciones(){
       let formData = new FormData();
+      formData.append("id", this.form.id);
         formData.append("pregunta", this.form.pregunta);
         formData.append("respuesta", this.form.respuesta);
         Api.editar_oraciones(formData).then(({data}) => {
@@ -558,6 +560,7 @@ export default {
     },
     editar_frases(){
       let formData = new FormData();
+      formData.append("id", this.form.id);
         formData.append("pregunta", this.form.pregunta);
         formData.append("respuesta", this.form.respuesta);
         Api.editar_frases(formData).then(({data}) => {

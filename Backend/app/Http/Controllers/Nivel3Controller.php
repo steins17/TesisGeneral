@@ -216,17 +216,20 @@ class Nivel3Controller extends Controller
         $datos->nivel = 3;
         $datos->subnivel = 1;
         $datos->usuario_crea = $user;
+        $datos->usuario_modifica = $user;
         $datos->foto = $nombre_imagen;
         $datos->save();
 
         $id = $datos->id;
+        // Preguntas_subnivel::where('id_subnivel',$id)->delete();
         
-        $ps = new Preguntas_subnivel();
+        $ps = Preguntas_subnivel::findOrFail($rq->id);
         $ps->valor_campo = $rq->respuesta;
         $ps->nivel = 3;
         $ps->estado = 1;
         $ps->id_subnivel = $id;
         $ps->usuario_crea = $user;
+        $ps->usuario_modifica = $user;
         $ps->save();
 
         $rq->file('imagen')->move($destino, $nombre_imagen);

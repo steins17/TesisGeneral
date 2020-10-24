@@ -65,9 +65,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/nivel3/guardar_l', 'Nivel3Controller@guardar_l');
     Route::post('/nivel3/guardar_s', 'Nivel3Controller@guardar_s');
     Route::post('/nivel3/guardar_p', 'Nivel3Controller@guardar_p');
+
     Route::post('/nivel3/editar_l', 'Nivel3Controller@editar_l');
     Route::post('/nivel3/editar_s', 'Nive3Controller@editar_s');
     Route::post('/nivel3/editar_p', 'Nivel3Controller@editar_p');
+    
     Route::delete('/nivel3/eliminar_letras/{id}', 'Nivel3Controller@eliminar_letras');
     Route::delete('/nivel3/eliminar_silabas/{id}', 'Nivel3Controller@eliminar_silabas');
     Route::delete('/nivel3/eliminar_palabras/{id}', 'Nivel3Controller@eliminar_palabras');
@@ -82,8 +84,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/nivel4/listar', 'Nivel4Controller@listar');
     Route::post('/nivel4/guardar_oraciones', 'Nivel4Controller@guardar_oraciones');
     Route::post('/nivel4/guardar_frases', 'Nivel4Controller@guardar_frases');
+
     Route::post('/nivel4/editar_oraciones', 'Nivel4Controller@editar_oraciones');
     Route::post('/nivel4/editar_frases', 'Nivel4Controller@editar_frases');
+    
     Route::delete('/nivel4/eliminar_oraciones/{id}', 'Nivel4Controller@eliminar_oraciones');
     Route::delete('/nivel4/eliminar_frases/{id}', 'Nivel4Controller@eliminar_frases');
 });

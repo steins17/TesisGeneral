@@ -723,7 +723,7 @@ export default {
         formData.append("tipo1", this.form.preguntas[0].tipo);
         formData.append("foto2", this.form.preguntas[1].foto);
         formData.append("tipo2", this.form.preguntas[1].tipo);
-        console.log(this.form);
+        // console.log(this.form);
         Api.guardar(formData, {headers: { 'Content-Type': 'multipart/form-data'},} ).then(({data}) => {
           this.$vs.notification({
             square: true,
@@ -844,6 +844,7 @@ export default {
     editar_silabas(){
         let formData = new FormData();
         formData.append("audio", this.form.audio);
+        formData.append("id", this.form.id);
         formData.append("foto1", this.form.preguntas[0].foto);
         formData.append("tipo1", this.form.preguntas[0].tipo);
         formData.append("foto2", this.form.preguntas[1].foto);
@@ -866,6 +867,7 @@ export default {
     },
     editar_oraciones(){
         let formData = new FormData();
+        formData.append("id", this.form.id);
         formData.append("pregunta", this.form_oraciones.pregunta);
         formData.append("respuesta", this.form_oraciones.respuesta);
         formData.append("imagen", this.form_oraciones.imagen);
