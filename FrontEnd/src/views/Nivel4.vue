@@ -150,7 +150,7 @@
                   <vs-td>
                     <i class="fas fa-toggle-on pointer eventsalto" style="color:green" v-if="tr.estado==1"></i>
                     <i class="fas fa-toggle-off pointer eventsalto" style="color:red" v-else></i>
-                    <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar', tr)"></i>
+                    <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar', tr,2)"></i>
                     <i class="fas fa-trash ml-2 pointer eventsalto" @click="eliminar_oraciones(tr.id_subnivel)"></i>
                   </vs-td>
                 </vs-tr>
@@ -187,7 +187,7 @@
                   <vs-td>
                     <i class="fas fa-toggle-on pointer eventsalto" style="color:green" @click="cambiar_estado(tr.id, 0)" v-if="tr.estado==1"></i>
                     <i class="fas fa-toggle-off pointer eventsalto" style="color:red" @click="cambiar_estado(tr.id, 1)" v-else></i>
-                    <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar',tr,3)"></i>
+                    <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar',tr,2)"></i>
                     <i class="fas fa-trash ml-2 pointer eventsalto" @click="eliminar_frases(tr.id_subnivel)"></i>
                   </vs-td>
                 </vs-tr>
@@ -440,7 +440,7 @@ export default {
           alert("disculpas, no puedes usar la API");
         } else {
           rec = new webkitSpeechRecognition();
-          rec.lang = "es-AR";
+          rec.lang = "es-ES";
           rec.continuous = true;
           rec.interim = true;
           rec.addEventListener("result",iniciar);
