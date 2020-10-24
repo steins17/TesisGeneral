@@ -708,7 +708,7 @@ export default {
             sb:sb
           };
           this.form.audio = data.audiosb;
-          this.form.id = data.id;
+          this.form.id = data.id_subnivel;
           break;
         }
       }
