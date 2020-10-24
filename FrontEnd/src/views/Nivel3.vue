@@ -590,7 +590,7 @@ filters: {
     //administrador
     listar(){
       Api.listar().then( ({data}) => {
-        console.log(data);
+        // console.log(data);
         this.lista = data;
       }).catch( error => {
         console.log(error);
