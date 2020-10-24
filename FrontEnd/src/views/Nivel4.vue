@@ -295,8 +295,8 @@ export default {
       Api.llamarpreguntas().then(({data}) => {
         var valores = [ {oraciones:0,valor:0}, {frases:0,valor:0}];
         data.subnivel.forEach((el,index) => {
-          if(el.subnivel==1) this.oraciones.preguntas.push({nombre:el.nombre, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
-          if(el.subnivel==2) this.frases.preguntas.push({nombre:el.nombre, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
+          if(el.subnivel==1 && el.estado==1) this.oraciones.preguntas.push({nombre:el.nombre, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
+          if(el.subnivel==2 && el.estado==1) this.frases.preguntas.push({nombre:el.nombre, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
           data.preguntas.forEach(pr => {
             if(el.id==pr.id_subnivel && el.subnivel==1){  
               if(index!=valores[0].oraciones) valores[0].oraciones = index, valores[0].valor++;
