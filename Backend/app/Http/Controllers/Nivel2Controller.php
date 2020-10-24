@@ -218,7 +218,6 @@ class Nivel2Controller extends Controller
         $rq->file('imagen')->move($destino, $nombre_imagen);
     }
     function editar_l(Request $rq){
-        return $rq;
         $user = Auth::user()->id;
 
         $datos = Subnivel::findOrFail($rq->id);
