@@ -391,6 +391,8 @@ export default {
         pregunta:'',
         respuesta:'',
         imagen:'',
+        id:null,
+        id_pregunta:null
       }
     }
   },
@@ -410,8 +412,12 @@ filters: {
           data.preguntas.forEach(pr => {
             if(el.id==pr.id_subnivel && el.subnivel==1){
               if(index!=valores[0].letras) valores[0].letras = index, valores[0].valor++;
-              if(!this.letras.preguntas[valores[0].valor].respuestas) this.letras.preguntas[valores[0].valor].respuestas = [];
-              this.letras.preguntas[valores[0].valor].respuestas.push(pr);
+              if(typeof this.letras.preguntas[valores[0].valor]!== 'undefined'){ 
+                if(!this.letras.preguntas[valores[0].valor].respuestas){ 
+                  this.letras.preguntas[valores[0].valor].respuestas = [];
+                  this.letras.preguntas[valores[0].valor].respuestas.push(pr);
+                }
+              }
             };
             if(el.id==pr.id_subnivel && el.subnivel==2){  
               if(index!=valores[1].silabas) valores[1].silabas = index, valores[1].valor++;
@@ -617,6 +623,7 @@ filters: {
           };
           this.form.audio = data.audio;
           this.form.id = data.id_subnivel;
+          this.form.id_pregunta = data.id;
           break;
         }
       }
@@ -699,6 +706,7 @@ filters: {
     editar_l(){
         let formData = new FormData();
         formData.append("id", this.form.id);
+        formData.append("id_pregunta", this.form.id_pregunta);
         formData.append("pregunta", this.form.pregunta);
         formData.append("respuesta", this.form.respuesta);
         formData.append("imagen", this.form.imagen);
