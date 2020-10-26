@@ -306,7 +306,7 @@ class Nivel2Controller extends Controller
         $ps->nivel = 2;
         $ps->estado = 1;
         $ps->id_subnivel = $id;
-        $ps->usuario_crea = $user;
+        $ps->usuario_modifica = $user;
         $ps->save();
 
         $rq->file('foto2')->move($destino, $nombre_imagen);
@@ -322,7 +322,6 @@ class Nivel2Controller extends Controller
         $datos->nombre = $rq->pregunta;
         $datos->nivel = 2;
         $datos->subnivel = 3;
-        $datos->usuario_crea = $user;
         $datos->usuario_modifica = $user;
         $datos->foto = $nombre_imagen;
         $datos->save();
@@ -334,7 +333,6 @@ class Nivel2Controller extends Controller
         $ps->nivel = 2;
         $ps->estado = 1;
         $ps->id_subnivel = $id;
-        $ps->usuario_crea = $user;
         $ps->usuario_modifica = $user;
         $ps->foto = $nombre_imagen;
         $ps->save();

@@ -841,7 +841,7 @@ export default {
           console.log(error);
         });
     },
-    editar_silabas(){
+    editar_silabas(id){
         let formData = new FormData();
         formData.append("audio", this.form.audio);
         formData.append("id", this.form.id);
@@ -865,7 +865,7 @@ export default {
           console.log(error);
         });
     },
-    editar_oraciones(){
+    editar_oraciones(id){
         let formData = new FormData();
         formData.append("id", this.form.id);
         formData.append("pregunta", this.form_oraciones.pregunta);
@@ -888,6 +888,30 @@ export default {
     },
     eliminar_letras(id){
       Api.eliminar_letras(id).then(({data}) => {
+        this.$vs.notification({
+          square: true,
+          progress: 'auto',
+          color:'success',
+          title: 'Dato Borrado',
+          text: 'Dato borrado exitosamente'
+        });
+        this.listar();
+      })
+    },
+    eliminar_silabas(id){
+      Api.eliminar_silabas(id).then(({data}) => {
+        this.$vs.notification({
+          square: true,
+          progress: 'auto',
+          color:'success',
+          title: 'Dato Borrado',
+          text: 'Dato borrado exitosamente'
+        });
+        this.listar();
+      })
+    },
+    eliminar_oraciones(id){
+      Api.eliminar_oraciones(id).then(({data}) => {
         this.$vs.notification({
           square: true,
           progress: 'auto',

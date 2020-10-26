@@ -411,13 +411,16 @@ filters: {
           if(el.subnivel==3 && el.estado==1) this.palabras.preguntas.push({audio:el.audio,foto:el.foto, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
           data.preguntas.forEach(pr => {
             if(el.id==pr.id_subnivel && el.subnivel==1){
+              // if(index!=valores[0].letras) valores[0].letras = index, valores[0].valor++;
+              // if(typeof this.letras.preguntas[valores[0].valor]!== 'undefined'){ 
+              //   if(!this.letras.preguntas[valores[0].valor].respuestas){ 
+              //     this.letras.preguntas[valores[0].valor].respuestas = [];
+              //     this.letras.preguntas[valores[0].valor].respuestas.push(pr);
+              //   }
+              // }
               if(index!=valores[0].letras) valores[0].letras = index, valores[0].valor++;
-              if(typeof this.letras.preguntas[valores[0].valor]!== 'undefined'){ 
-                if(!this.letras.preguntas[valores[0].valor].respuestas){ 
-                  this.letras.preguntas[valores[0].valor].respuestas = [];
-                  this.letras.preguntas[valores[0].valor].respuestas.push(pr);
-                }
-              }
+              if(!this.letras.preguntas[valores[0].valor].respuestas) this.letras.preguntas[valores[0].valor].respuestas = [];
+              this.letras.preguntas[valores[0].valor].respuestas.push(pr);
             };
             if(el.id==pr.id_subnivel && el.subnivel==2){  
               if(index!=valores[1].silabas) valores[1].silabas = index, valores[1].valor++;
@@ -648,6 +651,13 @@ filters: {
           this.datos_modal.activo = false;
         }).catch( error => {
           console.log(error);
+          this.$vs.notification({
+            square: true,
+            progress: 'auto',
+            color:'danger',
+            title: 'Error al guardar',
+            text: 'Sorry, registro no guargado'
+          });
         });
     },
     guardar_s(){
@@ -667,6 +677,13 @@ filters: {
           this.datos_modal.activo = false;
         }).catch( error => {
           console.log(error);
+          this.$vs.notification({
+            square: true,
+            progress: 'auto',
+            color:'danger',
+            title: 'Error al guardar',
+            text: 'Sorry, registro no guargado'
+          });
         });
     },
     guardar_p(){
@@ -686,12 +703,18 @@ filters: {
           this.datos_modal.activo = false;
         }).catch( error => {
           console.log(error);
+          this.$vs.notification({
+            square: true,
+            progress: 'auto',
+            color:'danger',
+            title: 'Error al guardar',
+            text: 'Sorry, registro no guargado'
+          });
         });
     },
     forms(){
       this.form = {
         id:null,
-        nombre:'',
         audio:'',
         foto:'',
         pregunta:[
@@ -735,16 +758,17 @@ filters: {
     editar_s(){
         let formData = new FormData();
         formData.append("id", this.form.id);
+        formData.append("id_pregunta", this.form.id_pregunta);
         formData.append("pregunta", this.form.pregunta);
         formData.append("respuesta", this.form.respuesta);
         formData.append("imagen", this.form.imagen);
-        Api.editar_s(formData).then(({data}) => {
+        Api.editar_l(formData).then(({data}) => {
           this.$vs.notification({
             square: true,
             progress: 'auto',
             color:'success',
-            title: 'Guardaro exitosamente',
-            text: 'Registro guardado exitosamente'
+            title: 'Editado exitosamente',
+            text: 'Registro editado exitosamente'
           });
           this.listar();
           this.datos_modal.activo = false;
@@ -763,6 +787,7 @@ filters: {
     editar_p(){
         let formData = new FormData();
         formData.append("id", this.form.id);
+        formData.append("id_pregunta", this.form.id_pregunta);
         formData.append("pregunta", this.form.pregunta);
         formData.append("respuesta", this.form.respuesta);
         formData.append("imagen", this.form.imagen);

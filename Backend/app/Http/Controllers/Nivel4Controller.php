@@ -141,17 +141,14 @@ class Nivel4Controller extends Controller
         $datos->nombre = $rq->pregunta;
         $datos->nivel = 4;
         $datos->subnivel = 1;
-        $datos->usuario_crea = $user;
+        $datos->usuario_modifica = $user;
         $datos->save();
 
-        $id = $datos->id;
         
-        $ps = Preguntas_subnivel::findOrFail($rq->id);
+        $ps = Preguntas_subnivel::findOrFail($rq->id_pregunta);
         $ps->valor_campo = $rq->respuesta;
-        $ps->nivel = 4;
         $ps->estado = 1;
-        $ps->id_subnivel = $id;
-        $ps->usuario_crea = $user;
+        $datos->usuario_modifica = $user;
         $ps->save();
     }
     function editar_frases(Request $rq){
@@ -161,19 +158,12 @@ class Nivel4Controller extends Controller
         $datos->nombre = $rq->pregunta;
         $datos->nivel = 4;
         $datos->subnivel = 2;
-        $datos->usuario_crea = $user;
         $datos->usuario_modifica = $user;
         $datos->save();
-
-        $id = $datos->id;
-        // Preguntas_subnivel::where('id_subnivel',$id)->delete();
         
-        $ps = Preguntas_subnivel::findOrFail($rq->id);
+        $ps = Preguntas_subnivel::findOrFail($rq->id_pregunta);
         $ps->valor_campo = $rq->respuesta;
-        $ps->nivel = 4;
         $ps->estado = 1;
-        $ps->id_subnivel = $id;
-        $ps->usuario_crea = $user;
         $ps->usuario_modifica = $user;
         $ps->save();
     }

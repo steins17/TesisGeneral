@@ -282,6 +282,8 @@ export default {
       form:{
         pregunta:'',
         respuesta:'',
+        id:null,
+        id_pregunta:null
       }
     }
   },
@@ -467,11 +469,16 @@ export default {
     //administrador
     listar(){
       Api.listar().then( ({data}) => {
-        // console.log(data);
         this.lista = data;
       }).catch( error => {
         console.log(error);
       });
+    },
+    forms(){
+      this.form ={
+        id:null,
+        nombre:'',
+      }
     },
     modal(tipo, data, sb){
       switch(tipo){
@@ -493,6 +500,7 @@ export default {
             sb:sb
           };
           this.form.id = data.id_subnivel;
+          this.form.id_pregunta = data.id;
           break;
         }
       }
@@ -513,7 +521,7 @@ export default {
             text: 'Registro guardado exitosamente'
           });
           this.listar();
-          this.form();
+          this.forms();
           this.datos_modal.activo = false;
         }).catch( error => {
           console.log(error);
@@ -532,7 +540,7 @@ export default {
             text: 'Registro guardado exitosamente'
           });
           this.listar();
-          this.form();
+          this.forms();
           this.datos_modal.activo = false;
         }).catch( error => {
           console.log(error);
@@ -541,6 +549,7 @@ export default {
     editar_oraciones(){
       let formData = new FormData();
       formData.append("id", this.form.id);
+        formData.append("id_pregunta", this.form.id_pregunta);
         formData.append("pregunta", this.form.pregunta);
         formData.append("respuesta", this.form.respuesta);
         Api.editar_oraciones(formData).then(({data}) => {
@@ -552,8 +561,8 @@ export default {
             text: 'Registro guardado exitosamente'
           });
           this.listar();
-          this.form();
           this.datos_modal.activo = false;
+          this.forms();
         }).catch( error => {
           console.log(error);
         });
@@ -561,6 +570,7 @@ export default {
     editar_frases(){
       let formData = new FormData();
       formData.append("id", this.form.id);
+        formData.append("id_pregunta", this.form.id_pregunta);
         formData.append("pregunta", this.form.pregunta);
         formData.append("respuesta", this.form.respuesta);
         Api.editar_frases(formData).then(({data}) => {
@@ -572,7 +582,7 @@ export default {
             text: 'Registro guardado exitosamente'
           });
           this.listar();
-          this.form();
+          this.forms();
           this.datos_modal.activo = false;
         }).catch( error => {
           console.log(error);
