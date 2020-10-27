@@ -803,18 +803,6 @@ export default {
         nombre:'',
         audio:'',
         foto:'',
-        preguntas:[
-          {
-            foto:'',
-            tipo:1,
-            valor_campo:''
-          },
-          {
-            foto:'',
-            tipo:0,
-            valor_campo:''
-          }
-        ]
       };
     },
     editar_letras(){
@@ -825,7 +813,7 @@ export default {
         formData.append("tipo1", this.form.preguntas[0].tipo);
         formData.append("foto2", this.form.preguntas[1].foto);
         formData.append("tipo2", this.form.preguntas[1].tipo);
-        console.log(this.form);
+        // console.log(this.form);
         Api.editar_l(formData, {headers: { 'Content-Type': 'multipart/form-data'},} ).then(({data}) => {
           this.$vs.notification({
             square: true,
