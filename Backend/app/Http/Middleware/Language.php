@@ -31,4 +31,3 @@ class Language
         return $next($request);
     }
 }
-
