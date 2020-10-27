@@ -16,4 +16,4 @@ export default {
   notas() {
     return Api().get("/notastotales");
   }
-};
+}

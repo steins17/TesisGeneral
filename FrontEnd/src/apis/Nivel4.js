@@ -40,4 +40,4 @@ export default {
   cambiar_estado(form){
     return Api().post("/nivel4/cambiar_estado", form);
   }
-};
+}
