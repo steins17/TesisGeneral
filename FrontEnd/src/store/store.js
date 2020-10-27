@@ -11,6 +11,7 @@ export default new Vuex.Store({
         user:null,
         verfoto:null,
     },
+
     actions: {
         recuperanota({ commit }) {
             if(localStorage.getItem("token")){
@@ -21,6 +22,7 @@ export default new Vuex.Store({
                 return 0;
             }
         },
+
         recuperauser({ commit }) {
             return User.auth().then(({data}) => {
                 return data;
@@ -39,4 +41,6 @@ export default new Vuex.Store({
             });
         }
     }
-});
+})
+
+
