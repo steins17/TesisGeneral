@@ -847,6 +847,7 @@ export default {
         let formData = new FormData();
         formData.append("audio", this.form.audio);
         formData.append("id", this.form.id);
+        formData.append("id_pregunta", this.form.id_pregunta);
         formData.append("foto1", this.form.preguntas[0].foto);
         formData.append("tipo1", this.form.preguntas[0].tipo);
         formData.append("foto2", this.form.preguntas[1].foto);
@@ -879,8 +880,8 @@ export default {
             square: true,
             progress: 'auto',
             color:'success',
-            title: 'Guardaro exitosamente',
-            text: 'Registro guardado exitosamente'
+            title: 'Modificación exitosa',
+            text: 'Registro modificado exitosamente'
           });
           this.listar();
           this.datos_modal.activo = false;

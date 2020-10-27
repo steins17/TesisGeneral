@@ -233,20 +233,19 @@ class Nivel2Controller extends Controller
         $datos->usuario_modifica = $user;
         $datos->save();
 
-        $id = $datos->id;
+        // $id = $datos->id_pregunta;
 
-        Preguntas_subnivel::where('id_subnivel',$id)->delete();
+        // Preguntas_subnivel::where('id_subnivel',$id)->delete();
 
         $file_imagen = $rq->file('foto1');
         $destino = base_path().'/../FrontEnd/public/archivos/imagenes/nivel2/letras';
         $nombre_imagen = $file_imagen->getClientOriginalName();
 
-        $ps = new Preguntas_subnivel();
+        $ps = Preguntas_subnivel::findOrFail($rq->id_pregunta);
         $ps->foto = $nombre_imagen;
-        $ps->tipo = $rq->tipo2;
+        $ps->tipo = $rq->tipo1;
         $ps->nivel = 2;
         $ps->estado = 1;
-        $ps->id_subnivel = $id;
         $ps->usuario_modifica = $user;
         $ps->save();
 
@@ -257,12 +256,11 @@ class Nivel2Controller extends Controller
         $destino = base_path().'/../FrontEnd/public/archivos/imagenes/nivel2/letras';
         $nombre_imagen = $file_imagen->getClientOriginalName();
 
-        $ps = new Preguntas_subnivel();
+        $ps = Preguntas_subnivel::findOrFail($rq->id_pregunta);
         $ps->foto = $nombre_imagen;
         $ps->tipo = $rq->tipo2;
         $ps->nivel = 2;
         $ps->estado = 1;
-        $ps->id_subnivel = $id;
         $ps->usuario_modifica = $user;
         $ps->save();
 
@@ -279,21 +277,20 @@ class Nivel2Controller extends Controller
         $datos->usuario_modifica = $user;
         $datos->save();
 
-        $id = $datos->id;
+        // $id = $datos->id;
 
-        Preguntas_subnivel::where('id_subnivel',$id)->delete();
+        // Preguntas_subnivel::where('id_subnivel',$id)->delete();
 
         $file_imagen = $rq->file('foto1');
         $destino = base_path().'/../FrontEnd/public/archivos/imagenes/nivel2/silabas';
         $nombre_imagen = $file_imagen->getClientOriginalName();
 
-        $ps = new Preguntas_subnivel();
+        $ps = Preguntas_subnivel::findOrFail($rq->id_pregunta);
         $ps->foto = $nombre_imagen;
-        $ps->tipo = $rq->tipo2;
+        $ps->tipo = $rq->tipo1;
         $ps->nivel = 2;
         $ps->estado = 1;
         $ps->id_subnivel = $id;
-        $ps->usuario_crea = $user;
         $ps->usuario_modifica = $user;
         $ps->save();
 
@@ -304,7 +301,7 @@ class Nivel2Controller extends Controller
         $destino = base_path().'/../FrontEnd/public/archivos/imagenes/nivel2/silabas';
         $nombre_imagen = $file_imagen->getClientOriginalName();
 
-        $ps = new Preguntas_subnivel();
+        $ps = Preguntas_subnivel::findOrFail($rq->id_pregunta);
         $ps->foto = $nombre_imagen;
         $ps->tipo = $rq->tipo2;
         $ps->nivel = 2;
