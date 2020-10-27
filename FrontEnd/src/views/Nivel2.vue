@@ -803,6 +803,18 @@ export default {
         nombre:'',
         audio:'',
         foto:'',
+        preguntas:[
+          {
+            foto:'',
+            tipo:1,
+            valor_campo:''
+          },
+          {
+            foto:'',
+            tipo:0,
+            valor_campo:''
+          }
+        ]
       };
     },
     editar_letras(){
