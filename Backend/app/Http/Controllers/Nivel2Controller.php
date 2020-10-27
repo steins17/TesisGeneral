@@ -17,20 +17,22 @@ class Nivel2Controller extends Controller
         $user = Auth::user()->id;
         DB::delete("DELETE FROM usuario_pregunta WHERE nivel = 2 AND subnivel = 1");
         for($i=0; $i<4; $i++){
-            $id = $rq[$i]["id"];
-            $bddres = DB::select("SELECT ps.* FROM preguntas_subnivel ps INNER JOIN subnivel sb ON sb.id=ps.id_subnivel WHERE ps.id = $id");
-            $res = $bddres[0];
-            $tipo = $res->tipo;
-            $preguntas_subnivel = $res->id;
+            if(isset($rq[$i]["id"])){
+                $id = $rq[$i]["id"];
+                $bddres = DB::select("SELECT ps.* FROM preguntas_subnivel ps INNER JOIN subnivel sb ON sb.id=ps.id_subnivel WHERE ps.id = $id");
+                $res = $bddres[0];
+                $tipo = $res->tipo;
+                $preguntas_subnivel = $res->id;
 
-            $nv2 = new Usuario_pregunta();
-            $nv2->tipo = $tipo;
-            $nv2->nivel = 2;
-            $nv2->subnivel = 1;
-            $nv2->id_users = $user;
-            $nv2->id_pre_nivel = $preguntas_subnivel;
-            $nv2->usuario_crea = $user;
-            $nv2->save();
+                $nv2 = new Usuario_pregunta();
+                $nv2->tipo = $tipo;
+                $nv2->nivel = 2;
+                $nv2->subnivel = 1;
+                $nv2->id_users = $user;
+                $nv2->id_pre_nivel = $preguntas_subnivel;
+                $nv2->usuario_crea = $user;
+                $nv2->save();
+            }    
         }
         return DB::select("SELECT sum(tipo) AS suma, count(*) AS total FROM usuario_pregunta WHERE nivel = 2 AND subnivel = 1");
     }
@@ -38,20 +40,22 @@ class Nivel2Controller extends Controller
         $user = Auth::user()->id;
         DB::delete("DELETE FROM usuario_pregunta WHERE nivel = 2 AND subnivel = 2");
         for($i=0; $i<10; $i++){
-            $id = $rq[$i]["id"];
-            $bddres = DB::select("SELECT ps.* FROM preguntas_subnivel ps INNER JOIN subnivel sb ON sb.id=ps.id_subnivel WHERE ps.id = $id");
-            $res = $bddres[0];
-            $tipo = $res->tipo;
-            $preguntas_subnivel = $res->id;
+            if(isset($rq[$i]["id"])){
+                $id = $rq[$i]["id"];
+                $bddres = DB::select("SELECT ps.* FROM preguntas_subnivel ps INNER JOIN subnivel sb ON sb.id=ps.id_subnivel WHERE ps.id = $id");
+                $res = $bddres[0];
+                $tipo = $res->tipo;
+                $preguntas_subnivel = $res->id;
 
-            $nv2 = new Usuario_pregunta();
-            $nv2->tipo = $tipo;
-            $nv2->nivel = 2;
-            $nv2->subnivel = 2;
-            $nv2->id_users = $user;
-            $nv2->id_pre_nivel = $preguntas_subnivel;
-            $nv2->usuario_crea = $user;
-            $nv2->save();
+                $nv2 = new Usuario_pregunta();
+                $nv2->tipo = $tipo;
+                $nv2->nivel = 2;
+                $nv2->subnivel = 2;
+                $nv2->id_users = $user;
+                $nv2->id_pre_nivel = $preguntas_subnivel;
+                $nv2->usuario_crea = $user;
+                $nv2->save();
+            }
         }
         return DB::select("SELECT sum(tipo) AS suma, count(*) AS total FROM usuario_pregunta WHERE nivel = 2 AND subnivel = 2");
     }
@@ -59,26 +63,28 @@ class Nivel2Controller extends Controller
         $user = Auth::user()->id;
         DB::delete("DELETE FROM usuario_pregunta WHERE nivel = 2 AND subnivel = 3");
         for($i=0; $i<10; $i++){
-            $id = $rq[$i]["id"];
-            $bddres = DB::select("SELECT ps.* FROM preguntas_subnivel ps INNER JOIN subnivel sb ON sb.id=ps.id_subnivel WHERE ps.id = $id");
-            $res = $bddres[0];
-            $valor_campo = $res->valor_campo;
-            $tipo=0;
-            $campo_r= mb_strtolower(rtrim($rq[$i]["respuesta_campo"], '.'));
-            
-            if($valor_campo==$campo_r){
-                $tipo=1;
-            }
-            $preguntas_subnivel = $res->id;
+            if(isset($rq[$i]["id"])){
+                $id = $rq[$i]["id"];
+                $bddres = DB::select("SELECT ps.* FROM preguntas_subnivel ps INNER JOIN subnivel sb ON sb.id=ps.id_subnivel WHERE ps.id = $id");
+                $res = $bddres[0];
+                $valor_campo = $res->valor_campo;
+                $tipo=0;
+                $campo_r= mb_strtolower(rtrim($rq[$i]["respuesta_campo"], '.'));
+                
+                if($valor_campo==$campo_r){
+                    $tipo=1;
+                }
+                $preguntas_subnivel = $res->id;
 
-            $nv2 = new Usuario_pregunta();
-            $nv2->tipo = $tipo;
-            $nv2->nivel = 2;
-            $nv2->subnivel = 3;
-            $nv2->id_users = $user;
-            $nv2->id_pre_nivel = $preguntas_subnivel;
-            $nv2->usuario_crea = $user;
-            $nv2->save();
+                $nv2 = new Usuario_pregunta();
+                $nv2->tipo = $tipo;
+                $nv2->nivel = 2;
+                $nv2->subnivel = 3;
+                $nv2->id_users = $user;
+                $nv2->id_pre_nivel = $preguntas_subnivel;
+                $nv2->usuario_crea = $user;
+                $nv2->save();
+            }
         }
         return DB::select("SELECT sum(tipo) AS suma, count(*) AS total FROM usuario_pregunta WHERE nivel = 2 AND subnivel = 3");
     }
@@ -313,7 +319,7 @@ class Nivel2Controller extends Controller
         $user = Auth::user()->id;
 
         $file_imagen = $rq->file('imagen');
-        $destino = base_path().'/../FrontEnd/public/archivos/imagenes/nivel2/oraciones';
+        $destino = base_path().'/../FrontEnd/public/archivos/imagenes/nivel2/oraciones/';
         $nombre_imagen = $file_imagen->getClientOriginalName();
 
         $datos = Subnivel::findOrFail($rq->id);
@@ -324,13 +330,11 @@ class Nivel2Controller extends Controller
         $datos->foto = $nombre_imagen;
         $datos->save();
 
-        $id = $datos->id;
         
-        $ps = Preguntas_subnivel::findOrFail($rq->id);
+        $ps = Preguntas_subnivel::findOrFail($rq->id_pregunta);
         $ps->valor_campo = $rq->respuesta;
         $ps->nivel = 2;
         $ps->estado = 1;
-        $ps->id_subnivel = $id;
         $ps->usuario_modifica = $user;
         $ps->foto = $nombre_imagen;
         $ps->save();

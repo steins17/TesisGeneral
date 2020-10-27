@@ -709,6 +709,7 @@ export default {
           };
           this.form.audio = data.audiosb;
           this.form.id = data.id_subnivel;
+          this.form.id_pregunta = data.id;
           break;
         }
       }
@@ -821,6 +822,7 @@ export default {
         let formData = new FormData();
         formData.append("audio", this.form.audio);
         formData.append("id", this.form.id);
+        formData.append("id_pregunta", this.form.id_pregunta);
         formData.append("foto1", this.form.preguntas[0].foto);
         formData.append("tipo1", this.form.preguntas[0].tipo);
         formData.append("foto2", this.form.preguntas[1].foto);
@@ -849,7 +851,7 @@ export default {
         formData.append("tipo1", this.form.preguntas[0].tipo);
         formData.append("foto2", this.form.preguntas[1].foto);
         formData.append("tipo2", this.form.preguntas[1].tipo);
-        console.log(this.form);
+        // console.log(this.form);
         Api.editar_s(formData, {headers: { 'Content-Type': 'multipart/form-data'},} ).then(({data}) => {
           this.$vs.notification({
             square: true,
@@ -868,6 +870,7 @@ export default {
     editar_oraciones(id){
         let formData = new FormData();
         formData.append("id", this.form.id);
+        formData.append("id_pregunta", this.form.id_pregunta);
         formData.append("pregunta", this.form_oraciones.pregunta);
         formData.append("respuesta", this.form_oraciones.respuesta);
         formData.append("imagen", this.form_oraciones.imagen);

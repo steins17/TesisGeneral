@@ -48,26 +48,28 @@ class Nivel3Controller extends Controller
         $user = Auth::user()->id;
         DB::delete("DELETE FROM usuario_pregunta WHERE nivel = 3 AND subnivel = 2");
         for($i=0; $i<10; $i++){
-            $id = $rq[$i]["id"];
-            $bddres = DB::select("SELECT ps.* FROM preguntas_subnivel ps INNER JOIN subnivel sb ON sb.id=ps.id_subnivel WHERE ps.id = $id");
-            $res = $bddres[0];
-            $valor_campo = $res->valor_campo;
-            $preguntas_subnivel = $res->id;
-            $tipo=0;
-            $campo_r = mb_strtolower(rtrim($rq[$i]["respuesta_campo"], '.'));
-            $valor_r = mb_strtolower(rtrim($valor_campo, '.'));
-            if($valor_r==$campo_r){
-                $tipo=1;
-            }
+            if(isset($rq[$i]["id"])){
+                $id = $rq[$i]["id"];
+                $bddres = DB::select("SELECT ps.* FROM preguntas_subnivel ps INNER JOIN subnivel sb ON sb.id=ps.id_subnivel WHERE ps.id = $id");
+                $res = $bddres[0];
+                $valor_campo = $res->valor_campo;
+                $preguntas_subnivel = $res->id;
+                $tipo=0;
+                $campo_r = mb_strtolower(rtrim($rq[$i]["respuesta_campo"], '.'));
+                $valor_r = mb_strtolower(rtrim($valor_campo, '.'));
+                if($valor_r==$campo_r){
+                    $tipo=1;
+                }
 
-            $nv3 = new Usuario_pregunta();
-            $nv3->tipo = $tipo;
-            $nv3->nivel = 3;
-            $nv3->subnivel = 2;
-            $nv3->id_users = $user;
-            $nv3->id_pre_nivel = $preguntas_subnivel;
-            $nv3->usuario_crea = $user;
-            $nv3->save();
+                $nv3 = new Usuario_pregunta();
+                $nv3->tipo = $tipo;
+                $nv3->nivel = 3;
+                $nv3->subnivel = 2;
+                $nv3->id_users = $user;
+                $nv3->id_pre_nivel = $preguntas_subnivel;
+                $nv3->usuario_crea = $user;
+                $nv3->save();
+            }    
         }
         return DB::select("SELECT sum(tipo) AS suma, count(*) AS total FROM usuario_pregunta WHERE nivel = 3 AND subnivel = 2");
     }
@@ -244,8 +246,6 @@ class Nivel3Controller extends Controller
         $datos->usuario_modifica = $user;
         $datos->foto = $nombre_imagen;
         $datos->save();
-
-        $id = $datos->id;
         
         $ps = Preguntas_subnivel::findOrFail($rq->id_pregunta);
         $ps->valor_campo = $rq->respuesta;
@@ -272,7 +272,6 @@ class Nivel3Controller extends Controller
         $datos->foto = $nombre_imagen;
         $datos->save();
 
-        $id = $datos->id;
         
         $ps = Preguntas_subnivel::findOrFail($rq->id_pregunta);
         $ps->valor_campo = $rq->respuesta;
