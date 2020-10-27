@@ -111,7 +111,7 @@
             <template #title>
               Calificación de la Unidad
             </template>
-              Felicidades, obtuviste una calificación de {{resultados.subnivel3}}/10, ya puedes ingresar al siguiente nivel
+              Felicidades, obtuviste una calificación de {{(resultados.subnivel3).toFixed(2)}}/10, ya puedes ingresar al siguiente nivel
           </vs-alert>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 col-md-6 p-0" v-for="(tr,index) in palabras.preguntas" :key="index">
             <div class="col-lg-12">
