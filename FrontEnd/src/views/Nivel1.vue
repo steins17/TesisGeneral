@@ -112,6 +112,7 @@ export default {
 }
 </script>
 
+
 <style>
   .estilocard{
     display: block;
@@ -130,3 +131,5 @@ export default {
     height: 390px;
   }
 </style>
+
+

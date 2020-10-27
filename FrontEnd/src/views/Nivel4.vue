@@ -635,7 +635,6 @@ export default {
   },
 }
 </script>
-
 <style>
   .w-100 input{
     width: 100%!important;
