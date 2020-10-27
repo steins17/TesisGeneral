@@ -395,6 +395,8 @@
     }
   };
 </script>
+
+
 <style>
   .subnumero{
     position: absolute;
@@ -644,7 +646,6 @@
   .translate-fade-down-enter, .translate-fade-down-leave-to {
       position: absolute;
   }
-
   .translate-fade-down-enter {
       transform: translateY(-10px);
   }
@@ -710,7 +711,6 @@
   .vs-input--has-icon{
         padding-left: 45px;
   }
-
   .text-danger{
     display: block;
     margin-bottom: 1rem!important;
