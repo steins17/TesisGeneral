@@ -23,7 +23,7 @@
               <template #title>
                 Calificación de la Unidad
               </template>
-                Felicidades, obtuviste una calificación de {{resultados.subnivel1}}/10, ya puedes ingresar a oraciones de este nivel
+                Felicidades, obtuviste una calificación de {{(resultados.subnivel1).toFixed(2)}}/10, ya puedes ingresar a oraciones de este nivel
             </vs-alert>
             <div class="card m-3" style="border-radius: 50px" v-for="(tr,index) in oraciones.preguntas" :key="index">
               <vs-row>
@@ -70,7 +70,7 @@
               <template #title>
                 Calificación de la Unidad
               </template>
-                Felicidades, obtuviste una calificación de {{resultados.subnivel2}}/10, ya has aprobado el curso
+                Felicidades, obtuviste una calificación de {{(resultados.subnivel2).toFixed(2)}}/10, ya has aprobado el curso
             </vs-alert>
             <div class="card m-3" style="border-radius: 50px" v-for="(tr,index) in frases.preguntas" :key="index">
               <vs-row>
@@ -502,6 +502,8 @@ export default {
           };
           this.form.id = data.id_subnivel;
           this.form.id_pregunta = data.id;
+          this.form.pregunta = data.nombre;
+          this.form.respuesta = data.valor_campo;
           break;
         }
       }

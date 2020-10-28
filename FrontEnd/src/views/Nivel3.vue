@@ -25,7 +25,7 @@
             <template #title>
               Calificación de la Unidad
             </template>
-              Felicidades, obtuviste una calificación de {{resultados.subnivel1}}/10, ya puedes ingresar al Sílabas de este nivel
+              Felicidades, obtuviste una calificación de {{(resultados.subnivel1).toFixed(2)}}/10, ya puedes ingresar al Sílabas de este nivel
           </vs-alert>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 col-md-6 p-0"  v-for="(tr,index) in letras.preguntas" :key="index">
             <div class="col-lg-12 mb-4"  >
@@ -68,7 +68,7 @@
             <template #title>
               Calificación de la Unidad
             </template>
-              Felicidades, obtuviste una calificación de {{resultados.subnivel2}}/10, ya puedes ingresar al Sílabas de este nivel
+              Felicidades, obtuviste una calificación de {{(resultados.subnivel2).toFixed(2)}}/10, ya puedes ingresar al Sílabas de este nivel
           </vs-alert>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 col-md-6 p-0" v-for="(tr,index) in silabas.preguntas" :key="index">
             <div class="col-lg-12 mb-4" >
@@ -624,9 +624,10 @@ filters: {
             titulo:"Editar Registro",
             sb:sb
           };
-          this.form.audio = data.audio;
           this.form.id = data.id_subnivel;
           this.form.id_pregunta = data.id;
+          this.form.pregunta = data.audio;
+          this.form.respuesta = data.valor_campo;
           break;
         }
       }

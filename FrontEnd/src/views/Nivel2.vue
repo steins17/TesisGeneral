@@ -26,7 +26,7 @@
                   <template #title>
                     Calificación de la Unidad
                   </template>
-                    Felicidades, obtuviste una calificación de {{resultados.subnivel1}}/10, ya puedes ingresar al Sílabas de este nivel
+                    Felicidades, obtuviste una calificación de {{(resultados.subnivel1).toFixed(2)}}/10, ya puedes ingresar al Sílabas de este nivel
                 </vs-alert>
                 <div class="card mb-3 p-3" style="border-radius: 50px" v-for="(tr,index) in letras.preguntas" :key="index">
                   <vs-row>
@@ -74,7 +74,7 @@
                   <template #title>
                     Calificación de la Unidad
                   </template>
-                    Felicidades, obtuviste una calificación de {{resultados.subnivel2}}/10, ya puedes ingresar a Oraciones de este nivel
+                    Felicidades, obtuviste una calificación de {{(resultados.subnivel2).toFixed(2)}}/10, ya puedes ingresar a Oraciones de este nivel
                 </vs-alert>
                 <div class="card mb-3 p-3" style="border-radius: 50px" v-for="(tr,index) in silabas.preguntas" :key="index">
                   <vs-row>
@@ -120,7 +120,7 @@
               <template #title>
                 Calificación de la Unidad
               </template>
-                Felicidades, obtuviste una calificación de {{resultados.subnivel3}}/10, ya puedes ingresar al siguiente nivel
+                Felicidades, obtuviste una calificación de {{(resultados.subnivel3).toFixed(2)}}/10, ya puedes ingresar al siguiente nivel
             </vs-alert>
             <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-6 col-md-6 p-3" v-for="(tr,index) in oraciones.preguntas " :key="index">
               <div class="col-lg-12 mb-4 p-0">
