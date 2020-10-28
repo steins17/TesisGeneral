@@ -250,21 +250,7 @@ class Nivel2Controller extends Controller
         $ps->save();
 
         $rq->file('foto1')->move($destino, $nombre_imagen);
-
-        // foto2
-        $file_imagen = $rq->file('foto2');
-        $destino = base_path().'/../FrontEnd/public/archivos/imagenes/nivel2/letras';
-        $nombre_imagen = $file_imagen->getClientOriginalName();
-
-        $ps = Preguntas_subnivel::findOrFail($rq->id_pregunta);
-        $ps->foto = $nombre_imagen;
-        $ps->tipo = $rq->tipo2;
-        $ps->nivel = 2;
-        $ps->estado = 1;
-        $ps->usuario_modifica = $user;
-        $ps->save();
-
-        $rq->file('foto2')->move($destino, $nombre_imagen);
+        return $user;
     }
     function editar_s(Request $rq){
         $user = Auth::user()->id;

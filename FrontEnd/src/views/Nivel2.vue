@@ -282,7 +282,7 @@
                   <vs-td>
                     <i class="fas fa-toggle-on pointer eventsalto" style="color:green" @click="cambiar_estado(tr.id, 0)" v-if="tr.estado==1"></i>
                     <i class="fas fa-toggle-off pointer eventsalto" style="color:red" @click="cambiar_estado(tr.id, 1)" v-else></i>
-                    <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar',tr,3)"></i>
+                    <i class="fas fa-edit ml-2 pointer eventsalto" @click="modal('editar1',tr,3)"></i>
                     <i class="fas fa-trash ml-2 pointer eventsalto" @click="eliminar_oraciones(tr.id_subnivel)"></i>
                   </vs-td>
                 </vs-tr>
@@ -331,7 +331,7 @@
                 </div>
             </div>
           </div>
-          <div class="row">
+          <div class="row" v-if="datos_modal.tipo==1">
             <div class="col-lg-8">
                 <div class="center content-inputs">
                   <vs-input
@@ -387,26 +387,26 @@
         </div>
         <template #footer>
           <div class="footer-dialog" v-if="datos_modal.sb==1">
-            <vs-button block @click.prevent="guardar_letras()" v-if="datos_modal.tipo==1">
+            <vs-button @click.prevent="guardar_letras()" v-if="datos_modal.tipo==1">
               Agregar
             </vs-button>
-            <vs-button block @click.prevent="editar_letras()" v-else>
+            <vs-button @click="editar_letras()" v-else>
               Editar
             </vs-button>
           </div>
           <div class="footer-dialog" v-else-if="datos_modal.sb==2">
-            <vs-button block @click.prevent="guardar_silabas()" v-if="datos_modal.tipo==1">
+            <vs-button @click.prevent="guardar_silabas()" v-if="datos_modal.tipo==1">
               Agregar1
             </vs-button>
-            <vs-button block @click.prevent="editar_silabas()" v-else>
+            <vs-button @click.prevent="editar_silabas()" v-else>
               Editar1
             </vs-button>
           </div>
           <div class="footer-dialog" v-else>
-            <vs-button block @click.stop="guardar_oraciones()" v-if="datos_modal.tipo==1">
+            <vs-button @click.stop="guardar_oraciones()" v-if="datos_modal.tipo==1">
               Agregar2
             </vs-button>
-            <vs-button block @click.prevent="editar_oraciones()" v-else>
+            <vs-button @click.prevent="editar_oraciones()" v-else>
               Editar2
             </vs-button>
           </div>
@@ -690,6 +690,7 @@ export default {
       });
     },
     modal(tipo, data, sb){
+      console.log(data);
       switch(tipo){
         case 'agregar': {
           this.datos_modal = {
@@ -707,6 +708,20 @@ export default {
             titulo:"Editar Registro",
             sb:sb
           };
+          this.form.audio = data.audiosb;
+          this.form.id = data.id_subnivel;
+          this.form.id_pregunta = data.id;
+          break;
+        }
+        case 'editar1': {
+          this.datos_modal = {
+            activo:true,
+            tipo:2,
+            titulo:"Editar Registro",
+            sb:sb
+          };
+          this.form_oraciones.pregunta = data.nombre;
+          this.form_oraciones.respuesta = data.valor_campo;
           this.form.audio = data.audiosb;
           this.form.id = data.id_subnivel;
           this.form.id_pregunta = data.id;
@@ -825,10 +840,8 @@ export default {
         formData.append("id_pregunta", this.form.id_pregunta);
         formData.append("foto1", this.form.preguntas[0].foto);
         formData.append("tipo1", this.form.preguntas[0].tipo);
-        formData.append("foto2", this.form.preguntas[1].foto);
-        formData.append("tipo2", this.form.preguntas[1].tipo);
         // console.log(this.form);
-        Api.editar_l(formData, {headers: { 'Content-Type': 'multipart/form-data'},} ).then(({data}) => {
+        Api.editar_l(formData).then(({data}) => {
           this.$vs.notification({
             square: true,
             progress: 'auto',
