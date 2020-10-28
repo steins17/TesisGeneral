@@ -259,7 +259,6 @@ class Nivel2Controller extends Controller
         $datos->audio = $rq->audio;
         $datos->nivel = 2;
         $datos->subnivel = 2;
-        $datos->usuario_crea = $user;
         $datos->usuario_modifica = $user;
         $datos->save();
 
@@ -276,27 +275,12 @@ class Nivel2Controller extends Controller
         $ps->tipo = $rq->tipo1;
         $ps->nivel = 2;
         $ps->estado = 1;
-        $ps->id_subnivel = $id;
         $ps->usuario_modifica = $user;
         $ps->save();
 
         $rq->file('foto1')->move($destino, $nombre_imagen);
 
-        // foto2
-        $file_imagen = $rq->file('foto2');
-        $destino = base_path().'/../FrontEnd/public/archivos/imagenes/nivel2/silabas';
-        $nombre_imagen = $file_imagen->getClientOriginalName();
-
-        $ps = Preguntas_subnivel::findOrFail($rq->id_pregunta);
-        $ps->foto = $nombre_imagen;
-        $ps->tipo = $rq->tipo2;
-        $ps->nivel = 2;
-        $ps->estado = 1;
-        $ps->id_subnivel = $id;
-        $ps->usuario_modifica = $user;
-        $ps->save();
-
-        $rq->file('foto2')->move($destino, $nombre_imagen);
+        
     }
     function editar_o(Request $rq){
         $user = Auth::user()->id;
