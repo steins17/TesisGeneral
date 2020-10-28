@@ -409,7 +409,7 @@ filters: {
           if(el.subnivel==1 && el.estado==1) this.letras.preguntas.push({audio:el.audio,foto:el.foto, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
           if(el.subnivel==2 && el.estado==1) this.silabas.preguntas.push({audio:el.audio,foto:el.foto, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
           if(el.subnivel==3 && el.estado==1) this.palabras.preguntas.push({audio:el.audio,foto:el.foto, subnivel:el.subnivel, nivel:el.nivel, id:el.id});
-          data.preguntas.forEach(pr => {
+          data.preguntas.forEach((pr,index) => {
             if(el.id==pr.id_subnivel && el.subnivel==1){
               // if(index!=valores[0].letras) valores[0].letras = index, valores[0].valor++;
               // if(typeof this.letras.preguntas[valores[0].valor]!== 'undefined'){ 
@@ -420,7 +420,7 @@ filters: {
               // }
               if(index!=valores[0].letras) valores[0].letras = index, valores[0].valor++;
               if(!this.letras.preguntas[valores[0].valor].respuestas) this.letras.preguntas[valores[0].valor].respuestas = [];
-              this.letras.preguntas[valores[0].valor].respuestas.push(pr);
+              this.letras.preguntas[valores[0].valor].respuestas.push(pr); 
             };
             if(el.id==pr.id_subnivel && el.subnivel==2){  
               if(index!=valores[1].silabas) valores[1].silabas = index, valores[1].valor++;
