@@ -690,7 +690,6 @@ export default {
       });
     },
     modal(tipo, data, sb){
-      console.log(data);
       switch(tipo){
         case 'agregar': {
           this.datos_modal = {
