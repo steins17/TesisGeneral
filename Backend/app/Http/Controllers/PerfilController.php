@@ -25,12 +25,11 @@ class PerfilController extends Controller
             'name' => ['required'],
             'email' => ['required'],
             'fecha_nacimiento' => ['required'],
-            'edad' => ['required'],
             'telefono' => ['required'],
             'celular' => ['required'],
             'direccion' => ['required'],
         ]);
-        
+
         /*
             tipos
             1=>escuchar-imagen
@@ -48,10 +47,9 @@ class PerfilController extends Controller
         $dat=date_create($request->fecha_nacimiento);
         $date = date_format($dat,"Y-m-d");
 
-        if(isset($request->id_persona)){
-            $perfil = Persona::findOrFail($request->id_persona);
+        if(isset($request->id)){
+            $perfil = Persona::findOrFail($request->id);
             $perfil->fecha_nacimiento=$date;
-            $perfil->edad= $request->edad;
             $perfil->telefono= $request->telefono;
             $perfil->celular= $request->celular;
             $perfil->direccion= $request->direccion;
@@ -60,7 +58,6 @@ class PerfilController extends Controller
         }else{
             $perfil = new Persona();
             $perfil->fecha_nacimiento=$date;
-            $perfil->edad= $request->edad;
             $perfil->telefono= $request->telefono;
             $perfil->celular= $request->celular;
             $perfil->direccion= $request->direccion;

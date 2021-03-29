@@ -27,6 +27,12 @@
             </template>
               Felicidades, obtuviste una calificación de {{(resultados.subnivel1).toFixed(2)}}/10, ya puedes ingresar al Sílabas de este nivel
           </vs-alert>
+          <vs-alert class="mb-3">
+            <template #title>
+              Forma de uso
+            </template>
+              Dar click en el botón negro, escuchar la instrucción y escribir.
+          </vs-alert>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 col-md-6 p-0"  v-for="(tr,index) in letras.preguntas" :key="index">
             <div class="col-lg-12 mb-4"  >
               <div class="card m-3" style="border-radius: 50px">
@@ -70,6 +76,12 @@
             </template>
               Felicidades, obtuviste una calificación de {{(resultados.subnivel2).toFixed(2)}}/10, ya puedes ingresar al Sílabas de este nivel
           </vs-alert>
+          <vs-alert class="mb-3">
+            <template #title>
+              Forma de uso
+            </template>
+              Dar click en el botón negro, escuchar la instrucción y escribir.
+          </vs-alert>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 col-md-6 p-0" v-for="(tr,index) in silabas.preguntas" :key="index">
             <div class="col-lg-12 mb-4" >
               <div class="card m-3 " style="border-radius: 50px" >
@@ -112,6 +124,12 @@
               Calificación de la Unidad
             </template>
               Felicidades, obtuviste una calificación de {{(resultados.subnivel3).toFixed(2)}}/10, ya puedes ingresar al siguiente nivel
+          </vs-alert>
+          <vs-alert class="mb-3">
+            <template #title>
+              Forma de uso
+            </template>
+              Dar click en el botón negro, escuchar la instrucción y escribir, las tíldes influyen en la nota. (Al finalizar recargar la página para acceder al siguiente nivel)
           </vs-alert>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" class="col-lg-4 col-md-6 p-0" v-for="(tr,index) in palabras.preguntas" :key="index">
             <div class="col-lg-12">

@@ -4,6 +4,12 @@
       <div class="row form-material" v-if="tipo">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
           <h3 class="mt-4 text-center mb-5">Mi perfil de usuario</h3>
+          <vs-alert class="mb-3">
+              <template #title>
+                Forma de uso
+              </template>
+                Debe ingresar todos los datos para guardar.
+            </vs-alert>
         </div>
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-4">
           <div class="form-group" style="margin: 10px">
@@ -23,21 +29,18 @@
           <div class="form-group" style="margin: 10px">
             <label for="edad">Edad:</label>
             <div class="input-group mb-2">
-              <input type="text" class="form-control" id="inlineFormInputGroup" v-model="form.edad">
+              <input type="text" class="form-control" id="inlineFormInputGroup" v-model="edad" maxlength="3" disabled>
               <div class="input-group-prepend">
                 <div class="input-group-text">Años</div>
               </div>
             </div>
-            <span class="text-danger" v-if="error_validacion.edad">
-              {{ error_validacion.edad[0] }}
-            </span>
           </div>
         </div>
         <div class="col-xl-8 col-lg-6 col-md-6 col-sm-12 mb-4">
           <div class="form-group" style="margin: 10px">
             <label for="fecha_nacimiento">Fecha Nacimiento:</label>
              <div class="input-group mb-2">
-              <datepicker v-model="form.fecha_nacimiento" class="form-control stylepicker" :language="es"></datepicker>
+              <input type="date" v-model="form.fecha_nacimiento" class="form-control">
               <div class="input-group-prepend">
                 <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
               </div>
@@ -51,7 +54,7 @@
           <div class="form-group" style="margin: 10px">
             <label for="telefono">Teléfono:</label>
             <div class="input-group mb-2">
-              <input type="text"  class="form-control" id="telefono" v-model="form.telefono">
+              <input type="text"  class="form-control" id="telefono" v-model="form.telefono" maxlength="7">
               <div class="input-group-prepend">
                 <div class="input-group-text"><i class="fa fa-phone"></i></div>
               </div>
@@ -65,7 +68,7 @@
           <div class="form-group" style="margin: 10px">
             <label for="celular">Celular:</label>
             <div class="input-group mb-2">
-              <input type="text"  class="form-control" id="celular" v-model="form.celular">
+              <input type="text"  class="form-control" id="celular" v-model="form.celular" maxlength="10">
               <div class="input-group-prepend">
                 <div class="input-group-text"><i class="fas fa-mobile-alt"></i></div>
               </div>
@@ -79,7 +82,7 @@
           <div class="form-group" style="margin: 10px">
             <label for="dirrecion">Dirección:</label>
             <div class="input-group mb-2">
-              <input type="text"  class="form-control" id="direccion" v-model="form.direccion">
+              <input type="text"  class="form-control" id="direccion" v-model="form.direccion" maxlength="25">
               <div class="input-group-prepend">
                 <div class="input-group-text"><i class="fas fa-directions"></i></div>
               </div>
@@ -120,13 +123,13 @@
       </div>
       <div class="row form-material" v-else>
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-          <h3 class="mt-4 text-center mb-5">Reestablecer contraseña</h3>
+          <h3 class="mt-4 text-center mb-5">Cambiar contraseña</h3>
         </div>
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-4">
           <div class="form-group" style="margin: 10px">
             <label for="name">Contraseña Anterior:</label>
             <div class="input-group mb-2">
-              <input type="text"  class="form-control" id="name" v-model="form.old_password">
+              <input type="password"  class="form-control" id="name" v-model="form.old_password">
               <div class="input-group-prepend">
                 <div class="input-group-text"><i class="fas fa-key"></i></div>
               </div>
@@ -140,7 +143,7 @@
           <div class="form-group" style="margin: 10px">
             <label for="name">Contraseña Nueva:</label>
             <div class="input-group mb-2">
-              <input type="text"  class="form-control" id="name" v-model="form.password">
+              <input type="password"  class="form-control" id="name" v-model="form.password">
               <div class="input-group-prepend">
                 <div class="input-group-text"><i class="fas fa-lock"></i></div>
               </div>
@@ -154,7 +157,7 @@
           <div class="form-group" style="margin: 10px">
             <label for="edad">Repetir Contraseña Nueva:</label>
             <div class="input-group mb-2">
-              <input type="text" class="form-control" id="inlineFormInputGroup" v-model="form.password_confirmation">
+              <input type="password" class="form-control" id="inlineFormInputGroup" v-model="form.password_confirmation">
               <div class="input-group-prepend">
                 <div class="input-group-text"><i class="fas fa-lock"></i></div>
               </div>
@@ -167,7 +170,7 @@
         <vs-button @click="restablecer_pass" class="btn btn-primary btn-block" style="float: right;margin-right: 2px" v-else>Guardar</vs-button>
       </div>
       <div class="form-group mt-3 mb-4 text-center" v-if="tipo">
-        Quieres cambiar de contraseña? <a href="javascript:void(0)" @click="tipo=false">Restablecer contreseña</a>
+        Quieres cambiar de contraseña? <a href="javascript:void(0)" @click="tipo=false">Cambiar contreseña</a>
       </div>
       <div class="form-group mt-3 mb-4 text-center" v-else>
         Quieres cambiar tus datos? <a href="javascript:void(0)" @click="tipo=true">Volver a mi perfil</a>
@@ -180,6 +183,8 @@
 import Persona from "../apis/Persona";
 import Datepicker from 'vuejs-datepicker';
 import { es } from 'vuejs-datepicker/dist/locale';
+import moment from "moment";
+moment.locale("es");
 
 export default {
   components: {
@@ -190,13 +195,13 @@ export default {
       baseURL: "http://localhost:8000/api",
       es: es,
       form: {
+        id: "",
         name: "",
         email: "",
         old_password:"",
         password: "",
         password_confirmation: "",
         fecha_nacimiento:"",
-        edad:"",
         telefono:"",
         celeular:"",
         direccion:"",
@@ -209,10 +214,20 @@ export default {
       tipo: true,
     }
   },
+  computed:{
+    edad(){
+      var edad = "Debe escoger una fecha";
+      if(this.form.fecha_nacimiento){
+        edad =  (moment(moment(this.form.fecha_nacimiento).format("YYYYMMDD"), "YYYYMMDD").fromNow()).replace("Hace", "");
+      }
+      return edad;
+    }
+  },
   methods: {
     recuperar(){
       Persona.recuperar().then(({data}) => {
         this.form = data;
+        this.form.fecha_nacimiento = moment(this.form.fecha_nacimiento).format("YYYY-MM-DD");
       });
     },
     restablecer(){

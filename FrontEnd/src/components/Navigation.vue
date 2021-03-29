@@ -22,8 +22,8 @@
           </button>   
           <div slot="dropdown"> 
             <router-link class="dropdown-item vs-sidebar__item__text color-drem" to="/prolife"> <i class="fas fa-user"></i> Mi perfil</router-link>
-            <router-link class="dropdown-item vs-sidebar__item__text color-drem" to="/prolife"> <i class="fas fa-poll-h"></i> Mis respuestas</router-link>
-            <router-link class="dropdown-item vs-sidebar__item__text color-drem" to="/prolife"> <i class="fas fa-cogs"></i> Configuración</router-link>
+            <!-- <router-link class="dropdown-item vs-sidebar__item__text color-drem" to="/prolife"> <i class="fas fa-poll-h"></i> Mis respuestas</router-link>
+            <router-link class="dropdown-item vs-sidebar__item__text color-drem" to="/prolife"> <i class="fas fa-cogs"></i> Configuración</router-link> -->
             <hr>
             <a class="dropdown-item vs-sidebar__item__text color-drem" href="javascript:void(0)" @click="logout()"> <i class="fa fa-sign-out"></i> Cerrar sesión</a>
           </div>
@@ -109,7 +109,7 @@
         </vs-sidebar-item> -->
         <template #footer>
           <vs-row justify="space-between">
-            <vs-avatar badge-color="danger" badge-position="top-right">
+            <!-- <vs-avatar badge-color="danger" badge-position="top-right">
               <vs-tooltip circle>
                 <i class="fas fa-bell cursor-pointer" ></i>
                 <template #badge>
@@ -119,7 +119,7 @@
                   Notificaciones
                 </template>
               </vs-tooltip>
-            </vs-avatar>
+            </vs-avatar> -->
             <vs-avatar @click="logout()" v-if="user">
               <vs-tooltip circle>
                 <i class="fa fa-sign-out cursor-pointer" aria-hidden="true"></i>
@@ -245,63 +245,63 @@
       'dropdown-menu':DropdownMenu
     },
     data: () => ({
-      baseURL: "http://localhost:8000/api",
-      open: true,
-      hover:true,
-      reduce:true,
-      active:true,
-      menuver:false,
-      interactive:true,
-      user: null,
-      val_loading:null,
-      modal:{
-        login:false,
-        registro:false,
-      },
-      form_login: {
-        email: "",
-        password: "",
-        device_name: "browser"
-      },
-      errors_login: [],
-      form_registro: {
-        name: "",
-        email: "",
-        password: "",
-        password_confirmation: ""
-      },
-      errors_registro: [],
-      verfoto:false,
-      nota: {
-        nota2:0,
-        nota3:0,
-        nota4:0,
-      },
+      baseURL: "http://localhost:8000/api", 
+      open: true, 
+      hover:true, 
+      reduce:true, 
+      active:true, 
+      menuver:false, 
+      interactive:true, 
+      user: null, 
+      val_loading:null, 
+      modal:{ 
+        login:false, 
+        registro:false, 
+      }, 
+      form_login: { 
+        email: "", 
+        password: "", 
+        device_name: "browser" 
+      }, 
+      errors_login: [], 
+      form_registro: { 
+        name: "",  
+        email: "",  
+        password: "", 
+        password_confirmation: "" 
+      }, 
+      errors_registro: [], 
+      verfoto:false, 
+      nota: { 
+        nota2:0, 
+        nota3:0, 
+        nota4:0, 
+      }, 
     }),
-    methods:{
-      settings(){
-        this.reduce = !this.reduce;
-        this.hover = !this.hover;
-        localStorage.setItem("settings",JSON.stringify({reduce:this.reduce,hover:this.hover}));
-      },
-      usuario(){
-        if(localStorage.getItem("token")){
-          store.dispatch('recuperauser').then((value) => {
-            this.user = value;
-            if(this.user.foto) this.verfoto=true;
-            this.loading("close");
-          }).catch(error => {
-              if (error.response.status === 401) {
-                  localStorage.removeItem("token");
-                  console.log("debes iniciar sesión");
-              }else if (error.response.status === 500) {
-                  localStorage.removeItem("token");
-                  console.log("debes iniciar sesión");
-              }else{
-                  localStorage.removeItem("token");
-                  console.log("debes iniciar sesión");
+    methods:{ 
+      settings(){ 
+        this.reduce = !this.reduce; 
+        this.hover = !this.hover; 
+        localStorage.setItem("settings",JSON.stringify({reduce:this.reduce,hover:this.hover})); 
+      }, 
+      usuario(){ 
+        if(localStorage.getItem("token")){ 
+          store.dispatch('recuperauser').then((value) => { 
+            this.user = value; 
+            if(this.user.foto) this.verfoto=true; 
+            this.loading("close"); 
+          }).catch(error => { 
+              if (error.response.status === 401) { 
+                  localStorage.removeItem("token"); 
+                  console.log("debes iniciar sesión"); 
+              }else if (error.response.status === 500) { 
+                  localStorage.removeItem("token"); 
+                  console.log("debes iniciar sesión"); 
+              }else{ 
+                  localStorage.removeItem("token"); 
+                  console.log("debes iniciar sesión"); 
                   location.reload();
-              }
+              } 
           });
         }else{
           setTimeout(() => {
@@ -331,6 +331,19 @@
       cambiarmodales(){
         this.modal.login =! this.modal.login;
         this.modal.registro =! this.modal.registro;
+        this.form_login = {
+          email: "",
+          password: "",
+          device_name: "browser"
+        };
+        this.errors_login = [];
+        this.form_registro = {
+          name: "",
+          email: "",
+          password: "",
+          password_confirmation: ""
+        };
+        this.errors_registro = [];
       },
       login() {
         User.login(this.form_login)

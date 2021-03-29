@@ -25,6 +25,12 @@
               </template>
                 Felicidades, obtuviste una calificación de {{(resultados.subnivel1).toFixed(2)}}/10, ya puedes ingresar a oraciones de este nivel
             </vs-alert>
+            <vs-alert class="mb-3">
+              <template #title>
+                Forma de uso
+              </template>
+                Dar click en el botón azul, hablar y verificar si es correcto la oración.
+            </vs-alert>
             <div class="card m-3" style="border-radius: 50px" v-for="(tr,index) in oraciones.preguntas" :key="index">
               <vs-row>
                 <vs-col vs-type="flex" vs-justify="center" vs-align="center" style="margin: 30px">
@@ -72,6 +78,12 @@
               </template>
                 Felicidades, obtuviste una calificación de {{(resultados.subnivel2).toFixed(2)}}/10, ya has aprobado el curso
             </vs-alert>
+            <vs-alert class="mb-3">
+              <template #title>
+                Forma de uso
+              </template>
+                Dar click en el botón azul, hablar y verificar si es correcto la oración.
+            </vs-alert>
             <div class="card m-3" style="border-radius: 50px" v-for="(tr,index) in frases.preguntas" :key="index">
               <vs-row>
                 <vs-col vs-type="flex" vs-justify="center" vs-align="center" style="margin: 30px">
@@ -116,7 +128,7 @@
       <li class="nav-item col-lg-6 text-center">
         <a class="nav-link active" id="level3-tab" data-toggle="tab" href="#a" role="tab" aria-controls="uno" aria-selected="true" style="border-radius: 50px">ORACIONES</a>
       </li>
-      <li class="nav-item col-lg-6 text-center" v-if="resultados.subnivel1 >= 7">
+      <li class="nav-item col-lg-6 text-center">
         <a class="nav-link " id="leve3-tab" data-toggle="tab" href="#b" role="tab" aria-controls="dos" aria-selected="false" style="border-radius: 50px">FRASES</a>
       </li>
     </ul>
@@ -357,7 +369,7 @@ export default {
       }
       Api.enviaroraciones(this.variable_seleccionado).then( ({data}) => {
         var resultado = data[0].suma * 10 / data[0].total;
-        this.resultados.subnivel4 = resultado;
+        this.resultados.subnivel1 = resultado;
         this.$vs.notification({
           square: true,
           progress: 'auto',
@@ -435,7 +447,7 @@ export default {
       rec.start();
       setTimeout(() => {
         return;
-      }, 3000);
+      }, 10000);
     },
     hablarc(index){
       let rec;
